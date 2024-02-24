@@ -1,0 +1,50 @@
+/* En el archivo CSS de AlertDialogComponent o en el archivo CSS global */
+@font-face {
+    font-family: "FontsCarta";
+    src: url("../../fots/KaushanScript-Regular.ttf");
+  }
+
+*{
+    font-family: "FontsCarta"
+}
+
+.mat-dialog-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Esto centra verticalmente en la pantalla */
+  }
+
+.alert{
+    color: white;
+    padding: 20px;
+    margin-bottom: 15px;
+    
+  }
+
+  h1{
+    font-family: "FontsCarta"
+  }
+
+  p{
+    color: white;
+  }
+  
+  .closebtn{
+    margin-left: 15px;
+    color: black;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+    height: 25px;
+  background: white;
+  }
+  
+  .closebtn:hover{
+    color: black;
+    background-color: yellow;
+}
+  

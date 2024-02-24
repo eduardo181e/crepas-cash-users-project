@@ -1,0 +1,158 @@
+
+<div class="every">
+    <div class="container">
+        <div class="header">
+            <h1 class="title">{{'crepas.dulces' | translate}}</h1>
+            <div>
+            <p class="descripcion">{{'crepa.dulce.describe.precio' | translate}}</p>    
+            <p style="float: left;">{{'for.only' | translate}}</p><p class="precio">${{precioRegular[0]}}</p>
+            </div>
+            <div class="clearfix"></div>
+            <div>
+            <p class="descripcion1">{{'crepa.dulce.describe.precio.1' | translate}}</p><p style="float: left;margin-bottom: 20px;"> {{'cost.of' | translate}}</p><p class="precio">${{precioExtra[0]}}</p>
+            </div>
+            <div class="clearfix"></div>
+            <div style="position: relative;">
+                <div style="position: absolute;" ><p style="float: left;">{{'crepa.dulce.describe.precio.nieve' | translate}}</p><p class="precio">${{precioNieve[0]}}</p></div>
+                
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="instruccion">{{'crepa.dulce.describe' | translate}}</div>
+        <div class="create">
+            <div class="uno">
+                <div style="position: relative;"><i class="icon1">1</i><h1 class="title1 titleh">{{'crepa.dulce.tipo.harina' | translate}}</h1></div>
+                
+                <div class="harina">
+                    <ul  *ngFor="let harina of harinas">
+                        <li (click)=" actualizarHarinaSeleccionada(harina.harina, harina.id, harina.existencia)">{{harina.harina}}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="dos">
+                <i class="icon2">2</i><h1 class="title1 titleI">{{'crepa.dulce.ingredientes' | translate}}</h1>
+                <div class="ingredientes">
+                <div class="IngredientesUnt">
+                    <h2 class="subtitle">{{'crepa.dulce.ingredientes.untables' | translate}}</h2>
+                    <ul  *ngFor="let ingrediente_unt of ingredientes_unt">
+                        <li (click)="actualizarIngredienteUnt(ingrediente_unt.ingrediente_unt, ingrediente_unt.id, ingrediente_unt.existencia)">{{ingrediente_unt.ingrediente_unt}}</li>
+                    </ul>
+                </div>
+                    <div class="IngredientesCom1">
+                    <h2 class="subtitle" style="margin-bottom: 10px;">{{'crepa.dulce.ingredientes.complementos' | translate}}</h2>
+                    <div class="IngredientesCom">
+                    <div class="frutas">
+                    <h2 class="subtitle2">{{'crepa.dulce.ingredientes.complementos.frutas' | translate}}</h2>
+                    <ul *ngFor="let ingrediente_com of frutas">
+                        <li (click)="actualizarIngredienteCom(ingrediente_com.ingrediente_com, ingrediente_com.id, ingrediente_com.existencia)">
+                            {{ingrediente_com.ingrediente_com}}</li>
+                    </ul>                        
+                    </div>
+                    <div class="frutosSecos">
+                    <h2 class="subtitle2">{{'crepa.dulce.ingredientes.complementos.frutos.secos' | translate}}</h2>
+                    <ul *ngFor="let ingrediente_com of frutos_secos">
+                        <li (click)="actualizarIngredienteCom(ingrediente_com.ingrediente_com, ingrediente_com.id, ingrediente_com.existencia)">
+                            {{ingrediente_com.ingrediente_com}}</li>
+                    </ul>                     
+                    </div>
+                    <div class="Otros">
+                        <h2 class="subtitle2">{{'crepa.dulce.ingredientes.complementos.otros' | translate}}</h2>
+                        <ul *ngFor="let ingrediente_com of Otros">
+                            <li (click)="actualizarIngredienteCom(ingrediente_com.ingrediente_com, ingrediente_com.id, ingrediente_com.existencia)">
+                                {{ingrediente_com.ingrediente_com}}</li>
+                        </ul>                        
+                        </div>
+                </div>                    
+                </div>                        
+                    </div>
+
+
+            </div>
+            <div class="tres">
+                <i class="icon3">3</i><h1 class="title2">{{'crepa.dulce.decoracion' | translate}}</h1>
+                <div class="decoracion">
+                <div class="incluye">
+                    <h2 class="subtitle3">{{'crepa.dulce.decoracion.incluye' | translate}}</h2>
+                    <ul>
+                        <li (click)="actualizarDecoracion('Azucar Glass')">{{'crepa.dulce.decoracion.incluye.azucar' | translate}}</li>
+                        <li (click)="actualizarDecoracion('Canela en polvo')">{{'crepa.dulce.decoracion.incluye.canela' | translate}}</li>
+                    </ul>
+                </div>
+                <div class="decoracionUnt">
+                    <h2 class="sunUnt sunUnt1">{{'crepa.dulce.decoracion.incluye.lechera' | translate}} </h2><h1 class="sunUnt o">{{'or' | translate}}</h1><h2 class="sunUnt sunUnt2">{{'crepa.dulce.decoracion.incluye.chocolate' | translate}}</h2>
+                    <div style="position: relative;">
+                    <div class="Lechera" (click)="actualizarDecoracion('Lechera')">
+                        <div style="position: relative;">
+                         <p style="position: absolute;
+                         top: 40px;
+                         left: 30px;">{{'crepa.dulce.decoracion.incluye.lechera' | translate}}</p>   
+                        </div>
+                        
+                    </div>                        
+                    </div>
+                    <div style="position: relative;">
+                    <div class="Chocolate" (click)="actualizarDecoracion('Chocolate')">
+                        <div style="position: relative;"><p style="position: absolute;
+                            top: 40px;
+                            left: 30px;">{{'crepa.dulce.decoracion.incluye.chocolate' | translate}}</p></div>
+                        
+                    </div>                        
+                    </div>
+
+                </div>
+                <div class="ni">
+                    <div style="position: relative;">
+                                        <h2 class="sunUnt sunN">{{'crepa.dulce.decoracion.nieve' | translate}}</h2>    
+                    </div>
+
+                    <ul class="Nieve" >
+                        <li *ngFor="let nieve of nieves" (click)="actualizarNieve(nieve.nieve, nieve.id, nieve.existencia)">
+                            {{nieve.nieve}}
+                        </li>
+                    </ul>
+                </div>                    
+                </div>
+
+            </div>
+        </div>
+    </div>  
+    <div class="compra">
+                <!-- Tarjeta del artículo seleccionado -->
+                <div>
+                    <div class="crepaTitle">
+                        {{'you.crepa.dulce' | translate}}
+                    </div>
+                    <div>
+                        <p class="titleCrepa">{{'you.crepa.dulce.sabor' | translate}}<i class="sabor">{{crepa.harina.harina}}</i> </p>
+                        <p *ngIf="!mostrarIngredientes()" style="color: black;background: #ffbfcb;width: 80%;margin-left: 10%;border-radius: 15px;padding-top: 5px; padding-bottom: 5px; height: auto;padding-top: 15px;padding-bottom: 15px;" class="titleCrepa">{{'warning.crepa.dulce' | translate}}</p>
+                        <p *ngIf="mostrarIngredientes()" class="titleCrepa">{{'you.crepa.dulce.ingredientes' | translate}}</p>
+                        <p *ngIf="mostrarUnt()" class="titleCrepa">{{'crepa.dulce.ingredientes.untables' | translate}}:</p>
+                        <p class="select" *ngFor="let ingrediente_unt of crepa.ingredientes_unt">
+                            {{ingrediente_unt.nombre}}
+                            <i (click)="eliminarIngredienteUnt(ingrediente_unt.nombre)" class="far fa-trash-alt trash"></i>
+                        </p>
+                        <p *ngIf="mostrarCom()" class="titleCrepa">{{'crepa.dulce.ingredientes.complementos' | translate}}:</p>
+                        <p class="select" *ngFor="let ingrediente_com of crepa.ingredientes_com">
+                            {{ingrediente_com.nombre}}
+                            <i (click)="eliminarIngredienteCom(ingrediente_com.nombre)" class="far fa-trash-alt trash"></i>
+                        </p>
+                        <p *ngIf="mostrarNieve()" class="titleCrepa">{{'you.crepa.dulce.nieve' | translate}}</p>
+                        <p class="select" *ngFor="let nieve of crepa.nieve">
+                            {{nieve.nombre}}
+                            <i (click)="eliminarNieve(nieve.nombre)" class="far fa-trash-alt trash"></i>
+                          </p>  
+                        <p *ngIf="mostrarDecoracion()" class="titleCrepa">{{'you.crepa.dulce.decoracion' | translate}}</p>
+                        <p class="select" *ngFor="let decoracion of crepa.decoracion">
+                            {{decoracion.nombre}}
+                            <i (click)="eliminarDecoracion(decoracion.nombre)" class="far fa-trash-alt trash"></i>
+                          </p>
+                        <p class="titleCrepa">{{'you.crepa.dulce.precio' | translate}} ${{crepa.precio}}</p>
+                    </div>
+                </div>
+        
+                <div  (click)="anadirCrepa()">
+                    <div class="comprar">
+                        {{'add.orden' | translate}}
+                    </div>
+                </div>
+    </div>         

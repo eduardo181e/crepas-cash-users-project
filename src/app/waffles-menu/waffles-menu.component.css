@@ -1,0 +1,71 @@
+@font-face {
+  font-family: "FontsCarta";
+  src: url("../../fots/KaushanScript-Regular.ttf");
+}
+
+@import url(../principal/menu-principal/menu-principal.component.css);
+
+.extra{
+  margin-left: 0%;
+}
+
+@media (max-width: 1000px){
+  #ensalada1{
+    width: 65%;
+  }
+
+  #ensalada2{
+    position: absolute;
+    left: -10px;
+  }
+}
+
+@media (max-width: 670px) {
+  .title2{
+    width: 35%;
+    margin-left: 4%;
+  }
+
+  #ensalada2{
+    margin-top: 80px;
+  }
+
+  .title{
+    height: 200px;
+  }
+  #ensalada1 {
+    width: 55%;
+  }
+
+  #ensalada1 div{
+    height: 95%;
+  }
+
+
+  #ensalada .title{
+    height: 220px;
+  }
+}
+
+@media (max-width: 400px) {
+  #ensalada2 {
+    margin-top: 55px;
+  }
+
+  #ensalada1 div{
+    height: 80%;
+  }
+
+  #ensalada .title{
+    height: 192px;
+  }
+}
+
+
+
+@media (max-width: 450px){
+  #ensalada2{
+    width: 150px;
+    left: -43px;
+  }
+}

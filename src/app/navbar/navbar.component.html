@@ -1,0 +1,121 @@
+
+<nav id="navIn">
+    <ul class="menu-horizontal">
+      <div class="iconb" (click)="desaparecer()"  style="margin-left: 10px; margin-top: 5px; margin-bottom: 6px;">
+          <div class="icon">
+           <i style="font-size: 28px;
+           color: white;
+           position: absolute;
+           top: 6px;
+           left: 8px;" class="fa fa-bars"></i>   
+          </div>        
+      </div>
+        <li class="r1" *ngIf="authService.isAuthenticated()"><a (click)="navigateMenuPrincipal()">{{'menu.main'| translate}}</a></li>
+        <li *ngIf="authService.isAuthenticated()">
+            <a (click)="crepas()">{{'crepas' | translate}}</a>
+            <ul class="menu-vertical">
+                <li >
+                    <a (click)="crepaSalada()">{{'crepas.saladas' | translate}}</a>
+                </li>
+                <li>
+                    <a (click)="crepaDulce()">{{'crepas.dulces' | translate}}</a>
+                </li>
+            </ul>
+        </li>
+        <li *ngIf="authService.isAuthenticated()">
+            <a (click)="waffles()">{{'waffles' | translate}}</a>
+            <ul class="menu-vertical">
+                <li>
+                    <a (click)="waffle()">{{'waffles' | translate}}</a>
+                </li>
+                <li>
+                    <a (click)="waffleCanasta()">{{'waffles.canasta' | translate}} </a>
+                </li>
+            </ul>
+        </li>
+        <li *ngIf="authService.isAuthenticated()">
+            <a (click)="bebidas()">{{'bebidas' | translate}}</a>
+            <ul class="menu-vertical">
+                <li>
+                    <a (click)="bebidaFria()">{{'bebidas.frias' | translate}} </a>
+                </li>
+                <li>
+                    <a (click)="bebidaCaliente()">{{'bebidas.calientes' | translate}}</a>
+                </li>
+            </ul>
+        </li>
+        <li *ngIf="authService.isAuthenticated()">
+            <a (click)="botana()">{{'botanas' | translate}}</a>
+        </li>
+        <li *ngIf="authService.isAuthenticated()">
+          <a (click)="ensaladaInd()">{{'ensaladas.individuales' | translate}}</a>
+      </li>
+        <li *ngIf="authService.isAuthenticated()"><a (click)="carrito()">{{'carrito' | translate}}</a></li>
+        <li *ngIf="authService.isAuthenticated()"><a (click)="logout()">{{'logOut'| translate}}</a></li>
+        <li class="r2" *ngIf="authService.isAuthenticated()">
+            <a (click)="navigateAccountConfig()"><i class="fas fa-cog" style="margin-right: 5px;"></i>{{'settings'| translate}}</a>
+          </li>
+        <li *ngIf="!authService.isAuthenticated()" class="login"><a (click)="login()">{{'signIn'| translate}}</a></li>
+    </ul>
+  </nav>
+
+<div class="capa"></div>
+<div class="iconIn" >
+    <div (click)="aparecer()" class="icon">
+     <i  style="font-size: 28px;
+     color: rgb(88, 105, 114);
+     position: absolute;
+     top: 6px;
+     left: 8px;" class="fa fa-bars"></i>   
+    </div>        
+
+    
+
+<div class="back" (click)="desaparecer()"></div>
+<div class="back1"></div>
+<nav id="navAn">
+  <ul class="menu-horizontal">
+    <div class="iconb"  style="margin-left: 10px; margin-top: 5px; margin-bottom: 6px;">
+        <div (click)="desaparecer()" class="icon">
+         <i  style="font-size: 28px;
+         color: white;
+         position: absolute;
+         top: 6px;
+         left: 8px;" class="fa fa-bars"></i>   
+        </div>        
+    </div>
+      <li class="r1" *ngIf="authService.isAuthenticated()"><a (click)="navigateMenuPrincipal()">{{'menu.main'| translate}}</a></li>
+
+              <li *ngIf="authService.isAuthenticated()">
+                  <a (click)="crepaSalada()">{{'crepas.saladas' | translate}}</a>
+              </li>
+              <li *ngIf="authService.isAuthenticated()">
+                  <a (click)="crepaDulce()">{{'crepas.dulces' | translate}}</a>
+              </li>
+              <li *ngIf="authService.isAuthenticated()">
+                  <a (click)="waffle()">{{'waffles' | translate}}</a>
+              </li>
+              <li *ngIf="authService.isAuthenticated()">
+                  <a (click)="waffleCanasta()">{{'waffles.canasta' | translate}}</a>
+              </li>
+              <li *ngIf="authService.isAuthenticated()">
+                  <a (click)="bebidaFria()">{{'bebidas.frias' | translate}}</a>
+              </li>
+              <li *ngIf="authService.isAuthenticated()">
+                  <a (click)="bebidaCaliente()">{{'bebidas.calientes' | translate}}</a>
+              </li>
+      <li *ngIf="authService.isAuthenticated()">
+          <a (click)="botana()">{{'botanas' | translate}}</a>
+      </li>
+      <li *ngIf="authService.isAuthenticated()">
+        <a (click)="ensaladaInd()">{{'ensaladas.individuales' | translate}}</a>
+    </li>
+      <li *ngIf="authService.isAuthenticated()"><a (click)="carrito()">{{'carrito' | translate}}</a></li>
+      <li class="r2" *ngIf="authService.isAuthenticated()"><a (click)="logout()">{{'logOut'| translate}}</a></li>
+      <li *ngIf="authService.isAuthenticated()">
+        <a (click)="navigateAccountConfig()"><i class="fas fa-cog" style="margin-right: 5px;"></i>{{'settings'| translate}}</a>
+      </li>
+      <li *ngIf="!authService.isAuthenticated()" class="login"><a (click)="login()">{{'signIn'| translate}}</a></li>
+  </ul>
+</nav>
+</div>

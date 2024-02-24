@@ -1,0 +1,254 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css");
+
+#navIn{
+    display: block;
+}
+
+#navAn{
+    display: none;
+}
+
+.icon{
+    width: 40px;
+    height: 40px;
+  position: relative;
+}
+
+.iconIn{
+    display: none;
+}
+
+.iconb{
+    display: none;
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+nav, .nav1{
+    left: 0%;
+}
+
+.back{
+    display: none;
+    z-index: 1;
+}
+
+.back1{
+    display: none;
+    z-index: 4;
+}
+
+nav {
+    width: 1000px;
+    margin: auto;
+    background-color: #333;
+    font-size: 17px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 3;
+    border-radius: 10px;
+}
+
+.menu-horizontal{
+    width: 100%;
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+}
+
+.menu-horizontal > li >a{
+    display: block;
+    padding: 15px 20px;
+    color: white;
+    text-decoration: none;
+}
+
+.menu-horizontal > li:hover{
+    background-color: red;
+}
+
+.icon1:hover{
+    background-color: #333;
+}
+
+.menu-vertical{
+    list-style: none;
+    position: absolute;
+    display: none;
+    width: 200px;
+    background-color: rgba(0,0,0,.5);
+}
+
+.menu-horizontal > li:hover .menu-vertical{
+    display: block;
+}
+
+.menu-vertical li:hover{
+    background-color: black;
+}
+
+.menu-vertical > li > a{
+    display: block;
+    padding: 15px 20px;
+    color: white;
+    text-decoration: none;
+    padding: 15px 15px 15px 20px;
+}
+
+.login{
+    margin-left: 85%;
+}
+
+li {
+    cursor: pointer;
+}
+
+.r1{
+    border-radius: 10px 0px 0px 10px;
+}
+
+.r2{
+    border-radius: 0px 10px 10px 0px;
+}
+
+@media (max-width: 1030px){
+    #navIn{
+        display: none;
+    }
+    
+    #navAn{
+        display: block;
+        left: -480%;
+    width: 180px;
+    position: absolute;
+    height: 100vh;
+    margin-top: -30px;
+    border-radius: 0px;
+    top: 25px;
+    }
+    nav{left: -100%;
+        width: 180px;
+  position: absolute;
+  height: 100vh;
+  margin-top: -30px;
+    border-radius: 0px;
+    }
+
+    .login{
+        margin-left: 0px;
+    }
+
+    .aparecer{
+        display: block;
+        animation: aparecer 0.2s;
+    }
+
+    .desaparecer{
+        animation: desaparecer 0.2s ease-in-out;
+    }
+
+    @keyframes aparecer {
+        0% {
+          left: -480%;
+        }
+        100% {
+          left: -25%;
+        }
+      }
+
+
+    @keyframes desaparecer {
+        0% {
+          left: -25%;
+        }
+        100% {
+          left: -480%;
+        }
+      }
+
+      nav{
+        position: absolute;
+      }
+
+
+      .back{
+        display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background-color: rgba(0,0,0,.5);
+      }
+     .back1{
+        display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+      }
+
+      .icon:hover{
+        border-radius: 100%;
+        background-color: rgba(0,0,0,.5);
+      }
+
+    .menu-horizontal{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .menu-horizontal li {
+        position: relative;
+    }
+
+
+    .menu-vertical{
+        position: absolute;
+  top: 0px;
+  left: 180px;
+    }
+
+
+    .iconb{
+        display: block;
+        
+    }
+
+
+    .r1{
+        border-radius: 0px;
+    }
+    
+    .r2{
+        border-radius: 0px;
+    }
+
+
+    .iconIn{
+        display: block;
+        position: absolute;
+  top: 5px;
+  left: 0px;
+  z-index: 3;
+    }
+
+    .capa{
+        width: 50px;
+        height: 40px;
+        position: absolute;
+        top: 5px;
+        left: 0px;
+        z-index: 4;
+        display: none;
+    }
+
+    .nav1{
+        margin-top: -60px;
+    }
+}

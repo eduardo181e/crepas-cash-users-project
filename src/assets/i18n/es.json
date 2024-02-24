@@ -1,0 +1,375 @@
+{
+    "hello.world": "Hola mundo!",
+    "signUp": "Registrarse",
+    "signIn": "Iniciar sesión",
+    "logOut": "Cerrar sesión",
+    "spanish": "Español",
+    "english": "Inglés",
+    "name": "Nombre",
+    "alert": "Alerta",
+
+    "username": "Nombre de Usuario",
+    "fullname": "Nombre Completo",
+    "password": "Contraseña",
+    "password.new": "Contraseña Nueva",
+    "password.change": "Cambiar Contraseña",
+    "lang": "Idioma",
+    "account.config": "Configuracion de Cuenta",
+    "update.user": "Actualizar Usuario",
+
+    "menu.main": "Menú principal",
+    "menu.ventas": "Ventas",
+    "menu.sucursales": "Sucursales",
+    "menu.productos": "Productos",
+    "menu.usuarios.caja": "Usuarios de Caja",
+    "settings": "Configuración",
+    "admin.barch": "Administracion de Sucursal",
+
+    "products": "Productos",
+    "sales": "Ventas",
+    "usuarios.caja": "Usuarios Caja",
+    "sucursales": "Sucursales",
+    "facturas": "Facturas",
+    "aceptar": "Aceptar",
+
+    "crepas": "Crepas",
+    "bebidas": "Bebidas",
+    "waffles": "Waffles",
+    "botanas": "Botanas",
+    "ensaladas.individuales": "Ensaladas Individuales",
+
+    "crepas.ventas": "Crepas Ventas",
+    "crepas.dulce.ventas": "Crepas Dulces Ventas",
+    "crepas.salada.ventas": "Crepas Saladas Ventas",
+    "bebidas.ventas": "Bebidas Ventas",
+    "waffles.ventas": "Waffles Ventas",
+    "waffles.canasta.ventas": "Waffles Canasta Ventas",
+
+    "crepas.ventas.global": "Crepas Ventas Globales",
+    "crepas.dulce.ventas.global": "Crepas Dulces Ventas Globales",
+    "crepas.salada.ventas.global": "Crepas Saladas Ventas Globales",
+    "bebidas.ventas.global": "Bebidas Ventas Globales",
+    "waffles.ventas.global": "Waffles Ventas Globales",
+    "waffles.canasta.ventas.global": "Waffles Canasta Ventas Globales",
+
+    "crepas.stock": "Crepas Ventas Inventario",
+    "crepas.dulce.stock": "Crepas Dulces Ventas Inventario",
+    "crepas.salada.stock": "Crepas Saladas Ventas Inventario",
+    "bebidas.stock": "Bebidas Ventas Inventario",
+    "waffles.stock": "Waffles Ventas Inventario",
+    "waffles.canasta.stock": "Waffles Canasta Inventario",
+
+    "crepas.dulces": "Crepas Dulces",
+    "crepas.saladas": "Crepas Saladas",
+
+    "bebidas.calientes": "Bebidas Calientes",
+    "bebidas.frias": "Bebidas Frías",
+
+    "waffles.canasta": "Waffles Canasta",
+
+    "crepas.dulces.harinas": "Harinas",
+    "crepas.dulces.ingredientes.unt": "Ingredientes Untables",
+    "crepas.dulces.ingredientes.com": "Ingredientes Complemetarios",
+    "crepas.dulces.nieves": "Nieves",
+    "crepas.dulces.precios": "Precios",
+
+    "crepas.dulce.harinas": "Harina",
+    "crepas.dulce.ingredientes.unt": "Ingrediente Untable",
+    "crepas.dulce.ingredientes.com": "Ingrediente Complemetario",
+    "crepas.dulce.nieves": "Nieve",
+    "crepas.dulce.precios": "Precio",
+    "crepas.salada.ingrediente.principales": "Ingredientes Principales",
+    "crepas.salada.ingrediente.bases": "Ingredientes Base",
+    "crepas.salada.ingrediente.principal": "Ingredientes Principales",
+    "crepas.salada.ingrediente.base": "Ingredientes Base",
+
+    "descripcion": "Descripción",
+    "delete": "Eliminar",
+    "inventario": "Inventario",
+    "accions": "Acciones",
+    "inventario.true": "Cuenta con inventario",
+    "inventario.false": "No cuenta con inventario",
+    "inventario.none": "Por favor selecciona si quieres que este producto cuente con inventario o no",
+
+    "crepas.dulces.harinas.create": "Nueva Harina",
+    "crepas.dulces.harinas.edit": "Editar Harina",
+    "crepas.dulces.harinas.edit.harina": "Harina",
+
+    "bebida.create": "Nueva Bebida",
+    "bebida.edit": "Editar Bebida",
+    "bebida.edit.bebida": "Bebida",
+
+    "crepas.ingrediente.create": "Nuevo Ingrediente",
+    "crepas.ingrediente.edit": "Editar Ingrediente",
+    "crepas.ingrediente.edit.ingrediente": "Ingrediente",
+
+    "crepas.ensalada.create": "Nueva Ensalada",
+    "crepas.ensalada.edit": "Editar Ensalada",
+    "crepas.ensalada.edit.ensalada": "Ensalada",
+
+    "crepas.botana.create": "Nueva Botana",
+    "crepas.botana.edit": "Editar Botana",
+    "crepas.botana.edit.ensalada": "Botana",
+    "crepas.botana.edit.ensaladas": "Botanas",
+
+    "crepas.adereso.create": "Nuevo Aderezo",
+    "crepas.adereso.create.base": "Nuevo Aderezo Base",
+    "crepas.adereso.edit": "Editar Aderezo",
+    "crepas.adereso.edit.base": "Editar Aderezo Base",
+    "crepas.adereso.edit.adereso": "Aderezo",
+    "crepas.adereso.edit.aderesos": "Aderezos",
+    "crepas.adereso.edit.aderesos.base": "Aderezos Base",
+
+    "crepas.ingrediente.com.create": "Nuevo Ingrediente",
+    "crepas.ingrediente.com.edit": "Editar Ingrediente",
+    "crepas.ingrediente.com.tipo": "Tipo",
+    "crepas.ingrediente.com.edit.ingrediente": "Ingrediente",
+    "crepas.ingrediente.com.edit.frutas": "Frutas",
+    "crepas.ingrediente.com.edit.frutos.secos": "Frutos Secos",
+    "crepas.ingrediente.com.edit.otros": "Otros",
+
+    "crepas.dulces.nieve.create": "Nueva Nieve",
+    "crepas.dulces.nieve.edit": "Editar Nieve",
+    "crepas.dulces.nieve.edit.harina": "Nieve",
+    
+    "precio": "Precio",
+    "precio.descripcion": "Descripcion",
+    "precio.edit": "Editar Precio",
+
+    "menu.crepas": "Crepas",
+    "menu.bebidas": "Bebidas",
+    "menu.botanas": "Botanas",
+    "menu.waffles": "Waffles",
+    "menu.ensalada": "Ensaladas Individuales",
+
+    "menu.crepas.dulce": "Crepa Dulce",
+    "menu.crepas.salada": "Crepa Salada",
+    "menu.bebidas.calientes": "Bebidas Calientes",
+    "menu.bebidas.frias": "Bebidas Frias",
+    "menu.waffles.canasta": "Waffles Canasta",
+
+    "existencia": "Existencia",
+    "product.id": "Product_id", 
+    "sucursal.id": "Sucursal_id", 
+
+    "stock": "Inventario",
+
+    "menu.crepas.dulce.stock": "Crepa Dulce Inventario",
+    "menu.crepas.dulce.harina.stock": "Harina Inventario",
+    "menu.crepas.ingredientes.com.dulce.stock": "Ingredientes Complemetarios Inventario",
+    "menu.crepas.ingredientes.unt.dulce.stock": "Ingredientes Untables Inventario",
+    "menu.crepas.nieve.dulce.stock": "Nieves Inventario",
+
+
+
+
+    "menu.crepas.salada.stock": "Crepa Salada Inventario",
+    "menu.crepas.salada.adereso.stock": "Aderesos Inventario",
+    "menu.crepas.salada.adereso.base.stock": "Aderesos Base Inventario",
+    "menu.crepas.salada.ingredientes.principales.stock": "Ingredientes Principales Inventario",
+    "menu.crepas.salada.ingredientes.base.stock": "Ingredientes Base Inventario",
+    "menu.crepas.salada.botanas.stock": "Botanas Inventario",
+    "menu.crepas.salada.ensaladas.stock": "Ensaladas Inventario",
+
+
+    "menu.bebidas.calientes.stock": "Bebidas Calientes Inventario",
+    "menu.bebidas.frias.stock": "Bebidas Frias Inventario",
+    "menu.waffles.canasta.stock": "Waffles Canasta Inventario",
+
+    "ventas": "Ventas",
+
+    "menu.crepas.dulce.ventas": "Crepa Dulce Ventas",
+    "menu.crepas.harina.dulce.ventas": "Harinas Ventas",
+    "menu.crepas.ingredientes.com.dulce.ventas": "Ingredientes Complemetarios Ventas",
+    "menu.crepas.ingredientes.unt.dulce.ventas": "Ingredientes Untables Ventas",
+    "menu.crepas.nieve.dulce.ventas": "Nieves Ventas",
+
+
+    "menu.crepas.salada.ventas": "Crepa Salada Ventas",
+    "menu.crepas.salada.adereso.ventas": "Aderesos Ventas",
+    "menu.crepas.salada.adereso.base.ventas": "Aderesos Base Ventas",
+    "menu.crepas.salada.ingredientes.principales.ventas": "Ingredientes Principales Ventas",
+    "menu.crepas.salada.ingredientes.base.ventas": "Ingredientes Base Ventas",
+    "menu.crepas.salada.botanas.ventas": "Botanas Ventas",
+    "menu.crepas.salada.ensaladas.ventas": "Ensaladas Ventas",
+
+    "menu.bebidas.calientes.ventas": "Bebidas Calientes Ventas",
+    "menu.bebidas.frias.ventas": "Bebidas Frias Ventas",
+    "menu.waffles.canasta.ventas": "Waffles Canasta Ventas",
+
+
+    "menu.crepas.dulce.ventas.global": "Crepa Dulce Ventas Globales",
+    "menu.crepas.harina.dulce.ventas.global": "Harinas Ventas Globales",
+    "menu.crepas.ingredientes.com.dulce.ventas.global": "Ingredientes Complemetarios Ventas Globales",
+    "menu.crepas.ingredientes.unt.dulce.ventas.global": "Ingredientes Untables Ventas Globales",
+    "menu.crepas.nieve.dulce.ventas.global": "Nieves Ventas Globales",
+
+
+    "menu.crepas.salada.ventas.global": "Crepa Salada Ventas Globales",
+    "menu.crepas.salada.adereso.ventas.global": "Aderesos Ventas Globales",
+    "menu.crepas.salada.adereso.base.ventas.global": "Aderesos Base Ventas Globales",
+    "menu.crepas.salada.ingredientes.principales.ventas.global": "Ingredientes Principales Ventas Globales",
+    "menu.crepas.salada.ingredientes.base.ventas.global": "Ingredientes Base Ventas Globales",
+    "menu.crepas.salada.botanas.ventas.global": "Botanas Ventas Globales",
+    "menu.crepas.salada.ensaladas.ventas.global": "Ensaladas Ventas Globales",
+
+    "menu.bebidas.calientes.ventas.global": "Bebidas Calientes Ventas Globales",
+    "menu.bebidas.frias.ventas.global": "Bebidas Frias Ventas Globales",
+    "menu.waffles.canasta.ventas.global": "Waffles Canasta Ventas Globales",
+
+    "ventas.globales": "Ventas Globales",
+
+    "menu.crepas.dulce.ventas.globales": "Crepa Dulce Ventas Globales",
+    "menu.crepas.salada.ventas.globales": "Crepa Salada Ventas Globales",
+    "menu.bebidas.calientes.ventas.globales": "Bebidas Calientes Ventas Globales",
+    "menu.bebidas.frias.ventas.globales": "Bebidas Frias Ventas Globales",
+    "menu.waffles.canasta.ventas.globales": "Waffles Canasta Ventas Globales",
+
+    "facturas.globales": "Facturas Globales",
+    "Factura.id": "Factura_id",
+    "numero.productos": "Numero de Productos",
+    "total": "Total",
+    "fecha.hora": "Fecha y Hora",
+    "factura.ver": "Ver Factura",
+    "Sucursal.id": "Sucursal_id",
+
+
+    "user.id": "Usuario_id",
+    "numero.caja": "Numero de Caja",
+    
+    "warning.stock": "No hay productos para administrar el inventario",
+    "warning.sucursales": "No existe ninguna sucursal",
+    "warning.users": "No existe ningun usuario",
+    "warning.facturas": "No hay facturas dentro del lapso seleccionado",
+    "warning.sales": "No hay ventas dentro del lapso seleccionado",
+    "warning.stock.false.req": "Este producto no requiere inventario",
+    "warning.ingrediente.com.tipo": "Por favor selecciona un tipo para este ingrediente",
+
+    "inicio": "Inicio",
+    "fin": "Fin",
+
+    "descripcion.form": "Escribe la descripcion del producto",
+    "precio.form": "Escribe el precio de este producto",
+
+    "guardar": "Guardar",
+    "generate": "Generar",
+    
+    "generate.sales": "Generar Ventas",
+    "precios.crepa.dulce": "Precios Crepa Dulce",
+    "precios.crepa.salada": "Precios Crepa Salada",
+    "precios.crepa.waffles": "Precios Waffles",
+    "precios.crepa.waffles.canasta": "Precios Waffles Canasta",
+
+    "numero.casa": "Numero de Casa",
+    "nombre.calle": "Nombre de Calle",
+    "ciudad": "Ciudad",
+    "estado": "Estado o Provincia",
+    "pais": "País",
+    "numero.telefono": "Número de Teléfono",
+    "create.sucursal": "Nueva Sucursal",
+    "edit.sucursal": "Editar Sucursal",
+    "admin.sucursal": "Administracion de Sucursal",
+
+    "codigo.postal": "Código Postal",
+
+    "usuario": "Usuario",
+    "sucursal": "Sucursal",
+
+    "create.user": "Nuevo Usuario",
+    "edit.user": "Editar Usuario",
+
+    "for.only": "A solo:",
+    "cost.of": "Costo de:",
+    "or": "o",
+
+
+    "descripcion.bebidas.calientes": "Contamos con bebidas dulces agridulces y picositas",
+    "you.bebidas.calientes": "Tu Bebida",
+    "warning.bebidas.calientes": "Por favor selecciona tu bebida",
+    "add.orden": "Agregar a la orden",
+
+    "descripcion.botana": "Contamos con bebidas dulces agridulces y picositas",
+    "you.botana": "Tu Botana",
+    "warning.botana": "Por favor selecciona tu bebida",
+
+    "ensalada.describe.precio": "Elige tu ensalada favorita",
+
+    "descripcion.ensalada": "Contamos con deliciosas ensaladas",
+    "you.ensalada": "Tu Ensalada",
+    "warning.ensalada": "Por favor selecciona tu ensalada",
+
+    "crepa.dulce.describe.precio": "Crepa dulce en harina sabor vainilla con dos ingredientes de tu preferencia",
+    "crepa.dulce.describe.precio.1": "Cada ingrediente extra o cambio de sabor de harina tiene un",
+    "crepa.dulce.describe.precio.nieve": "Nieve:",
+
+    "crepa.dulce.describe": "Crea tu Crepa con 3 simples pasos",
+    "crepa.dulce.tipo.harina": "Tipo de harina",
+    "crepa.dulce.ingredientes": "Ingredientes",
+    "crepa.dulce.ingredientes.untables": "Untables",
+    "crepa.dulce.ingredientes.complementos": "Complementos",
+    "crepa.dulce.ingredientes.complementos.frutas": "Frutas",
+    "crepa.dulce.ingredientes.complementos.frutos.secos": "Frutos Secos",
+    "crepa.dulce.ingredientes.complementos.otros": "Otros",
+    "crepa.dulce.decoracion": "Decoración",
+    "crepa.dulce.decoracion.incluye": "- Incluye -",
+    "crepa.dulce.decoracion.incluye.azucar": "Azucar Glass",
+    "crepa.dulce.decoracion.incluye.canela": "Canela en polvo",
+    "crepa.dulce.decoracion.incluye.lechera": "Lechera",
+    "crepa.dulce.decoracion.incluye.chocolate": "Chocolate",
+    "crepa.dulce.decoracion.nieve": "(Opcional) Nieve",
+
+    "you.crepa.dulce": "Tu crepa",
+    "you.crepa.dulce.sabor": "Tu crepa es de sabor:",
+    "you.crepa.dulce.ingredientes": "Los ingredientes de tu crepa son:",
+    "you.crepa.dulce.nieve": "La nieve de su crepa es:",
+    "you.crepa.dulce.decoracion": "La decoracion de crepa es:",
+    "you.crepa.dulce.precio": "El precio de tu crepa es:",
+
+    "warning.crepa.dulce": "Por favor selecciona los ingredientes",
+
+    "crepa.salada.describe.precio": "Crepa Salada con Jamon de Pavo, Queso gratinado y una porcion de ensalada acompañada de salsa chilena",
+    "crepa.salada.describe.precio.1": "Cada ingrediente extra tiene un",
+
+    "crepa.salada.describe": "Crea tu Crepa con 2 simples pasos",
+    "crepa.salada.aderesos.ensalada": "Aderezos para ensalada",
+    "you.crepa.salada.ingredientes.base": "Los Ingredientes base de tu crepa son:",
+    "you.crepa.salada.aderesos.base": "Los aderezos base de su crepa son:",
+    "you.crepa.salada.ingredientes.principales": "Los ingredientes principales de tu crepa son:",
+    "you.crepa.salada.aderesos.ensalada": "Los aderesos para ensalada de su crepa son:",
+
+    "you.waffle": "Tu waffle",
+    "you.waffle.ingredientes": "Los ingredientes de tu waffle son:",
+    "you.waffle.precio": "El precio de tu waffle es:",
+
+    "waffle.describe": "Crea tu delicioso waffle",
+    "waffle.describe.precio": "Waffle en harina sabor vainilla con dos ingredientes de tu preferencia",
+
+    "waffle.canasta.describe.precio": "Waffle en forma de canasta con un ingrediente de tu preferencia",
+    "carrito": "Carrito",
+    "carrito.vacio": "No hay ningun producto en el carrito",
+    "carrito.danger.crepa": "Edita o elimina esta crepa para poder continuar con tu compra",
+    "carrito.danger.bebida": "Edita o elimina esta bebida para poder continuar con tu compra",
+    "carrito.danger.waffle": "Edita o elimina este waffle para poder continuar con tu compra",
+    "carrito.danger.botana": "Edita o elimina esta botana para poder continuar con tu compra",
+    "carrito.danger.ensalada": "Edita o elimina esta ensalada para poder continuar con tu compra",
+
+    "carrito.cantidad": "Cantidad",
+    "carrito.precio": "Precio",
+    "carrito.total": "Total",
+
+    "edit": "Editar",
+    "carrito.realiz": "Realizar Compra",
+
+    "carrito.bebida": "Bebida",
+    "carrito.ensalada": "Ensalada",
+    "carrito.botana": "Botana",
+
+    "caja": "Caja"
+
+
+
+
+
+
+
+}

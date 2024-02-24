@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: "FontsCarta";
+    src: url("./fots/KaushanScript-Regular.ttf");
+  }
+html, body { height: 100%; }
+body { margin: 0; font-family: "FontsCarta"; padding: 0px;}
+*{
+    font-family: "FontsCarta"
+}
+
+body{
+    background-image: url(./backgrouds/HD-wallpaper-brown-wooden-boards-macro-brown-wooden-texture-wooden-backgrounds-wooden-textures-vertical-wooden-boards-brown-background.jpg);
+}

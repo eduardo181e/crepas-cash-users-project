@@ -1,0 +1,36 @@
+
+<div class="every">
+    <div class="container">
+        <div class="header">
+            <h1 class="title">{{'bebidas.calientes' | translate}}</h1>
+        </div>
+        <div class="instruccion">{{'descripcion.bebidas.calientes' | translate}}</div>
+        <div class="create">
+            <div class="uno">
+                <div class="bebida" (click)="addBebida(bebida)" *ngFor="let bebida of bebidas">
+                    <p>{{ bebida.bebida }}<i>{{ bebida.precio }}</i></p>
+                    <p style="position: absolute;top: 45px;">{{ bebida.descripcion }}</p>
+                </div>
+            </div>
+        </div>
+    </div>  
+    <div class="compra">
+                <!-- Tarjeta del artículo seleccionado -->
+                <div>
+                    <div *ngIf="mostrarIngredientes()" class="crepaTitle">
+                        {{'you.bebidas.calientes' | translate}}
+                    </div>
+                    <p *ngIf="!mostrarIngredientes()" style="color: red;background: white;width: 80%;margin-left: 10%;border-radius: 15px;padding-top: 5px; padding-bottom: 5px; height: auto;" class="titleCrepa">{{'warning.bebidas.calientes' | translate}}</p>
+                    <div>
+                        <p>{{bebidaSeleccionada.bebida}}</p>
+                        <p>{{bebidaSeleccionada.descripcion}}</p>
+                        <p>{{bebidaSeleccionada.precio}}</p>
+                    </div>
+                </div>
+        
+                <div  (click)="addOrden()">
+                    <div class="comprar">
+                        {{'add.orden' | translate}}
+                    </div>
+                </div>
+    </div>         

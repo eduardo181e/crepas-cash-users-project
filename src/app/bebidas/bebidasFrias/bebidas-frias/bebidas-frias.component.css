@@ -1,0 +1,1262 @@
+@font-face {
+    font-family: "FontsCarta";
+    src: url("./fots/KaushanScript-Regular.ttf");
+  }
+  
+  h1, h2{
+    font-family: "FontsCarta";
+  }
+
+  .bebida{
+    cursor: pointer;
+  }
+
+  .comprar, .comprar{
+    cursor: pointer;
+  }
+  
+  .uno div{
+    position: relative;
+    height: 70px;
+    padding-top: 15px;
+    font-size: 20px;
+    width: 50%;
+  }
+
+  .uno div p{
+    width: 90%;
+  margin-left: 5%;
+  }
+
+  .uno div p:nth-child(1){
+    border-bottom: 5px solid black;
+  }
+  i{
+    float: right;
+  }
+  *{
+    line-height: 1;
+  }
+  
+  .every{
+    overflow-x: hidden;
+    overflow-y: hidden;
+    font-family: "FontsCarta";
+  }
+  
+  .container{
+    width: 75%;
+    margin: 0px;
+    padding: 0px;
+    margin-top: -40px;
+  }
+  .precio{
+      float: left;
+      background: radial-gradient( 124% 286% at 90% 44%, rgba(255, 255, 255, 1) 12%, rgba(255, 255, 255, 0) 84% );
+      background-blend-mode: normal;
+      width: 65px;
+      text-align: right;
+      padding-right: 5px;
+      border-radius: 6px;
+    }
+  
+    .header{
+      background: url(https://pbs.twimg.com/media/FTl5UMgXoAARfyd.jpg:large);
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      height: 350px;
+      font-family: "FontsCarta";
+    }
+  
+    .title {
+      padding-top: 286px;
+        font-size: 60px;
+        text-shadow: 3px 2px brown;
+        color: white;
+        margin-bottom: 35px;
+      }
+    .clearfix{
+      clear: both;
+    }
+    .descripcion{
+      margin-bottom: 2px;
+      width: 245px;
+    } 
+  
+    .descripcion1{
+      margin-bottom: 0px;
+      width: 364px;
+    } 
+  .instruccion{
+    background: #ffbfcb;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    font-size: 25px;
+  }
+  
+  .create {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  
+  
+  .uno {
+    background-color: #FE9C53;
+    width: 100%;
+    position: relative;
+    display: flex;
+  flex-wrap: wrap;
+
+  } 
+  
+  .dos {
+    background-color: rgba(38, 215, 86, 0.77);
+    width: 70%;
+    position: relative;
+  }
+  
+  .tres {
+    width: 100%;
+    background-color: orange;
+    position: relative;
+    height: 270px;
+  }
+  
+  .title1{
+    text-align: center;
+    font-size: 45px;
+    transform: rotate(-4deg);
+    text-decoration: underline;
+    text-shadow: 3px 2px brown;
+    color: white;
+    margin-top: 40px;
+  }
+  .titleI{
+    margin-bottom: 40px;
+    margin-top: 30px;
+  }
+  .harina{
+    width: 60%;
+    margin-left: 10%;
+    margin-top: 30px;
+    border: 10px solid green;
+    border-radius: 20px;
+    padding-right: 40px;
+    margin-bottom: 20px;
+  }
+  
+  .harina ul{
+    list-style: none;
+    margin-left: -15px;
+  }
+  
+  .harina ul li{
+    margin-bottom: 10px;
+    margin-top: 30px;
+    font-size: 30px;
+  }
+  
+  .icon1 {
+      position: absolute;
+      top: -5px;
+      left: 1%;
+      font-size: 60px;
+      text-shadow: 3px 2px black;
+    color: white;
+    }
+  
+    .icon2 {
+      position: absolute;
+      left: 30%;
+      top: 25px;
+      font-size: 60px;
+      text-shadow: 3px 2px black;
+    color: white;
+    }
+    
+  
+    .icon3 {
+      position: absolute;
+      left: 1%;
+      top: 10px;
+      font-size: 60px;
+      text-shadow: 3px 2px black;
+      color: white;
+    }
+  .harina ul li:last-child {
+      margin-bottom: 30px;
+    }
+  
+    .ingredientes{
+      display: flex;
+    }
+  
+    .IngredientesCom{
+      display: flex;
+      flex-wrap: wrap;
+    }
+  
+    .IngredientesCom1{
+      width: 45%;
+      margin-left: 2.5%;
+      margin-right: 5%;
+      margin-bottom: 20px;
+    }
+  
+    .IngredientesUnt{
+      width: 45%;
+      margin-left: 5%;
+      margin-right: 2.5%;
+      margin-bottom: 20px;
+    }
+  
+    .subtitle{
+      text-align: center;
+    font-size: 35px;
+    color: blueviolet;
+    }
+  
+  
+    .IngredientesUnt,
+    .IngredientesCom1{
+    border: 10px solid purple;
+    border-radius: 20px;
+    }
+  
+    .IngredientesUnt ul{
+      list-style: none;
+      margin-left: 20%;
+    }
+  
+    .IngredientesUnt ul li{
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+  
+  .frutas{
+    margin-left: 2%;
+    margin-right: 1%;
+    width: 47%;
+  }
+  
+  .frutas ul{
+    list-style: none;
+    font-size: 20px;
+    margin-left: 10px;
+  }
+  
+  .frutas ul li{
+    margin-bottom: 5px;
+  }
+  
+  .frutosSecos{
+    margin-left: 1%;
+    margin-right: 2%;
+    width: 47%;
+  }
+  
+  .frutosSecos ul{
+    list-style: none;
+    font-size: 20px;
+    margin-left: 10px;
+  }
+  
+  .frutosSecos ul li{
+    margin-bottom: 5px;
+  }
+  
+  .Otros{
+    margin-left: 2%;
+    margin-right: 2%;
+    width: 47%;
+  }
+  
+  .Otros ul{
+    list-style: none;
+    font-size: 20px;
+    margin-left: 10px;
+  }
+  
+  .Otros ul li{
+    margin-bottom: 5px;
+  }
+  
+  
+  .subtitle2 {
+    text-align: center;
+    font-size: 22px;
+    color: azure;
+  }
+  
+  .decoracion{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    position: absolute;
+    top: 75px;
+  }
+  
+  .subtitle3 {
+    text-align: center;
+    font-size: 40px;
+    color: white;
+    margin-top: 0px;
+    margin-bottom: 30px;
+  }
+  
+  .incluye ul {
+    list-style: none;
+    margin-left: 15%;
+    font-size: 30px;
+  }
+
+  .incluye ul li{
+    margin-bottom: 15px;
+  }
+  
+  .decoracionUnt{
+    display: grid;
+    grid-template-columns: 200px 10px 150px;
+    grid-template-rows: 70px;
+    grid-template-areas: "l o c"
+                          "l1 u c1";
+  }
+  
+  .sunUnt{
+    font-size: 30px;
+    line-height: 50px;
+    text-shadow: 3px 1px brown;
+    color: white;
+  }
+  
+  .sunUnt1{
+    padding-left: 90px;
+    grid-area: l;
+  }
+  
+  .sunUnt2{
+    padding-left: 15px;
+    grid-area: c;
+  }
+  .o{
+    line-height: 46px;
+    grid-area: o;
+  }
+  
+  
+  .Lechera{
+    line-height: 30px;
+    grid-area: l1;
+    position: absolute;
+    left: 85px;
+    top: -10px;
+  }
+  
+  .Chocolate{
+    line-height: 30px;
+    grid-area: c1;
+    position: absolute;
+    left: 35px;
+    top: -10px;
+  }
+  
+  .Chocolate div{
+    height: 110px;
+    width: 110px;
+    background-color: purple;
+    border-radius: 10px;
+  }
+  
+  .Chocolate div:hover{
+    background-color: rgba(255, 255, 255, 0.5);
+    transition: all 0.5s;
+  }
+  
+  .Lechera div:hover{
+    background-color: rgba(255, 255, 255, 0.5);
+    transition: all 0.5s;
+  }
+  
+  .Lechera div{
+    height: 110px;
+    width: 110px;
+    background-color: purple;
+    border-radius: 10px;
+  }
+  
+  .title2{
+    font-size: 45px;
+    transform: rotate(-4deg);
+    text-decoration: underline;
+    text-shadow: 3px 2px brown;
+    color: white;
+    padding-left: 4.3%;
+    position: absolute;
+    top: 20px;
+  }
+  
+  .Nieve{
+    display: block; /* Cambia flex por block */
+    column-count: 3; /* Número de columnas */
+    column-gap: 20px; /* Espacio entre columnas */
+    height: 100px; /* Altura máxima del div */
+    overflow: auto; /* Para manejar el desbordamiento */
+    margin-left: -30px;
+  }
+  
+  .Nieve li{
+    display: inline-block; /* Cambia flex por inline-block */
+    width: 100%; /* Ancho del elemento li */
+  }
+  
+  .every{
+    display: flex;
+  }
+  
+  .compra{
+    width: 25%;
+    text-align: center;
+    font-size: 25px;
+    background-color: burlywood;
+    margin-top: 0px;
+    height: auto;
+    margin-bottom: 0px;
+  }
+  
+  .crepaTitle{
+    font-size: 50px;
+    text-shadow: 3px 2px brown;
+    color: white;
+    margin-top: 30px;
+    margin-bottom: 20px;
+
+  }
+  
+  .header{
+    text-shadow: 1px 1px brown;
+    color: white;
+  }
+  
+  .precio{
+    color: black;
+    text-shadow: none;
+  }
+  
+  .titleCrepa{
+    font-size: 30px;
+    color: rgba(59, 28, 216, 0.94);
+    margin-top: 35px;
+    margin-bottom: 25px;
+  }
+  
+  .select{
+    color: white;
+    text-shadow: 1px 1px brown;
+    font-size: 20px;
+  }
+  
+  .sabor{
+    color: white;
+    text-shadow: 1px 1px brown;
+  }
+  
+  .comprar{
+    font-size: 40px;
+    color: brown;
+    border: 5px solid black;
+    width: 90%;
+    margin-left: 5%;
+    background: beige;
+    border-radius: 10px;
+    height: 65px;
+    line-height: 60px;
+  }
+  
+  .comprar:hover{
+    background: rgba(255, 255, 255, 0.5);
+    transition: all 0.5s;
+  }
+  
+  li:hover{
+    color: white;
+    transition: all 0.3s;
+  }
+  
+  .trash {
+    color: black;
+    background: red;
+    height: 23px;
+    width: 23px;
+    padding: 0px;
+      padding-top: 0px;
+    padding-top: 3px;
+    border-radius: 5px;
+  }
+  
+  @media (max-width: 1444px){
+  
+  
+    .icon2 {
+      left: 29%;
+  
+    }
+  
+  
+    .icon1 {
+      left: 0%;
+  
+    }
+  
+    .titleh{
+      margin-left: 5%;
+      font-size: 44px;
+    }
+  
+    .compra {
+      height: auto;
+    }
+  }
+  
+  @media (max-width: 1400px){
+  
+  
+    .comprar{
+      font-size: 30px;
+    }
+  
+      .icon2 {
+        left: 26.5%;
+      }
+  
+  
+    .icon1 {
+      left: 3%;
+  
+    }
+  
+    .titleh {
+      margin-left: 11%;
+      font-size: 38px;
+      margin-top: 42px;
+    }
+  
+    .frutas ul{
+      list-style: none;
+      font-size: 17px;
+      margin-left: 0px;
+    }
+    
+    .frutosSecos ul{
+      list-style: none;
+      font-size: 17px;
+      margin-left: 0px;
+    }
+    
+    .Otros ul{
+      list-style: none;
+      font-size: 17px;
+      margin-left: 0px;
+    }
+    
+    .IngredientesUnt ul{
+      list-style: none;
+      margin-left: 10%;
+    }
+  
+    .IngredientesUnt ul li{
+      font-size: 25px;
+      margin-bottom: 10px;
+    }
+  
+    
+    .harina ul li{
+      font-size: 25px;
+    }
+  
+    .compra {
+      height: auto;
+    }
+  
+    .title2 {
+      padding-left: 6.3%;
+    }
+  }
+  
+  @media (max-width: 1200px){
+  
+    .icon2 {
+      left: 25%;
+    }
+  
+    .incluye ul {
+      list-style: none;
+      margin-left: 8%;
+      font-size: 25px;
+    }
+  
+    .Nieve{
+      font-size: 14px;
+    }
+  
+    .icon1 {
+      left: 0%;
+    }
+  
+    .compra {
+      height: auto;
+    }
+  
+    .title2 {
+      padding-left: 6.3%;
+    }
+  }
+  
+  @media (max-width: 1112px){
+    .titleh{
+      font-size: 37px;
+    }
+    .icon2 {
+      left: 23%;
+    }
+  }
+  
+  @media (max-width: 1114px){
+  
+  }
+  
+  @media (max-width: 1104px){
+  
+    .comprar{
+      font-size: 25px;
+    }
+  
+    .icon1{
+    font-size: 50px;
+    }
+  
+    .icon2 {
+      left: 25%;
+      font-size: 50px;
+      top: 35px;
+    }
+  
+    .icon3{
+      font-size: 58px;
+      top: 35px;
+    }
+  
+    .incluye ul {
+      list-style: none;
+      font-size: 18px;
+    }
+  
+    .subtitle3 {
+      text-align: center;
+      font-size: 30px;
+      color: white;
+      margin-bottom: 0px;
+      margin-top: 20px;
+      margin-left: 10px;
+      width: 130%;
+    }
+  
+  
+    .Nieve {
+      font-size: 13px;
+    }
+  
+  .Nieve {
+    display: block;
+    column-count: 3;
+    column-gap: 20px;
+    height: 100px;
+    overflow: auto;
+    margin-left: -67px;
+    margin-right: 10%;
+  }
+  
+  .sunUnt {
+    font-size: 26px;
+    line-height: 35px;
+    text-shadow: 3px 1px brown;
+    color: white;
+  }
+  
+  .titleh {
+    margin-left: 11%;
+    font-size: 30px;
+    margin-top: 42px;
+  }
+  
+  .decoracionUnt{
+    width: 400px;
+  }
+  
+  
+  .titleI{
+    text-align: inherit;
+    margin-left: 32%;
+    font-size: 35px;
+  }
+  
+  .sunN{
+    margin-left: -30px;
+  }
+    .title2 {
+      padding-left: 6.3%;
+      margin-top: 20px;
+    }
+  
+  
+    .compra {
+      height: auto;
+    }
+  
+  
+    .harina ul {
+      list-style: none;
+      margin-left: -35px;
+    }
+  
+    .IngredientesUnt ul {
+      list-style: none;
+      margin-left: -15%;
+    }
+  
+    .frutas ul {
+      margin-left: -15px;
+    }
+  
+    .frutosSecos ul {
+      margin-left: -15px;
+    }
+  
+  
+    .Otros ul{
+      margin-left: -15px;
+    }
+  }
+  
+  
+  @media (max-width: 920px){
+    .incluye ul {
+      list-style: none;
+      font-size: 15px;
+      width: 100%;
+    }
+  
+    .subtitle3 {
+      text-align: center;
+      font-size: 30px;
+      color: white;
+      margin-bottom: 0px;
+      margin-top: 20px;
+      margin-left: 10px;
+      width: 130%;
+    }
+  
+  }
+  
+  @media (max-width: 884px){
+    .every{
+      flex-wrap: wrap;
+    }
+  
+    .container{
+      width: 100%;
+    }
+  
+    .compra {
+      width: 100%;
+      height: auto;
+    }
+  
+    .comprar {
+      font-size: 30px;
+      margin-bottom: 20px;
+    }
+  }
+  
+  @media (max-width: 689px){
+    .subtitle3 {
+      font-size: 23px;
+    }
+  }
+  
+  @media (max-width: 684px){
+    .Lechera{top: -25px;}
+    .Chocolate{top: -25px;}
+    .decoracionUnt {
+      width: 400px;
+      height: 170px;
+      margin-left: 20%;
+    }
+    .incluye ul {
+      list-style: none;
+      font-size: 15px;
+      width: 80%;
+    }
+
+    .harina{
+      margin-left: 5%;
+    }
+  
+    .subtitle3 {
+  
+      width: 90%;
+    }
+  
+    .Nieve {
+      font-size: 20px;
+      margin-left: -5px;
+      height: 120px;
+    }
+  
+    .sunN {
+      margin-left: 70px;
+    }
+  
+    .sunUnt {
+      font-size: 35px;
+    }
+  
+    .tres{ 
+      height:642px;;
+    }
+  
+    .decoracion {
+      display: flex;
+      flex-direction: column;
+    }
+  
+    .incluye ul{ 
+      padding-left: 30%;
+    padding-right: 0%;
+    width: 40%;
+    font-size: 20px;
+    }
+  
+    .subtitle3 {
+      font-size: 40px;
+    }
+  
+    .sunUnt1 {
+      padding-left: 75px;
+    }
+  
+    .o{
+      line-height: 35px;
+    }
+  
+    .ni{
+      margin-left: 20%;
+    }
+  
+    .compra {
+      height: auto;
+    }
+  
+    .comprar{
+      margin-bottom: 20px;
+    }
+  
+    .icon2 {
+      left: 23%;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .decoracionUnt {
+      margin-left: 12%;
+    }
+  
+    .sunN {
+      margin-left: 5%;
+    }
+  
+    .icon2 {
+      left: 23%;
+    }
+
+    .icon3 {
+      left: -1%;
+    }
+  }
+  
+  @media (max-width: 570px) {
+  
+    .icon2 {
+      left: 22%;
+    }
+  
+    .harina ul {
+      list-style: none;
+      margin-left: -41px;
+    }
+  
+    .harina ul li {
+      font-size: 25px;
+    }
+  
+    .harina {
+      margin-left: 0%;
+    }
+  }
+  
+  @media (max-width: 794px) {
+    .subtitle {
+      font-size: 20px;
+    }
+  }
+  
+  @media (max-width: 619px) {
+    .frutas{
+      width: 100%;
+    }
+  
+    .frutosSecos{
+      width: 100%;
+    }
+  
+    .Otros{
+      width: 100%;
+    } 
+  
+    .frutas ul {
+      margin-left: -35px;
+      font-size: 22px;
+    }
+  
+    .frutosSecos ul {
+      margin-left: -35px;
+      font-size: 22px;
+    }
+  
+    .Otros ul {
+      margin-left: -35px;
+      font-size: 22px;
+    }
+  }
+  
+  @media (max-width: 570px) {
+  
+    .icon2 {
+      left: 22%;
+    }
+  }
+  
+  
+  
+  
+  @media (max-width: 484px){
+    
+    .decoracionUnt {
+      width: 345px;
+      height: 170px;
+      margin-left: -2%;
+    }
+  
+    .ni {
+      margin-left: 20%;
+    }
+  
+    .sunN {
+      margin-left: -7px;
+    }
+  
+    .Nieve {
+      font-size: 20px;
+      margin-left: -70px;
+      height: 120px;
+      margin-right: 10%;
+    }
+  
+    .subtitle3 {
+      width: 90%;
+      font-size: 40px;
+    }
+  
+    .incluye ul {
+      padding-left: 25%;
+      padding-right: 0%;
+      width: 40%;
+      font-size: 20px;
+    }
+  
+    .title2 {
+      padding-left: 8.3%;
+    }
+  
+    .uno{
+      width: 100%;
+    }
+  
+    .dos{
+      width: 100%;
+    }
+  
+    .icon1 {
+      font-size: 59px;
+      left: 17.5%;
+    }
+  
+    .titleh {
+      margin-left: 11%;
+      font-size: 40px;
+      margin-top: 42px;
+    }
+  
+    .harina ul li {
+      font-size: 30px;
+    }
+  
+    .harina ul {
+      list-style: none;
+      margin-left: 0px;
+    }
+  
+    .titleI {
+      text-align: inherit;
+      margin-left: 32%;
+      font-size: 40px;
+    }
+  
+    .icon2 {
+      left: 21%;
+      font-size: 60px;
+      top: 30px;
+    }
+  
+    .subtitle {
+      text-align: center;
+      font-size: 25px;
+    }
+  
+    .frutas ul {
+      margin-left: -15px;
+      font-size: 25px;
+    }
+  
+    .frutosSecos ul {
+      margin-left: -15px;
+      font-size: 25px;
+    }
+  
+    .Otros ul {
+      margin-left: -15px;
+      font-size: 25px;
+    }
+  
+    .frutas{
+      width: 100%;
+    }
+  
+    .frutosSecos{
+      width: 100%;
+    }
+  
+    .Otros{
+      width: 100%;
+    } 
+  
+    .harina {
+      margin-left: 12%;
+    }
+  }
+  
+  
+  @media (max-width: 733px){
+    .frutas ul {
+      margin-left: -30px;
+    }
+  
+    .frutosSecos ul {
+      margin-left: -30px;
+    }
+  
+    .Otros ul {
+      margin-left: -30px;
+    }
+  }
+  
+  
+  @media (max-width: 383px){
+
+  
+    .icon1{
+      left: 13%;
+    }
+  
+    .icon2 {
+      left: 20%;
+  
+    }
+  }
+  
+  
+  @media (max-width: 376px){
+    .subtitle {
+      text-align: center;
+      font-size: 20px;
+    }
+  
+    .frutas ul {
+      margin-left: -35px;
+      font-size: 22px;
+    }
+  
+    .frutosSecos ul {
+      margin-left: -35px;
+      font-size: 22px;
+    }
+  
+    .Otros ul {
+      margin-left: -35px;
+      font-size: 22px;
+    }
+  
+    .header{
+      font-size: 14px;
+    }
+  
+    .clearfix {
+      margin-bottom: -14px;
+    }
+  }
+  
+  @media (max-width: 386px){
+
+    .clearfix{
+      margin-bottom: 0px;
+    }
+    .decoracionUnt {
+      margin-left: -10%;
+    }
+  
+    .sunN {
+      margin-left: -25px;
+    }
+  
+    .icon1{
+      left: 12%;
+    }
+  
+    .icon2 {
+      left: 19%;
+  
+    }
+
+    .title{
+      line-height: 1;
+      padding-top: 270px;
+    }
+  }
+  
+  @media (max-width: 337px){
+
+    .icon1{
+      left: 10%;
+    }
+
+  
+    .icon2 {
+      left: 18%;
+  
+    }
+  
+    .titleh {
+      font-size: 37px;
+    }
+  .instruccion {
+    font-size: 20px;
+  
+  }
+  
+  .subtitle3 {
+    width: 88%;
+  }
+  
+  .decoracionUnt {
+    margin-left: -20%;
+  }
+  
+  .sunUnt {
+    font-size: 32px;
+  }
+  
+  .sunUnt1 {
+    padding-left: 86px;
+  }
+  
+  .ni {
+    margin-left: 14%;
+  }
+  
+  .Nieve {
+    font-size: 18px;
+    margin-left: -60px;
+    height: 120px;
+    padding-right: 12%;
+  }
+  
+  .title2 {
+    padding-left: 11.3%;
+  }
+  
+  .IngredientesCom{
+    margin-right: 0px;
+  }
+  
+  .IngredientesUnt{
+    margin-left: 1%;
+    margin-right: 0px;
+  }
+  
+  .harina ul {
+    list-style: none;
+    margin-left: -20px;
+  }
+  
+  
+  .decoracion{
+    width: 100%;
+  }
+  
+  
+  }
+
+  @media (max-width: 600px){
+    .uno div{
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 510px){
+    .instruccion{
+      font-size: 20px;
+    }
+  }
+
+
+  @media (max-width: 420px){
+    .instruccion{
+      height: 70px;
+      line-height: 30px;
+      padding-top: 10px;
+    }
+
+    .title{
+      line-height: 1;
+      padding-top: 270px;
+    }
+  }
+
+  @media (max-width: 320px){
+    .header{
+      height: 400px;
+    }
+    
+  } 

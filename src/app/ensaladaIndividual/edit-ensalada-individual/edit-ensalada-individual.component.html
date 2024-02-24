@@ -1,0 +1,39 @@
+<div class="every">
+    <div class="container">
+        <div class="header">
+            <h1 class="title">{{'ensalada' | translate}}</h1>
+            <div>
+                <p class="descripcion">{{'ensalada.describe.precio' | translate}}</p>    
+                <p style="float: left;">{{'for.only' | translate}}</p><p class="precio">${{precioEnsalada}}</p>
+                </div>
+                <div class="clearfix"></div>
+        </div>
+        <div class="instruccion">{{'descripcion.ensalada' | translate}}</div>
+        <div class="create">
+            <div class="uno">
+                <div class="ensalada" (click)="addEnsalada(ensalada)" *ngFor="let ensalada of ensaladas">
+                    <p>{{ ensalada.ensalada_ind }}</p>
+                    <p style="position: absolute;top: 45px;">{{ ensalada.descripcion }}</p>
+                </div>
+            </div>
+        </div>
+    </div>  
+    <div class="compra">
+                <!-- Tarjeta del artículo seleccionado -->
+                <div>
+                    <div *ngIf="mostrarIngredientes()" class="crepaTitle">
+                        {{'you.ensalada' | translate}}
+                    </div>
+                    <p *ngIf="!mostrarIngredientes()" style="color: black;background: #ffbfcb;width: 80%;margin-left: 10%;border-radius: 15px;padding-top: 5px; padding-bottom: 5px; height: auto;padding-top: 15px;padding-bottom: 15px;" class="titleCrepa">Por favor selecciona tu ensalada</p>
+                    <div>
+                        <p>{{ensaladaSeleccionada.ensalada_ind}}</p>
+                        <p>{{ensaladaSeleccionada.descripcion}}</p>
+                    </div>
+                </div>
+        
+                <div  (click)="addOrden()">
+                    <div class="comprar">
+                        {{'add.orden' | translate}}
+                    </div>
+                </div>
+    </div>            

@@ -1,0 +1,100 @@
+
+<div class="every">
+    <div class="container">
+        <div class="header">
+            <h1 class="title">{{'crepas.saladas' | translate}}</h1>
+            <div>
+            <p class="descripcion"> {{'crepa.salada.describe.precio' | translate}}</p>    
+            <p style="float: left;">{{'for.only' | translate}}</p><p class="precio">${{precioRegular[0]}}</p>
+            </div>
+            <div class="clearfix"></div>
+            <div>
+            <p class="descripcion1">{{'crepa.salada.describe.precio.1' | translate}}</p><p style="float: left;margin-bottom: 20px;"> {{'cost.of' | translate}}</p><p class="precio">${{precioExtra[0]}}</p>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="instruccion">{{'crepa.salada.describe' | translate}}</div>
+        <div class="create">
+            <div class="uno bordbott">
+                <div style="position: relative;"><i class="icon1">1</i><h1 class="title1 titleh">{{'crepas.salada.ingrediente.principales' | translate}}</h1></div>
+                
+                <div class="harina">
+                    <ul>
+                        <li *ngFor="let ingrediente_pri of ingredientes_pri" (click)=" actualizarIngredientes(ingrediente_pri.ingrediente_pri, ingrediente_pri.id, ingrediente_pri.existencia)">{{ingrediente_pri.ingrediente_pri}}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="dos bordbott">
+                <i class="icon2">2</i><h1 class="title1 titleI">{{'crepa.salada.aderesos.ensalada' | translate}}</h1>
+                <div class="ingredientes">
+                <div class="IngredientesUnt">
+                    <ul>
+                        <li *ngFor="let adereso of aderesos" (click)="actualizarAderesos(adereso.adereso, adereso.id, adereso.existencia)">{{adereso.adereso}}</li>
+                    </ul>
+                </div>                     
+                    </div>
+
+
+            </div>
+                <div class="uno IB">
+                <div style="position: relative;"><h1 class="title1 titleh">{{'crepas.salada.ingrediente.bases' | translate}}</h1></div>
+                
+                <div class="harina">
+                    <ul>
+                        <li *ngFor="let ingrediente_pri of ingredientes_base1" (click)=" actualizarIngredienteBase(ingrediente_pri.ingrediente_base, ingrediente_pri.id, ingrediente_pri.existencia)">{{ingrediente_pri.ingrediente_base}}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="dos AB">
+                <h1 class="title1 titleI">{{'crepas.adereso.edit.aderesos.base' | translate}}</h1>
+                <div class="ingredientes">
+                <div class="IngredientesUnt">
+                    <ul>
+                        <li *ngFor="let adereso of adereso_base1" (click)="actualizarAderesoBase(adereso.adereso_base, adereso.id, adereso.existencia)">{{adereso.adereso_base}}</li>
+                    </ul>
+                </div>                     
+                    </div>
+
+
+            </div>
+        </div>
+    </div>  
+    <div class="compra">
+                <!-- Tarjeta del artículo seleccionado -->
+                <div>
+                    <div *ngIf="mostrarIngredientes()" class="crepaTitle">
+                        {{'you.crepa.dulce' | translate}}
+                    </div>
+                    <div>
+                        <p *ngIf="!mostrarIngredientes()" style="color: black;background: #ffbfcb;width: 80%;margin-left: 10%;border-radius: 15px;padding-top: 5px; padding-bottom: 5px; height: auto;padding-top: 15px;padding-bottom: 15px;" class="titleCrepa">{{'warning.crepa.dulce' | translate}}</p>
+                        <p *ngIf="mostrarIngredientes()" class="titleCrepa">{{'you.crepa.dulce.ingredientes' | translate}}</p>
+                        <p *ngIf="debeMostrarIB()" class="titleCrepa" >{{'you.crepa.salada.ingredientes.base' | translate}}</p>
+                        <p class="select" *ngFor="let ingrediente_base of crepa.ingredientes_base">
+                            {{ingrediente_base.ingrediente_base}}
+                            <i (click)="eliminarIngrediente_base(ingrediente_base)" class="far fa-trash-alt trash"></i>
+                        </p>
+                        <p class="titleCrepa" *ngIf="debeMostrarAB()">{{'you.crepa.salada.aderesos.base' | translate}}</p>
+                        <p class="select" *ngFor="let adereso1 of crepa.adereso_base">
+                            {{adereso1.adereso_base}}
+                            <i (click)="eliminarAdereso_base(adereso1)" class="far fa-trash-alt trash"></i>
+                        </p>
+                        <p class="titleCrepa" *ngIf="ingredientePri()">{{'you.crepa.salada.ingredientes.principales' | translate}}</p>
+                        <p class="select" *ngFor="let ingrediente of crepa.ingredientes">
+                            {{ingrediente.nombre}}
+                            <i (click)="eliminarIngrediente(ingrediente)" class="far fa-trash-alt trash"></i>
+                        </p>
+                        <p class="titleCrepa" *ngIf="Adereso()">{{'you.crepa.salada.aderesos.ensalada' | translate}}</p>
+                        <p class="select" *ngFor="let adereso of crepa.aderesos">
+                            {{adereso.nombre}}
+                            <i (click)="eliminarAdereso(adereso)" class="far fa-trash-alt trash"></i>
+                        </p>
+                        <p class="titleCrepa">El precio de tu crepa es: ${{crepa.precio}}</p>
+                    </div>
+                </div>
+        
+                <div  (click)="anadirCrepa()">
+                    <div class="comprar">
+                        {{'add.orden' | translate}}
+                    </div>
+                </div>
+    </div>         

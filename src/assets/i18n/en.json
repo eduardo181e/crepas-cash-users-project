@@ -1,0 +1,369 @@
+{
+    "hello.world": "Hello World!",
+    "signUp": "SignUp",
+    "signIn": "LogIn",
+    "logOut": "LogOut",
+    "spanish": "Spanish",
+    "english": "English",
+    "name": "Name",
+    "alert": "Alert",
+
+    "username": "Username",
+    "fullname": "Fullname",
+    "password": "Password",
+    "password.new": "New Password",
+    "password.change": "Change Password",
+    "lang": "Language",
+    "account.config": "Configuration of Account",
+    "update.user": "Update User",
+
+    "menu.main": "Main Menu",
+    "menu.ventas": "Sales",
+    "menu.sucursales": "Branches",
+    "menu.productos": "Products",
+    "menu.usuarios.caja": "Cash Users",
+    "settings": "Settings",
+    "admin.barch": "Branch Administration",
+    "aceptar": "Accept",
+
+    "products": "Products",
+    "sales": "Sales",
+    "usuarios.caja": "Cash Users",
+    "sucursales": "Branches",
+    "facturas": "Invoices",
+
+    "crepas": "Crepes",
+    "bebidas": "Drinks",
+    "waffles": "Waffles",
+    "botanas": "Snack",
+    "ensaladas.individuales": "Individual Salads",
+
+    "crepas.ventas": "Crepes Sales",
+    "crepas.dulce.ventas": "Sweet Crepes Sales",
+    "crepas.salada.ventas": "Salty Crepes Sales",
+    "bebidas.ventas": "Drinks Sales",
+    "waffles.ventas": "Waffles Sales",
+    "waffles.canasta.ventas": "Waffles Basket Sales",
+
+    "crepas.ventas.global": "Crepes Global Sales",
+    "crepas.dulce.ventas.global": "Sweet Crepes Global Sales",
+    "crepas.salada.ventas.global": "Salty Crepes Global Sales",
+    "bebidas.ventas.global": "Drinks Global Sales",
+    "waffles.ventas.global": "Waffles Global Sales",
+    "waffles.canasta.ventas.global": "Waffles Basket Global Sales",
+
+    "crepas.stock": "Crepes Inventory",
+    "crepas.dulce.stock": "Sweet Crepes Inventory",
+    "crepas.salada.stock": "Salty Crepes Inventory",
+    "bebidas.stock": "Drinks Inventory",
+    "waffles.stock": "Waffles Inventory",
+    "waffles.canasta.stock": "Waffles Basket Inventory",
+
+    "crepas.dulces": "Sweet Crepes",
+    "crepas.saladas": "Salty Crepes",
+
+    "bebidas.calientes": "Hot Drinks",
+    "bebidas.frias": "Cold Drinks",
+
+    "waffles.canasta": "Waffles Basket",
+
+    "crepas.dulces.harinas": "Flours",
+    "crepas.dulces.ingredientes.unt": "Spreadable Ingredients",
+    "crepas.dulces.ingredientes.com": "Complementary Ingredients",
+    "crepas.dulces.nieves": "Snows",
+    "crepas.dulces.precios": "Prices",
+
+    "crepas.dulce.harinas": "Flour",
+    "crepas.dulce.ingredientes.unt": "Spreadable Ingredient",
+    "crepas.dulce.ingredientes.com": "Complementary Ingredient",
+    "crepas.dulce.nieves": "Snow",
+    "crepas.dulce.precios": "Price",
+    "crepas.salada.ingrediente.principales": "Main Ingredients",
+    "crepas.salada.ingrediente.bases": "Base Ingredients",
+    "crepas.salada.ingrediente.principal": "Ingredientes Principales",
+    "crepas.salada.ingrediente.base": "Ingredientes Base",
+
+    "descripcion": "Description",
+    "delete": "Delete",
+    "inventario": "Inventory",
+    "accions": "Actions",
+    "inventario.true": "Has inventory",
+    "inventario.false": "Does not have inventory",
+    "inventario.none": "Please select if you want this product to have inventory or not",
+
+    "crepas.dulces.harinas.create": "New Flour",
+    "crepas.dulces.harinas.edit": "Edit Flour",
+    "crepas.dulces.harinas.edit.harina": "Flour",
+
+    "bebida.create": "New Drink",
+    "bebida.edit": "Edit Drink",
+    "bebida.edit.bebida": "Drink",
+
+    "crepas.ingrediente.create": "New Ingredient",
+    "crepas.ingrediente.edit": "Edit Ingredient",
+    "crepas.ingrediente.edit.ingrediente": "Ingredient",
+
+    "crepas.ensalada.create": "New Salad",
+    "crepas.ensalada.edit": "Edit Salad",
+    "crepas.ensalada.edit.ensalada": "Salad",
+
+    "crepas.botana.create": "New Snack",
+    "crepas.botana.edit": "Edit Snack",
+    "crepas.botana.edit.ensalada": "Snack",
+    "crepas.botana.edit.ensaladas": "Snacks",
+
+    "crepas.adereso.create": "New Dressing",
+    "crepas.adereso.create.base": "New Base Dressing",
+    "crepas.adereso.edit": "Edit Dressing",
+    "crepas.adereso.edit.base": "Edit Base Dressing",
+    "crepas.adereso.edit.adereso": "Dressing",
+    "crepas.adereso.edit.aderesos": "Dressings",
+    "crepas.adereso.edit.aderesos.base": "Base Dressings",
+
+    "crepas.ingrediente.com.create": "New Ingredient",
+    "crepas.ingrediente.com.edit": "Edit Ingredient",
+    "crepas.ingrediente.com.tipo": "Type of Ingredient",
+    "crepas.ingrediente.com.edit.ingrediente": "Ingredient",
+    "crepas.ingrediente.com.edit.frutas": "Fruits",
+    "crepas.ingrediente.com.edit.frutos.secos": "Nuts",
+    "crepas.ingrediente.com.edit.otros": "Others",
+
+    "crepas.dulces.nieve.create": "New Snow",
+    "crepas.dulces.nieve.edit": "Edit Snow",
+    "crepas.dulces.nieve.edit.harina": "Snow",
+    
+    "precio": "Price",
+    "precio.descripcion": "Description",
+    "precio.edit": "Edit Price",
+
+    "menu.crepas": "Crepes",
+    "menu.bebidas": "Drinks",
+    "menu.botanas": "Snack",
+    "menu.waffles": "Waffles",
+    "menu.ensalada": "Individual Salads",
+
+    "menu.crepas.dulce": "Sweet Crepes",
+    "menu.crepas.salada": "Salty Crepes",
+    "menu.bebidas.calientes": "Hot Drinks",
+    "menu.bebidas.frias": "Cold Drinks",
+    "menu.waffles.canasta": "Waffles Basket",
+
+    "existencia": "Existence",
+    "product.id": "Product_id", 
+    "sucursal.id": "Branch_id", 
+
+    "stock": "Inventory",
+
+    "menu.crepas.dulce.stock": "Sweet Crepe Inventory",
+    "menu.crepas.dulce.harina.stock": "Flour Inventory",
+    "menu.crepas.ingredientes.com.dulce.stock": "Complementary Ingredients Inventory",
+    "menu.crepas.ingredientes.unt.dulce.stock": "Spreadable Ingredients Inventory",
+    "menu.crepas.nieve.dulce.stock": "Snows Inventory",
+
+
+
+    "menu.crepas.salada.stock": "Salted Crepe Inventory",
+    "menu.crepas.salada.adereso.stock": "Dressing Inventory",
+    "menu.crepas.salada.adereso.base.stock": "Base Dressing Inventory",
+    "menu.crepas.salada.ingredientes.principales.stock": "Main Ingredients Inventory",
+    "menu.crepas.salada.ingredientes.base.stock": "Ingredients Base Inventory",
+    "menu.crepas.salada.botanas.stock": "Inventory Snacks",
+    "menu.crepas.salada.ensaladas.stock": "Salads Inventory",
+
+    "menu.bebidas.calientes.stock": "Hot Drinks Inventory",
+    "menu.bebidas.frias.stock": "Cold Drinks Inventory",
+    "menu.waffles.canasta.stock": "Waffles Canasta Inventario",
+
+    "ventas": "Sales",
+
+    "menu.crepas.dulce.ventas": "Sweet Crepe Sales",
+    "menu.crepas.harina.dulce.ventas": "Flours Sales",
+    "menu.crepas.ingredientes.com.dulce.ventas": "Complementary Ingredients Sales",
+    "menu.crepas.ingredientes.unt.dulce.ventas": "Spreadable Ingredients Sales",
+    "menu.crepas.nieve.dulce.ventas": "Snow Sales",
+
+    "menu.crepas.salada.ventas": "Salted Crepe Sales",
+    "menu.crepas.salada.adereso.ventas": "Dressing Sales",
+    "menu.crepas.salada.adereso.base.ventas": "Base Dressing Sales",
+    "menu.crepas.salada.ingredientes.principales.ventas": "Main Ingredients Sales",
+    "menu.crepas.salada.ingredientes.base.ventas": "Ingredients Base Sales",
+    "menu.crepas.salada.botanas.ventas": "Sales Snacks",
+    "menu.crepas.salada.ensaladas.ventas": "Salads Sales",
+
+    "menu.bebidas.calientes.ventas": "Hot Drinks Sales",
+    "menu.bebidas.frias.ventas": "Cold Drinks Sales",
+    "menu.waffles.canasta.ventas": "Waffles Basket Sales",
+
+    "menu.crepas.dulce.ventas.global": "Sweet Crepe Global Sales",
+    "menu.crepas.harina.dulce.ventas.global": "Flours Global Sales",
+    "menu.crepas.ingredientes.com.dulce.ventas.global": "Complementary Ingredients Global Sales",
+    "menu.crepas.ingredientes.unt.dulce.ventas.global": "Spreadable Ingredients Global Sales",
+    "menu.crepas.nieve.dulce.ventas.global": "Snow Global Sales",
+
+    "menu.crepas.salada.ventas.global": "Salted Crepe Global Sales",
+    "menu.crepas.salada.adereso.ventas.global": "Dressing Global Sales",
+    "menu.crepas.salada.adereso.base.ventas.global": "Base Dressing Global Sales",
+    "menu.crepas.salada.ingredientes.principales.ventas.global": "Main Ingredients Global Sales",
+    "menu.crepas.salada.ingredientes.base.ventas.global": "Ingredients Base Global Sales",
+    "menu.crepas.salada.botanas.ventas.global": "Global Sales Snacks",
+    "menu.crepas.salada.ensaladas.ventas.global": "Salads Sales Global",
+
+    "menu.bebidas.calientes.ventas.global": "Hot Drinks Global Sales",
+    "menu.bebidas.frias.ventas.global": "Cold Drinks Global Sales",
+    "menu.waffles.canasta.ventas.global": "Waffles Basket Global Sales",
+
+
+    "ventas.globales": "Global Sales",
+
+    "menu.crepas.dulce.ventas.globales": "Sweet Crepe Global Sales",
+    "menu.crepas.salada.ventas.globales": "Salted Crepe Global Sales",
+    "menu.bebidas.calientes.ventas.globales": "Hot Drinks Global Sales",
+    "menu.bebidas.frias.ventas.globales": "Cold Drinks Global Sales",
+    "menu.waffles.canasta.ventas.globales": "Waffles Basket Global Sales",
+
+    "facturas.globales": "Global Invoices",
+    "Factura.id": "Invoice_id",
+    "numero.productos": "Number of Products",
+    "total": "Total",
+    "fecha.hora": "Date and Time",
+    "factura.ver": "View Invoice",
+    "Sucursal.id": "Branch_id",
+
+    "user.id": "User_id",
+    "numero.caja": "Cash Number",
+    
+    "warning.stock": "There are no products to manage stock",
+    "warning.sucursales": "there are no branches",
+    "warning.users": "There are no users to manage cash",
+    "warning.facturas": "There are no invoices within the selected period",
+    "warning.sales": "There are no sales within the selected period",
+    "warning.stock.false.req": "This product does not require inventory",
+    "warning.ingrediente.com.tipo": "Please select a type for this ingredient",
+    
+
+    "inicio": "Start",
+    "fin": "End",
+
+    "descripcion.form": "Write the product description",
+    "precio.form": "Enter the price of this product",
+
+    "guardar": "Save",
+    
+    "generate.sales": "Generate Sales",
+    "precios.crepa.dulce": "Sweet Crepe Prices",
+    "precios.crepa.salada": "Salty Crepe Prices",
+    "precios.crepa.waffles": "Waffle Prices",
+    "precios.crepa.waffles.canasta": "Prices Waffles Basket",
+
+    "numero.casa": "House Number",
+    "nombre.calle": "Street Name",
+    "ciudad": "City",
+    "estado": "State",
+    "pais": "Country",
+    "numero.telefono": "Phone Number",
+    "create.sucursal": "New Branch",
+    "edit.sucursal": "Edit Branch",
+    "admin.sucursal": "Branch Administration",
+
+    "codigo.postal": "Postal Code",
+
+    "usuario": "User",
+    "sucursal": "Branch",
+
+
+    "create.user": "New User",
+    "edit.user": "Edit User",
+
+    "for.only": "For only:",
+    "cost.of": "Cost of:",
+    "or": "or",
+    
+    "descripcion.bebidas.calientes": "We have sweet agricultural drinks and snacks",
+    "you.bebidas.calientes": "Your Drink",
+    "warning.bebidas.calientes": "Please select your drink",
+    "add.orden": "Add to order",
+
+
+    "descripcion.botana": "We have sweet agricultural drinks and snacks",
+    "you.botana": "Your Snack",
+    "warning.botana": "Please select your snack",
+
+    "ensalada.describe.precio": "Choose your favorite salad",
+
+    "descripcion.ensalada": "We have delicious salads",
+    "you.ensalada": "Your Salad",
+    "warning.ensalada": "Please select your salad",
+
+    "crepa.dulce.describe.precio": "Sweet crepe in vanilla flavored flour with two ingredients of your choice",
+    "crepa.dulce.describe.precio.1": "Each extra ingredient or flour flavor change has a",
+    "crepa.dulce.describe.precio.nieve": "Snow:",
+
+    "crepa.dulce.describe": "Create your Crepe with 3 simple steps",
+    "crepa.dulce.tipo.harina": "Type of flour",
+    "crepa.dulce.ingredientes": "Ingredients",
+    "crepa.dulce.ingredientes.untables": "Spreads",
+    "crepa.dulce.ingredientes.complementos": "Complements",
+    "crepa.dulce.ingredientes.complementos.frutas": "Fruits",
+    "crepa.dulce.ingredientes.complementos.frutos.secos": "Nuts",
+    "crepa.dulce.ingredientes.complementos.otros": "Others",
+    "crepa.dulce.decoracion": "Decoration",
+    "crepa.dulce.decoracion.incluye": "- Includes -",
+    "crepa.dulce.decoracion.incluye.azucar": "Sugar Glass",
+    "crepa.dulce.decoracion.incluye.canela": "Cinnamon Powder",
+    "crepa.dulce.decoracion.incluye.lechera": "Milkpot",
+    "crepa.dulce.decoracion.incluye.chocolate": "Chocolate",
+    "crepa.dulce.decoracion.nieve": "(Optional) Snow",
+
+    "you.crepa.dulce": "Your crepe",
+    "you.crepa.dulce.sabor": "Your crepe is flavored:",
+    "you.crepa.dulce.ingredientes": "The ingredients of your crepe are:",
+    "you.crepa.dulce.nieve": "The snow on your crepe is:",
+    "you.crepa.dulce.decoracion": "The crepe decoration is:",
+    "you.crepa.dulce.precio": "The price of your crepe is:",
+
+    "warning.crepa.dulce": "Please select the ingredients",
+
+    "crepa.salada.describe.precio": "Salty Crepe with Turkey Ham, Gratin Cheese and a portion of salad accompanied by Chilean sauce",
+    "crepa.salada.describe.precio.1": "Each extra ingredient has a",
+
+    "crepa.salada.describe": "Create your Crepe with 2 simple steps",
+    "crepa.salada.aderesos.ensalada": "Salad dressings",
+    "you.crepa.salada.ingredientes.base": "The base ingredients of your crepe are:",
+    "you.crepa.salada.aderesos.base": "The base toppings for your crepe are:",
+    "you.crepa.salada.ingredientes.principales": "The main ingredients of your crepe are:",
+    "you.crepa.salada.aderesos.ensalada": "The salad dressings for your crepe are:",
+
+    "you.waffle": "Your waffle",
+    "you.waffle.ingredientes": "The ingredients for your waffle are:",
+    "you.waffle.precio": "The price of your waffle is:",
+
+    "waffle.describe": "Create your delicious waffle",
+    "waffle.describe.precio": "Vanilla flour waffle with two ingredients of your choice",
+
+    "waffle.canasta.describe.precio": "Basket-shaped waffle with an ingredient of your choice",
+    "carrito": "Shopping Cart",
+    "carrito.vacio": "There are no products in the cart",
+    "carrito.danger.crepa": "Edit or delete this crepe to continue with your purchase",
+    "carrito.danger.bebida": "Edit or delete this drink to continue with your purchase",
+    "carrito.danger.waffle": "Edit or delete this waffle to continue with your purchase",
+    "carrito.danger.botana": "Edit or delete this snack to continue with your purchase",
+    "carrito.danger.ensalada": "Edit or delete this salad to continue with your purchase",
+
+    "carrito.cantidad": "Amount",
+    "carrito.precio": "Price",
+    "carrito.total": "Total",
+
+    "edit": "Edit",
+    "carrito.realiz": "Make Purchase",
+
+    "carrito.bebida": "Drink",
+    "carrito.ensalada": "Salad",
+    "carrito.botana": "Snack",
+    "generate": "Generate",
+    "caja": "cash register"
+
+
+
+
+
+}

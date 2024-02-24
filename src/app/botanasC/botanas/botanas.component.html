@@ -1,0 +1,34 @@
+
+<div class="every">
+    <div class="container">
+        <div class="header">
+            <h1 class="title">{{'botana' | translate}}</h1>
+        </div>
+        <div class="instruccion">{{'descripcion.botana' | translate}}</div>
+        <div class="create">
+            <div class="uno">
+                <div class="botana" (click)="addBotana(botana)" *ngFor="let botana of botanas">
+                    <p>{{ botana.botana }}<i>{{ botana.precio }}</i></p>
+                </div>
+            </div>
+        </div>
+    </div>  
+    <div class="compra">
+                <!-- Tarjeta del artículo seleccionado -->
+                <div>
+                    <div *ngIf="mostrarIngredientes()" class="crepaTitle">
+                        {{'you.botana' | translate}}
+                    </div>
+                    <p *ngIf="!mostrarIngredientes()" style="color: red;background: white;width: 80%;margin-left: 10%;border-radius: 15px;padding-top: 5px; padding-bottom: 5px; height: auto;" class="titleCrepa">{{'warning.botana' | translate}}</p>
+                    <div>
+                        <p>{{botanaSeleccionada.bebida}}</p>
+                        <p>{{botanaSeleccionada.precio}}</p>
+                    </div>
+                </div>
+        
+                <div  (click)="addOrden()">
+                    <div class="comprar">
+                        {{'add.orden' | translate}}
+                    </div>
+                </div>
+    </div>         

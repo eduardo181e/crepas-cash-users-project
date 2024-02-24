@@ -1,0 +1,490 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+h1{
+    width: 76%;
+    text-align: center;
+    margin-left: 12.7%;
+    font-size: 50px;
+    background: brown;
+    height: 60px;
+    line-height: 60px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    color: wheat;
+    font-family: "FontsCarta"
+  }
+
+.border-cell {
+    border-bottom: 0px;
+    padding: 8px;
+}
+
+.container1{
+    margin-left: 7.5%;
+    position: relative;
+}
+
+.warning{
+    background: brown;
+    width: 80%;
+    left: 6%;
+    font-size: 29px;
+    line-height: 1;
+    border-radius: 10px;
+    padding-left: 15px;
+    text-align: center;
+    height: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.dulce{
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.cant{
+    display: none;
+}
+
+.btn{
+    width: 100%;
+}
+
+.container{
+    margin-left: 7.5%;
+    margin-right: 7.5%;
+    margin-top: 30px;
+}
+
+.li{
+    text-decoration: none;
+}
+
+.ingredient-list li {
+    list-style-type: none;
+    text-decoration: none;
+}
+
+.table{
+    margin-bottom: 20px;
+    border: none;
+    border-collapse: collapse;
+}
+
+.dulce{
+
+    padding: 8px;
+    background: beige;
+
+}
+
+.padd{
+    padding-top: 10px;
+  padding-bottom: 10px;
+  color: white;
+}
+
+.dulce1{
+    background: #8c4b00;
+    color: white;
+}
+
+.salado{
+    padding: 8px;
+    background: beige;
+}
+
+.salado1{
+    background: #8c4b00;
+    color: white;
+}
+
+.caliente{
+    padding: 8px;
+    background: beige;
+}
+
+.caliente1{
+    background: #8c4b00;
+    color: white;
+}
+
+.frio{
+    padding: 8px;
+    background: beige;
+}
+
+.frio1{
+    background: #8c4b00;
+    color: white;
+}
+
+.rounded-table {
+    border-radius: 10px; /* Cambia este valor para ajustar el redondeo */
+  }
+
+.r1{
+    border-radius: 10px 0px 0px 0px;
+}
+
+.r2{
+    border-radius: 0px 10px 0px 0px;
+}
+
+.r3{
+    border-radius: 0px 0px 10px 0px;
+}
+
+.r4{
+    border-radius: 0px 0px 0px 10px;
+}
+
+.waffle{
+    background: beige;
+}
+
+.waffle1{
+    background: #8c4b00;
+    color: white;
+
+}
+
+.canasta{
+    background: beige;
+}
+
+.canasta1{
+    background: #8c4b00;
+    color: white;
+
+}
+
+.botana{
+    background: beige;
+}
+
+.botana1{
+    background: #8c4b00;
+    color: white;
+}
+
+.ensalada{
+    background: beige;
+}
+
+.ensalada1{
+    background: #8c4b00;
+    color: white;
+}
+
+.eliminar{
+    text-align: center;
+    background-color: rgba(255, 0, 0, 0.76);
+}
+
+.eliminar:hover{
+    background-color: rgba(255, 0, 0, 0.96);
+}
+
+.editar{
+    text-align: center;
+    background-color: rgba(0, 128, 255, 1);
+}
+
+.editar:hover{
+    background-color: rgba(0, 128, 255, 0.76);
+}
+
+.realiz > button{
+    display: block;
+    float: right;
+    height: 50px;
+    width: 40%;
+    background: blue;
+    color: white;
+    border: 0px;
+    border-radius: 10px;
+    margin-left: 50%;
+    font-size: 20px;
+}
+
+.realiz{
+    height: 100px;
+}
+
+.trashS{
+    background-color: red;
+    width: 13px;
+    height: 13px;
+    padding: 3.5px;
+      padding-left: 3.5px;
+    border-radius: 4px;
+    padding-left: 5px;
+    position: absolute;
+    left: -23px;
+}
+
+.list{
+    padding: 10px;
+}
+
+.danger{
+    background-color: red;
+    color: white;
+    border-radius: 10px;
+    padding-left: 10px;
+    margin-bottom: 5px;
+    height: 34px;
+    line-height: 34px;
+    font-size: 16px;
+    width: 36%;
+}   
+
+
+.trash1S{
+    margin-left: 21px;
+    margin: 0px;
+  padding: 0px;
+}
+
+.danger1{
+    background-color: red;
+  color: white;
+  border-radius: 10px;
+  padding-left: 10px;
+  margin-bottom: 5px;
+  height: 34px;
+  line-height: 34px;
+  font-size: 16px;
+  width: 39%;
+}
+
+
+td, th{
+    width: 5%;
+}
+
+div{
+    position: relative;
+}
+
+.total{
+    border-radius: 10px;
+    background-color: bisque;
+    height: 50px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.totalCant{
+    display: block;
+    float: right;
+    height: 50px;
+    width: 150px;
+    padding: 16px;
+    padding-left: 16px;
+    padding-left: 195px;
+    font-size: 25px;
+}
+.inventarioCom{
+    background-color: red;
+  color: white;
+  border-radius: 10px;
+  padding-left: 10px;
+  margin-bottom: 5px;
+  height: 34px;
+  line-height: 34px;
+  font-size: 16px;
+  width: 100%;
+}
+
+@media (max-width: 880px){
+    .table{
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    h1{
+        margin-top: 5px;
+      }
+}
+
+@media (max-width: 790px){
+    .container{
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+}
+
+@media (max-width: 472px){
+
+    h1{
+      font-size: 40px;
+      height: 60px;
+    }
+}
+
+@media (max-width: 380px){
+    h1{
+      font-size: 35px;
+      height: 55px;
+    }
+  }
+  
+  @media (max-width: 335px){
+    h1{
+      font-size: 30px;
+      height: 53px;
+      line-height: 53px;
+      width: 70%;
+      margin-left: 15%;
+    }
+  }
+  
+  @media (max-width: 300px){
+    h1{
+      font-size: 20px;
+      width: 66%;
+      margin-left: 17%;
+      height: 40px;
+      line-height: 40px;
+    }
+  }
+  .containerRes{
+    display: none;
+}
+
+@media(max-width: 850px){
+    .containerRes{
+        display: block;
+    }
+
+    .container{
+        display: none;
+    }
+    .dulceRes{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        flex-wrap: wrap;
+        background: #8c4b00;
+        text-align: center;
+    }
+    .waffleRes{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        flex-wrap: wrap;
+        background: #8c4b00;
+        text-align: center;
+    }
+
+    .canastaRes{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        flex-wrap: wrap;
+        background: #8c4b00;
+        text-align: center;
+    }
+    .saladaRes{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        flex-wrap: wrap;
+        background: #8c4b00;
+        text-align: center;
+    }
+
+    .calientesRes{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        flex-wrap: wrap;
+        background: #8c4b00;
+        text-align: center;
+    }
+
+    .friasRes{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        flex-wrap: wrap;
+        background: #8c4b00;
+        text-align: center;
+    }
+
+    .botanasRes{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        flex-wrap: wrap;
+        background: #8c4b00;
+        text-align: center; 
+    }
+
+    .ensaladaRes{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        flex-wrap: wrap;
+        background: #8c4b00;
+        text-align: center; 
+    }
+
+    .ContRes{
+        margin-bottom: 10px;
+    }
+
+    .Col{
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        flex-basis: 150px;
+        text-align: center;
+    }
+
+    .accions{
+        display: flex;
+        flex-direction: row;
+    }
+
+    .editRes{
+        flex-grow: 1;
+        background: rgba(0, 128, 255, 0.76);
+        text-align: center;
+        height: 35px;
+    line-height: 35px;
+    }
+
+    .deleteRes{
+        flex-grow: 1;
+        background: rgba(255, 0, 0, 0.76);
+        text-align: center;
+        height: 35px;
+    line-height: 35px;
+    }
+
+}
+
+@media (max-width: 620px) {
+    .warning{
+        font-size: 25px;
+    }
+}
+
+
+@media (max-width: 530px) {
+    .warning{
+        font-size: 20px;
+    }
+}
+
+.table{
+    border-radius: 10px;
+}

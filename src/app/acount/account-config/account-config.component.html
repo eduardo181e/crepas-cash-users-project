@@ -1,0 +1,34 @@
+
+<div class="container">
+    <h1>{{'account.config'| translate}}</h1>
+   <form>
+    <h2>{{'username'| translate}}</h2>
+        <div class="form-group">
+            <p>{{username}}</p>
+        </div>
+        <h2>{{'fullname'| translate}}</h2>
+        <div class="form-group">
+            <p>{{fullname}}</p>
+        </div>
+        <h2>{{'numero.caja'| translate}}</h2>
+        <div class="form-group">
+            <p>{{caja}}</p>
+        </div>
+        <h2>{{'sucursal'| translate}}</h2>
+        <div class="form-group">
+            <p>{{sucursal}}</p>
+        </div>
+
+        <h2>{{'lang'| translate}}</h2>
+        <div class="form-group">
+            <select (change)="changeLanguage()" [(ngModel)]="lang" class="form-control" name="lang">
+                <option  value= "es">
+                    {{'spanish'| translate}}
+                </option>
+                <option  value= "en">
+                    {{'english'| translate}}
+                </option>
+            </select>
+        </div>
+    </form>                
+   </div>
