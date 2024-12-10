@@ -300,6 +300,7 @@
 
     "crepa.dulce.describe.precio": "Crepa dulce en harina sabor vainilla con dos ingredientes de tu preferencia",
     "crepa.dulce.describe.precio.1": "Cada ingrediente extra o cambio de sabor de harina tiene un",
+    "crepa.dulce.describe.precio.2": "Cada decoracion extra despues de la primera tiene un",
     "crepa.dulce.describe.precio.nieve": "Nieve:",
 
     "crepa.dulce.describe": "Crea tu Crepa con 3 simples pasos",
@@ -364,7 +365,11 @@
     "carrito.ensalada": "Ensalada",
     "carrito.botana": "Botana",
 
-    "caja": "Caja"
+    "caja": "Caja",
+
+    "imprimir": "Imprimir orden",
+
+    "mesa": "Mesa"
 
 
 

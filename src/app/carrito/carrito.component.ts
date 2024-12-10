@@ -40,6 +40,7 @@ export class CarritoComponent {
     precioExtraCrepaDulce:any = [];
     precioRegularCrepaDulce:any = [];
     precioNieveCrepaDulce:any = [];
+    precioDecoracionCrepaDulce:any = [];
     conteorepeticionesCrepaD:any;
     resultadosUntCrepaD:any = [];
     resultadosComCrepaD:any = [];
@@ -56,6 +57,10 @@ export class CarritoComponent {
     nievesCrepaD1:any = [];
     inventarioNievesCrepaD:any = [];
     existenciasNievesCrepaD:any = [];
+    existenciasDecoracionesCrepaD:any = [];
+    invenatrioDecoracionesCrepaD:any = [];
+    decoracionesCrepaD:any = [];
+    decoracionesCrepaD1:any = [];
     invenatrioHarinasCrepaD:any = [];
     existenciasHarinasCrepaD:any = [];
     harinasCrepaD:any = [];
@@ -86,6 +91,7 @@ export class CarritoComponent {
     precioExtraWaffle:any = [];
     precioRegularWaffle:any = [];
     precioNieveWaffle:any = [];
+    precioDecoracionWaffle:any = [];
     waffles:any = [];
     wafflesIngUnt:any = [];
     waffles1IngUnt:any = [];
@@ -99,10 +105,15 @@ export class CarritoComponent {
     waffles1Nieve:any = [];
     inventarioWafflesNieve:any = [];
     existenciasWafflesNieve:any = [];
+    existenciasWafflesDecoraciones:any = [];
+    inventarioWafflesDecoraciones:any = [];
+    wafflesDecoraciones:any = [];
+    waffles1Decoraciones:any = [];
 
     // Waffles Canasta
     precioExtraWaffleCanasta:any = [];
     precioRegularWaffleCanasta:any = [];
+    precioDecoracionWaffleCanasta:any = [];
     wafflesCanasta:any = [];
     wafflesCanastaIngUnt:any = [];
     wafflesCanasta1IngUnt:any = [];
@@ -116,6 +127,10 @@ export class CarritoComponent {
     wafflesCanasta1Nieve:any = [];
     inventarioWafflesNieveCanasta:any = [];
     existenciasWafflesNieveCanasta:any = [];
+    existenciasWafflesDecoracionesCanasta:any = [];
+    inventarioWafflesDecoracionesCanasta:any = [];
+    wafflesCanastaDecoraciones:any = [];
+    wafflesCanasta1Decoraciones:any = [];
 
     // Bebidas Calientes
     bebidasCalientes:any = [];
@@ -139,6 +154,7 @@ export class CarritoComponent {
     ensaladasIndividual1:any = [];
     inventarioEnsaladasIndividual:any = [];
     existenEnsaladasIndividual:any = [];
+    mesa: number = 0;
     constructor(private service: CarritoService, private router: Router, private crepaDulceService: CrepaDulceService, private alertService: AlertDialogService,
     private crepaSaladaService: CrepaSaladaService,private waffleService: WaffleService,private waffleCanastaService: WaffleCanastaService, private bebidasFriasService: BebidasFriasService,
     private bebidasCalientesService: BebidasCalientesService, private ventas: SalesServiceService, private authService: AuthService){}
@@ -254,6 +270,16 @@ export class CarritoComponent {
           console.log(err)
         }
       )
+
+      this.crepaDulceService.getDecoraciones().subscribe(
+        res => {
+          this.existenciasDecoracionesCrepaD = res;
+          console.log(res)
+        },
+        err => {
+          console.log(err)
+        }
+      )
   
 
       
@@ -264,9 +290,11 @@ export class CarritoComponent {
           const regular = precios.findIndex((objeto:any)=> objeto.descripcion === 'Regular');
           const extra = precios.findIndex((objeto:any)=> objeto.descripcion === 'Extra');
           const nieve = precios.findIndex((objeto:any)=> objeto.descripcion === 'Nieve');
+          const decoracion = precios.findIndex((objeto:any)=> objeto.descripcion === 'Decoracion');
           this.precioRegularCrepaDulce.push(precios[regular].precio);
           this.precioExtraCrepaDulce.push(precios[extra].precio);
           this.precioNieveCrepaDulce.push(precios[nieve].precio);
+          this.precioDecoracionCrepaDulce.push(precios[decoracion].precio);
         },
         err => console.error(err)
       )
@@ -303,6 +331,16 @@ export class CarritoComponent {
           console.log(err)
         }
       )
+
+      this.waffleService.getDecoraciones().subscribe(
+        res => {
+          this.existenciasWafflesDecoraciones = res;
+          console.log(res)
+        },
+        err => {
+          console.log(err)
+        }
+      )
   
       this.waffleService.getPrecios().subscribe(
         (res:any) => {
@@ -311,9 +349,11 @@ export class CarritoComponent {
           const regular = precios.findIndex((objeto:any)=> objeto.descripcion === 'Regular');
           const extra = precios.findIndex((objeto:any)=> objeto.descripcion === 'Extra');
           const nieve = precios.findIndex((objeto:any)=> objeto.descripcion === 'Nieve');
+          const decoracion = precios.findIndex((objeto:any)=> objeto.descripcion === 'Decoracion');
           this.precioRegularWaffle.push(precios[regular].precio);
           this.precioExtraWaffle.push(precios[extra].precio);
           this.precioNieveWaffle.push(precios[nieve].precio);
+          this.precioDecoracionWaffle.push(precios[decoracion].precio);
         },
         err => console.error(err)
       )
@@ -349,6 +389,16 @@ export class CarritoComponent {
           console.log(err)
         }
       )
+
+      this.waffleCanastaService.getDecoraciones().subscribe(
+        res => {
+          this.existenciasWafflesDecoracionesCanasta = res;
+          console.log('-----decoraciones canasta----------------',res)
+        },
+        err => {
+          console.log(err)
+        }
+      )
   
       this.waffleCanastaService.getPrecios().subscribe(
         (res:any) => {
@@ -356,8 +406,10 @@ export class CarritoComponent {
           const precios:any = res
           const regular = precios.findIndex((objeto:any)=> objeto.descripcion === 'Regular');
           const extra = precios.findIndex((objeto:any)=> objeto.descripcion === 'Extra');
+          const decoracion = precios.findIndex((objeto:any)=> objeto.descripcion === 'Decoracion');
           this.precioRegularWaffleCanasta.push(precios[regular].precio);
           this.precioExtraWaffleCanasta.push(precios[extra].precio);
+          this.precioDecoracionWaffleCanasta.push(precios[decoracion].precio);
         },
         err => console.error(err)
       )
@@ -408,7 +460,10 @@ export class CarritoComponent {
 
      // Organizar Ordenes 
      this.service.viewOrdem().subscribe(
-      res => {
+      (res:any) => {
+        console.log('orden')
+        console.log(res)
+        this.mesa = res[0].mesa
         this.ordenes = res;
         console.log(this.ordenes);
         const grupos = this.ordenes.reduce((acc:any, obj:any) => {
@@ -473,19 +528,153 @@ export class CarritoComponent {
       console.log(this.total) 
     }
     
-    contarRepeticiones(arrays: any) {
+    contarRepeticionesDulce(arrays: any) {
       const resultados:any = {};
     
-      for (const array of arrays) {
-        for (const item of array) {
+      arrays.forEach((array:any, index:any) => {
+        array.forEach((item:any) =>{
           const id = item.id;
           if (!resultados[id]) {
             resultados[id] = 0;
           }
-          resultados[id]++;
-        }
+          resultados[id] += (parseInt(this.crepasDulces[index].cantidad))
 
-      }
+      })
+    });
+      return resultados;
+    }
+
+    contarRepeticionesUnit(arrays: any, type: string) {
+      const resultados:any = {};
+      console.log('Repeticiones',arrays, type)
+      arrays.forEach((array:any, index:any) => {
+          const id = array.id;
+          if (!resultados[id]) {
+            resultados[id] = 0;
+          }
+            switch(type){
+            case "bebidaFria":
+              resultados[id] += (parseInt(this.bebidasFrias[index].cantidad))
+              break
+            case "bebidasCalientes":
+              resultados[id] += (parseInt(this.bebidasCalientes[index].cantidad))
+              break
+            case "Ensaladas":
+              resultados[id] += (parseInt(this.ensaladasIndividual[index].cantidad))
+              break
+            case "Botanas":
+              resultados[id] += (parseInt(this.botanas[index].cantidad))
+              break
+          
+
+          }
+    });
+      return resultados;
+    }
+
+    contarRepeticionesSalada(arrays: any) {
+      const resultados:any = {};
+    
+      arrays.forEach((array:any, index:any) => {
+        array.forEach((item:any) =>{
+          const id = item.id;
+          if (!resultados[id]) {
+            resultados[id] = 0;
+          }
+          resultados[id] += (parseInt(this.crepasSaladas[index].cantidad))
+
+      })
+    });
+      return resultados;
+    }
+
+    contarRepeticionesWaffle(arrays: any) {
+      const resultados:any = {};
+    
+      arrays.forEach((array:any, index:any) => {
+        array.forEach((item:any) =>{
+          const id = item.id;
+          if (!resultados[id]) {
+            resultados[id] = 0;
+          }
+          resultados[id] += (parseInt(this.waffles[index].cantidad))
+
+      })
+    });
+      return resultados;
+    }
+
+    contarRepeticionesWaffleCanasta(arrays: any) {
+      const resultados:any = {};
+    
+      arrays.forEach((array:any, index:any) => {
+        array.forEach((item:any) =>{
+          const id = item.id;
+          if (!resultados[id]) {
+            resultados[id] = 0;
+          }
+          resultados[id] += (parseInt(this.wafflesCanasta[index].cantidad))
+
+      })
+    });
+      return resultados;
+    }
+
+    contarRepeticiones(arrays: any) {
+      const resultados:any = {};
+    
+      arrays.forEach((array:any, index:any) => {
+        array.forEach((item:any) =>{
+          const id = item.id;
+          if (!resultados[id]) {
+            resultados[id] = 0;
+          }
+          resultados[id]++
+
+      })
+    });
+      return resultados;
+    }
+
+    contarRepeticionesDecoraciones(arrays: any) {
+      const resultados:any = {};
+      arrays.forEach((array:any, index:any) => {
+        array.forEach((item:any) =>{
+          const nombre = item.nombre
+          if(!resultados[nombre]){
+            resultados[nombre] = 0;
+          }
+          resultados[nombre] += (parseInt(this.crepasDulces[index].cantidad))
+        })
+      });
+      return resultados;
+    }
+
+    contarRepeticionesDecoracionesWaffleCanasta(arrays: any) {
+      const resultados:any = {};
+      arrays.forEach((array:any, index:any) => {
+        array.forEach((item:any) =>{
+          const nombre = item.nombre
+          if(!resultados[nombre]){
+            resultados[nombre] = 0;
+          }
+          resultados[nombre] += (parseInt(this.wafflesCanasta[index].cantidad))
+        })
+      });
+      return resultados;
+    }
+
+    contarRepeticionesDecoracionesWaffle(arrays: any) {
+      const resultados:any = {};
+      arrays.forEach((array:any, index:any) => {
+        array.forEach((item:any) =>{
+          const nombre = item.nombre
+          if(!resultados[nombre]){
+            resultados[nombre] = 0;
+          }
+          resultados[nombre] += (parseInt(this.waffles[index].cantidad))
+        })
+      });
       return resultados;
     }
 
@@ -508,6 +697,16 @@ export class CarritoComponent {
     obtenerIdRepeticiones(diccionario:any) {
       // Usa la función map() para generar una lista de tuplas.
       return Object.entries(diccionario).map(([id, repeticiones]:[any, any]) => [id, repeticiones]);
+    }
+
+    updateMesa(){
+
+      this.service.updateMesaOrden(this.mesa).subscribe(
+        res => {
+          console.log(res);
+        },
+        err => console.log(err)
+      );
     }
 
     // Elimina la orden seleccionada
@@ -700,6 +899,7 @@ export class CarritoComponent {
               this.existenciasIngComCrepaD(this.ingredientesComCrepaD);
               this.existenciasIngUntCrepaD(this.ingredientesUntCrepaD);
               this.existenciasNievCrepaD(this.nievesCrepaD);
+              this.existenciasDecoracionCrepaD(this.decoracionesCrepaD);
               const harinas:any = [];
               this.crepasDulces.forEach((element:any) => {
                 const harina = element.orden.harina;
@@ -786,6 +986,7 @@ export class CarritoComponent {
               this.existenciasIngUntWaffle(this.wafflesIngUnt);
               this.existenciasIngComWaffle(this.wafflesIngCom);
               this.existenciasNieveWaffle(this.wafflesNieve);
+              this.existenciasDecoracionWaffle(this.wafflesDecoraciones);
               this.detectExistIngWaffle();
               this.calcularTotal();
             },
@@ -819,6 +1020,7 @@ export class CarritoComponent {
               this.existenciasIngUntWaffleCanasta(this.wafflesCanastaIngUnt);
               this.existenciasIngComWaffleCanasta(this.wafflesCanastaIngCom);
               this.existenciasNieveWaffleCanasta(this.wafflesCanastaNieve);
+              this.existenciasDecoracionesWaffleCanasta(this.wafflesCanastaDecoraciones);
               this.detectExistIngWaffleCanasta();
               this.calcularTotal();
             },
@@ -976,7 +1178,7 @@ export class CarritoComponent {
     // Crepas Saladas existencias de productos
   
      existenciasIngCrepaS(obj:any){
-      const resultados:any = this.contarRepeticiones(obj);
+      const resultados:any = this.contarRepeticionesSalada(obj);
       this.ingredientesCrepaS1 = []
       this.inventarioIngredientesCrepaS = [];
       obj.forEach((element:any, indice:any) => {
@@ -1003,20 +1205,20 @@ export class CarritoComponent {
               ingredientes.push(obj)
             }
           }else if(this.existenciasIngredientesCrepaS[index].cantidad === 1){
-          if(this.existenciasIngredientesCrepaS[index].existencia === 1 && (resultados[elemento.id]*this.crepasSaladas[indice].cantidad) <= this.existenciasIngredientesCrepaS[index].inventario){
+          if(this.existenciasIngredientesCrepaS[index].existencia === 1 && (resultados[elemento.id]) <= this.existenciasIngredientesCrepaS[index].inventario){
             const obj = {id: elemento.id, existencia: true, nombre: elemento.nombre, inventario: this.existenciasIngredientesCrepaS[index].inventario, cantidad : this.existenciasIngredientesCrepaS[index].cantidad}
             console.log(obj)
             ingredientes.push(obj)
-          }else if(this.existenciasIngredientesCrepaS[index].existencia === 1 && (resultados[elemento.id]*this.crepasSaladas[indice].cantidad) > this.existenciasIngredientesCrepaS[index].inventario){
+          }else if(this.existenciasIngredientesCrepaS[index].existencia === 1 && (resultados[elemento.id]) > this.existenciasIngredientesCrepaS[index].inventario){
             if(this.authService.lang() === 'es'){
               const obj = {id: elemento.id, existencia: false, nombre: elemento.nombre, inventario: this.existenciasIngredientesCrepaS[index].inventario, cantidad : this.existenciasIngredientesCrepaS[index].cantidad}
-              const warn = 'No hay suficientes '+ elemento.nombre + ' para realizar la orden solo quedan '+ this.existenciasIngredientesCrepaS[index].inventario + ', por favor elimine almenos ' + ((resultados[elemento.id]*this.crepasSaladas[indice].cantidad) - this.existenciasIngredientesCrepaS[index].inventario) + ' para poder continuar con su compra'
+              const warn = 'No hay suficientes '+ elemento.nombre + ' para realizar la orden solo quedan '+ this.existenciasIngredientesCrepaS[index].inventario + ', por favor elimine almenos ' + ((resultados[elemento.id]) - this.existenciasIngredientesCrepaS[index].inventario) + ' para poder continuar con su compra'
               inventario.push(warn)
               console.log(obj)
               ingredientes.push(obj)
               }else if(this.authService.lang() === 'en'){
                 const obj = {id: elemento.id, existencia: false, nombre: elemento.nombre, inventario: this.existenciasIngredientesCrepaS[index].inventario, cantidad : this.existenciasIngredientesCrepaS[index].cantidad}
-                const warn = 'There are not enough '+ elemento.nombre + ' to make the order, there are only '+ this.existenciasIngredientesCrepaS[index].inventario + ', please remove at least ' + ((resultados[elemento.id]*this.crepasSaladas[indice].cantidad) - this.existenciasIngredientesCrepaS[index].inventario) + ' to continue with your purchase'
+                const warn = 'There are not enough '+ elemento.nombre + ' to make the order, there are only '+ this.existenciasIngredientesCrepaS[index].inventario + ', please remove at least ' + ((resultados[elemento.id]) - this.existenciasIngredientesCrepaS[index].inventario) + ' to continue with your purchase'
                 inventario.push(warn)
                 console.log(obj)
                 ingredientes.push(obj)
@@ -1041,7 +1243,7 @@ export class CarritoComponent {
     }
 
     existenciasAdCrepaS(obj:any){
-      const resultados:any = this.contarRepeticiones(obj);
+      const resultados:any = this.contarRepeticionesSalada(obj);
       this.aderesosCrepaS1 = []
       this.inventarioAderesosCrepaS = [];
         obj.forEach((element:any, indice: any) => {
@@ -1068,20 +1270,20 @@ export class CarritoComponent {
                 aderezos.push(obj)
               }
             }else if(this.existenciasAderesosCrepaS[index].cantidad === 1){
-            if(this.existenciasAderesosCrepaS[index].existencia === 1 && (resultados[elemento.id]*this.crepasSaladas[indice].cantidad) <= this.existenciasAderesosCrepaS[index].inventario){
+            if(this.existenciasAderesosCrepaS[index].existencia === 1 && (resultados[elemento.id]) <= this.existenciasAderesosCrepaS[index].inventario){
               const obj = {id: elemento.id, existencia: true, nombre: elemento.nombre, inventario: this.existenciasAderesosCrepaS[index].inventario, cantidad : this.existenciasAderesosCrepaS[index].cantidad}
               console.log(obj)
               aderezos.push(obj)
-            }else if(this.existenciasAderesosCrepaS[index].existencia === 1 && (resultados[elemento.id]*this.crepasSaladas[indice].cantidad) > this.existenciasAderesosCrepaS[index].inventario){
+            }else if(this.existenciasAderesosCrepaS[index].existencia === 1 && (resultados[elemento.id]) > this.existenciasAderesosCrepaS[index].inventario){
               if(this.authService.lang() === 'es'){
                 const obj = {id: elemento.id, existencia: false, nombre: elemento.nombre, inventario: this.existenciasAderesosCrepaS[index].inventario, cantidad : this.existenciasAderesosCrepaS[index].cantidad}
-                const warn = 'No hay suficientes '+ elemento.nombre + ' para realizar la orden solo quedan '+ this.existenciasAderesosCrepaS[index].inventario + ', por favor elimine almenos ' + ((resultados[elemento.id]*this.crepasSaladas[indice].cantidad) - this.existenciasAderesosCrepaS[index].inventario) + ' para poder continuar con su compra'
+                const warn = 'No hay suficientes '+ elemento.nombre + ' para realizar la orden solo quedan '+ this.existenciasAderesosCrepaS[index].inventario + ', por favor elimine almenos ' + ((resultados[elemento.id]) - this.existenciasAderesosCrepaS[index].inventario) + ' para poder continuar con su compra'
                 inventario.push(warn)
                 console.log(obj)
                 aderezos.push(obj)
               }else if(this.authService.lang() === 'en'){
                 const obj = {id: elemento.id, existencia: false, nombre: elemento.nombre, inventario: this.existenciasAderesosCrepaS[index].inventario, cantidad : this.existenciasAderesosCrepaS[index].cantidad}
-                const warn = 'There are not enough '+ elemento.nombre + ' to make the order, there are only '+ this.existenciasAderesosCrepaS[index].inventario + ', please remove at least ' + ((resultados[elemento.id]*this.crepasSaladas[indice].cantidad) - this.existenciasAderesosCrepaS[index].inventario) + ' to continue with your purchase'
+                const warn = 'There are not enough '+ elemento.nombre + ' to make the order, there are only '+ this.existenciasAderesosCrepaS[index].inventario + ', please remove at least ' + ((resultados[elemento.id]) - this.existenciasAderesosCrepaS[index].inventario) + ' to continue with your purchase'
                 inventario.push(warn)
                 console.log(obj)
                 aderezos.push(obj)
@@ -1106,7 +1308,7 @@ export class CarritoComponent {
     }
 
     existenciasIngBaseCrepaS(obj:any){
-      const resultado = this.contarRepeticiones(obj);
+      const resultado = this.contarRepeticionesSalada(obj);
       this.ingredientesBaseCrepaS1 = []
       this.inventarioIngredientesBaseCrepaS = [];
         
@@ -1134,20 +1336,20 @@ export class CarritoComponent {
                 ingredientes.push(obj)
               }
             }else if(this.existenciasIngredientesBaseCrepaS[index].cantidad === 1){
-            if(this.existenciasIngredientesBaseCrepaS[index].existencia === 1 && (resultado[elemento.id]*this.crepasSaladas[indice].cantidad) <= this.existenciasIngredientesBaseCrepaS[index].inventario){
+            if(this.existenciasIngredientesBaseCrepaS[index].existencia === 1 && (resultado[elemento.id]) <= this.existenciasIngredientesBaseCrepaS[index].inventario){
               const obj = {id: elemento.id, existencia: true, ingrediente_base: elemento.ingrediente_base, inventario: this.existenciasIngredientesBaseCrepaS[index].inventario, cantidad : this.existenciasIngredientesBaseCrepaS[index].cantidad}
               console.log(obj)
               ingredientes.push(obj)
-            }else if(this.existenciasIngredientesBaseCrepaS[index].existencia === 1 && (resultado[elemento.id]*this.crepasSaladas[indice].cantidad) > this.existenciasIngredientesBaseCrepaS[index].inventario){
+            }else if(this.existenciasIngredientesBaseCrepaS[index].existencia === 1 && (resultado[elemento.id]) > this.existenciasIngredientesBaseCrepaS[index].inventario){
               if(this.authService.lang() === 'es'){
                 const obj = {id: elemento.id, existencia: false, ingrediente_base: elemento.ingrediente_base, inventario: this.existenciasIngredientesBaseCrepaS[index].inventario, cantidad : this.existenciasIngredientesBaseCrepaS[index].cantidad}
-                const warn = 'No hay suficientes '+ elemento.ingrediente_base + ' para realizar la orden solo quedan '+ this.existenciasIngredientesBaseCrepaS[index].inventario + ', por favor elimine almenos ' + ((resultado[elemento.id]*this.crepasSaladas[indice].cantidad) - this.existenciasIngredientesBaseCrepaS[index].inventario) + ' para poder continuar con su compra'
+                const warn = 'No hay suficientes '+ elemento.ingrediente_base + ' para realizar la orden solo quedan '+ this.existenciasIngredientesBaseCrepaS[index].inventario + ', por favor elimine almenos ' + ((resultado[elemento.id]) - this.existenciasIngredientesBaseCrepaS[index].inventario) + ' para poder continuar con su compra'
                 console.log(obj)
                 inventario.push(warn)
                 ingredientes.push(obj)
               }else if(this.authService.lang() === 'en'){
                 const obj = {id: elemento.id, existencia: false, ingrediente_base: elemento.ingrediente_base, inventario: this.existenciasIngredientesBaseCrepaS[index].inventario, cantidad : this.existenciasIngredientesBaseCrepaS[index].cantidad}
-                const warn = 'There are not enough '+ elemento.ingrediente_base + ' to make the order, there are only '+ this.existenciasIngredientesBaseCrepaS[index].inventario + ', please remove at least ' + ((resultado[elemento.id]*this.crepasSaladas[indice].cantidad) - this.existenciasIngredientesBaseCrepaS[index].inventario) + ' to continue with your purchase'
+                const warn = 'There are not enough '+ elemento.ingrediente_base + ' to make the order, there are only '+ this.existenciasIngredientesBaseCrepaS[index].inventario + ', please remove at least ' + ((resultado[elemento.id]) - this.existenciasIngredientesBaseCrepaS[index].inventario) + ' to continue with your purchase'
                 console.log(obj)
                 inventario.push(warn)
                 ingredientes.push(obj)
@@ -1174,7 +1376,7 @@ export class CarritoComponent {
      }
 
      existenciasAdBaseCrepaS(obj:any){
-      const resultado = this.contarRepeticiones(obj);
+      const resultado = this.contarRepeticionesSalada(obj);
       this.aderesosBaseCrepaS1 = [];
       this.inventarioAderesosBaseCrepaS = [];
           
@@ -1202,20 +1404,20 @@ export class CarritoComponent {
                   aderezos.push(obj)
                 }
               }else if(this.existenciasAderesosBaseCrepaS[index].cantidad === 1){
-              if(this.existenciasAderesosBaseCrepaS[index].existencia === 1 && (resultado[elemento.id]*this.crepasSaladas[indice].cantidad) <= this.existenciasAderesosBaseCrepaS[index].inventario){
+              if(this.existenciasAderesosBaseCrepaS[index].existencia === 1 && (resultado[elemento.id]) <= this.existenciasAderesosBaseCrepaS[index].inventario){
                 const obj = {id: elemento.id, existencia: true, adereso_base: elemento.adereso_base, inventario: this.existenciasAderesosBaseCrepaS[index].inventario, cantidad : this.existenciasAderesosBaseCrepaS[index].cantidad}
                 console.log(obj)
                 aderezos.push(obj)
-              }else if(this.existenciasAderesosBaseCrepaS[index].existencia === 1 && (resultado[elemento.id]*this.crepasSaladas[indice].cantidad) > this.existenciasAderesosBaseCrepaS[index].inventario){
+              }else if(this.existenciasAderesosBaseCrepaS[index].existencia === 1 && (resultado[elemento.id]) > this.existenciasAderesosBaseCrepaS[index].inventario){
                 if(this.authService.lang() === 'es'){
                   const obj = {id: elemento.id, existencia: false, adereso_base: elemento.adereso_base, inventario: this.existenciasAderesosBaseCrepaS[index].inventario, cantidad : this.existenciasAderesosBaseCrepaS[index].cantidad}
-                  const warn = 'No hay suficientes '+ elemento.adereso_base + ' para realizar la orden solo quedan '+ this.existenciasAderesosBaseCrepaS[index].inventario + ', por favor elimine almenos ' + ((resultado[elemento.id]*this.crepasSaladas[indice].cantidad) - this.existenciasAderesosBaseCrepaS[index].inventario) + ' para poder continuar con su compra'
+                  const warn = 'No hay suficientes '+ elemento.adereso_base + ' para realizar la orden solo quedan '+ this.existenciasAderesosBaseCrepaS[index].inventario + ', por favor elimine almenos ' + ((resultado[elemento.id]) - this.existenciasAderesosBaseCrepaS[index].inventario) + ' para poder continuar con su compra'
                   console.log(obj)
                   inventario.push(warn)
                   aderezos.push(obj)
                 }else if(this.authService.lang() === 'en'){
                   const obj = {id: elemento.id, existencia: false, adereso_base: elemento.adereso_base, inventario: this.existenciasAderesosBaseCrepaS[index].inventario, cantidad : this.existenciasAderesosBaseCrepaS[index].cantidad}
-                  const warn = 'There are not enough '+ elemento.adereso_base + ' to make the order, there are only '+ this.existenciasAderesosBaseCrepaS[index].inventario + ', please remove at least ' + ((resultado[elemento.id]*this.crepasSaladas[indice].cantidad) - this.existenciasAderesosBaseCrepaS[index].inventario) + ' to continue with your purchase'
+                  const warn = 'There are not enough '+ elemento.adereso_base + ' to make the order, there are only '+ this.existenciasAderesosBaseCrepaS[index].inventario + ', please remove at least ' + ((resultado[elemento.id]) - this.existenciasAderesosBaseCrepaS[index].inventario) + ' to continue with your purchase'
                   console.log(obj)
                   inventario.push(warn)
                   aderezos.push(obj)
@@ -1252,7 +1454,8 @@ export class CarritoComponent {
     // Crepa Dulce existencias de productos
 
     existenciasIngComCrepaD(obj:any){
-      this.resultadosComCrepaD = this.contarRepeticiones(this.ingredientesComCrepaD);
+      this.resultadosComCrepaD = this.contarRepeticionesDulce(this.ingredientesComCrepaD);
+      console.log('resulatdos', this.resultadosComCrepaD)
       this.ingredientesComCrepaD1 = []
       this.inventarioIngredientesComCrepaD = [];
       obj.forEach((element:any, indice:any) => {
@@ -1281,20 +1484,20 @@ export class CarritoComponent {
             }else if(this.existenciasingredientesComCrepaD[index].cantidad === 1){
               console.log(elemento);
               console.log(this.existenciasingredientesComCrepaD[index])
-              if(this.existenciasingredientesComCrepaD[index].existencia === 1 && (this.resultadosComCrepaD[elemento.id]*this.crepasDulces[indice].cantidad) <= this.existenciasingredientesComCrepaD[index].inventario){
+              if(this.existenciasingredientesComCrepaD[index].existencia === 1 && (this.resultadosComCrepaD[elemento.id]) <= this.existenciasingredientesComCrepaD[index].inventario){
                 const obj = {id: elemento.id, existencia: true, nombre: elemento.nombre, inventario: this.existenciasingredientesComCrepaD[index].inventario, cantidad : this.existenciasingredientesComCrepaD[index].cantidad}
                 console.log(obj)
                 ingredientes.push(obj)
-              }else if(this.existenciasingredientesComCrepaD[index].existencia === 1 && (this.resultadosComCrepaD[elemento.id]*this.crepasDulces[indice].cantidad) > this.existenciasingredientesComCrepaD[index].inventario){
+              }else if(this.existenciasingredientesComCrepaD[index].existencia === 1 && (this.resultadosComCrepaD[elemento.id]) > this.existenciasingredientesComCrepaD[index].inventario){
                 if(this.authService.lang() === 'es'){
                   const obj = {id: elemento.id, existencia: false, nombre: elemento.nombre, inventario: this.existenciasingredientesComCrepaD[index].inventario, cantidad : this.existenciasingredientesComCrepaD[index].cantidad}
-                  const warn = 'No hay suficientes '+ elemento.nombre + ' para realizar la orden solo quedan '+ this.existenciasingredientesComCrepaD[index].inventario + ', por favor elimine almenos ' + ((this.resultadosComCrepaD[elemento.id]*this.crepasDulces[indice].cantidad) - this.existenciasingredientesComCrepaD[index].inventario) + ' para poder continuar con su compra'
+                  const warn = 'No hay suficientes '+ elemento.nombre + ' para realizar la orden solo quedan '+ this.existenciasingredientesComCrepaD[index].inventario + ', por favor elimine almenos ' + ((this.resultadosComCrepaD[elemento.id]) - this.existenciasingredientesComCrepaD[index].inventario) + ' para poder continuar con su compra'
                   inventario.push(warn)
                   console.log(obj)
                   ingredientes.push(obj)
                 }else if(this.authService.lang() === 'en'){
                   const obj = {id: elemento.id, existencia: false, nombre: elemento.nombre, inventario: this.existenciasingredientesComCrepaD[index].inventario, cantidad : this.existenciasingredientesComCrepaD[index].cantidad}
-                  const warn = 'There are not enough '+ elemento.nombre + ' to make the order, there are only '+ this.existenciasingredientesComCrepaD[index].inventario + ', please remove at least ' + ((this.resultadosComCrepaD[elemento.id]*this.crepasDulces[indice].cantidad) - this.existenciasingredientesComCrepaD[index].inventario) + ' to continue with your purchase'
+                  const warn = 'There are not enough '+ elemento.nombre + ' to make the order, there are only '+ this.existenciasingredientesComCrepaD[index].inventario + ', please remove at least ' + ((this.resultadosComCrepaD[elemento.id]) - this.existenciasingredientesComCrepaD[index].inventario) + ' to continue with your purchase'
                   inventario.push(warn)
                   console.log(obj)
                   ingredientes.push(obj)
@@ -1320,7 +1523,7 @@ export class CarritoComponent {
     }
 
     existenciasIngUntCrepaD(obj:any){
-      this.resultadosUntCrepaD = this.contarRepeticiones(this.ingredientesUntCrepaD);
+      this.resultadosUntCrepaD = this.contarRepeticionesDulce(this.ingredientesUntCrepaD);
       this.ingredientesUntCrepaD1 = []
       this.inventarioIngredientesUntCrepaD = [];
       obj.forEach((element:any, indice: any) => {
@@ -1348,20 +1551,20 @@ export class CarritoComponent {
             }
           }else if(this.existenciasingredientesUntCrepaD[index].cantidad === 1){
             console.log(this.existenciasingredientesUntCrepaD[index])
-            if(this.existenciasingredientesUntCrepaD[index].existencia === 1 && (this.resultadosUntCrepaD[elemento.id]*this.crepasDulces[indice].cantidad) <= this.existenciasingredientesUntCrepaD[index].inventario){
+            if(this.existenciasingredientesUntCrepaD[index].existencia === 1 && (this.resultadosUntCrepaD[elemento.id]) <= this.existenciasingredientesUntCrepaD[index].inventario){
               const obj = {id: elemento.id, existencia: true, nombre: elemento.nombre, inventario: this.existenciasingredientesUntCrepaD[index].inventario, cantidad : this.existenciasingredientesUntCrepaD[index].cantidad}
               console.log(obj)
               ingredientes.push(obj)
-            }else if(this.existenciasingredientesUntCrepaD[index].existencia === 1 && (this.resultadosUntCrepaD[elemento.id]*this.crepasDulces[indice].cantidad) > this.existenciasingredientesUntCrepaD[index].inventario){
+            }else if(this.existenciasingredientesUntCrepaD[index].existencia === 1 && (this.resultadosUntCrepaD[elemento.id]) > this.existenciasingredientesUntCrepaD[index].inventario){
               if(this.authService.lang() === 'es'){
                 const obj = {id: elemento.id, existencia: false, nombre: elemento.nombre, inventario: this.existenciasingredientesUntCrepaD[index].inventario, cantidad : this.existenciasingredientesUntCrepaD[index].cantidad}
-                const warn = 'No hay suficientes '+ elemento.nombre + ' para realizar la orden solo quedan '+ this.existenciasingredientesUntCrepaD[index].inventario + ', por favor elimine almenos ' + ((this.resultadosUntCrepaD[elemento.id]*this.crepasDulces[indice].cantidad) - this.existenciasingredientesUntCrepaD[index].inventario) + ' para poder continuar con su compra'
+                const warn = 'No hay suficientes '+ elemento.nombre + ' para realizar la orden solo quedan '+ this.existenciasingredientesUntCrepaD[index].inventario + ', por favor elimine almenos ' + ((this.resultadosUntCrepaD[elemento.id]) - this.existenciasingredientesUntCrepaD[index].inventario) + ' para poder continuar con su compra'
                 inventario.push(warn)
                 console.log(obj)
                 ingredientes.push(obj)
               }else if(this.authService.lang() === 'en'){
                 const obj = {id: elemento.id, existencia: false, nombre: elemento.nombre, inventario: this.existenciasingredientesUntCrepaD[index].inventario, cantidad : this.existenciasingredientesUntCrepaD[index].cantidad}
-                const warn = 'There are not enough '+ elemento.nombre + ' to make the order, there are only '+ this.existenciasingredientesUntCrepaD[index].inventario + ', please remove at least ' + ((this.resultadosUntCrepaD[elemento.id]*this.crepasDulces[indice].cantidad) - this.existenciasingredientesUntCrepaD[index].inventario) + ' to continue with your purchase'
+                const warn = 'There are not enough '+ elemento.nombre + ' to make the order, there are only '+ this.existenciasingredientesUntCrepaD[index].inventario + ', please remove at least ' + ((this.resultadosUntCrepaD[elemento.id]) - this.existenciasingredientesUntCrepaD[index].inventario) + ' to continue with your purchase'
                 inventario.push(warn)
                 console.log(obj)
                 ingredientes.push(obj)
@@ -1387,7 +1590,7 @@ export class CarritoComponent {
     }
 
     existenciasNievCrepaD(obj:any){
-      const resultados = this.contarRepeticiones(this.nievesCrepaD);
+      const resultados = this.contarRepeticionesDulce(this.nievesCrepaD);
       this.nievesCrepaD1 = []
       this.inventarioNievesCrepaD = [];
       obj.forEach((element:any, indice:any) => {
@@ -1414,20 +1617,20 @@ export class CarritoComponent {
               nieves.push(obj)
             }
           }else if(this.existenciasNievesCrepaD[index].cantidad === 1){
-            if(this.existenciasNievesCrepaD[index].existencia === 1 && (resultados[elemento.id]*this.crepasDulces[indice].cantidad) <= this.existenciasNievesCrepaD[index].inventario){
+            if(this.existenciasNievesCrepaD[index].existencia === 1 && (resultados[elemento.id]) <= this.existenciasNievesCrepaD[index].inventario){
               const obj = {id: elemento.id, existencia: true, nombre: elemento.nombre, inventario: this.existenciasNievesCrepaD[index].inventario, cantidad : this.existenciasNievesCrepaD[index].cantidad}
               console.log(obj)
               nieves.push(obj)
-            }else if(this.existenciasNievesCrepaD[index].existencia === 1 && (resultados[elemento.id]*this.crepasDulces[indice].cantidad) > this.existenciasNievesCrepaD[index].inventario){
+            }else if(this.existenciasNievesCrepaD[index].existencia === 1 && (resultados[elemento.id]) > this.existenciasNievesCrepaD[index].inventario){
               if(this.authService.lang() === 'es'){
                 const obj = {id: elemento.id, existencia: false, nombre: elemento.nombre, inventario: this.existenciasNievesCrepaD[index].inventario, cantidad : this.existenciasNievesCrepaD[index].cantidad}
-                const warn = 'No hay suficientes '+ elemento.nombre + ' para realizar la orden solo quedan '+ this.existenciasNievesCrepaD[index].inventario + ', por favor elimine almenos ' + ((resultados[elemento.id]*this.crepasDulces[indice].cantidad) - this.existenciasNievesCrepaD[index].inventario) + ' para poder continuar con su compra'
+                const warn = 'No hay suficientes '+ elemento.nombre + ' para realizar la orden solo quedan '+ this.existenciasNievesCrepaD[index].inventario + ', por favor elimine almenos ' + ((resultados[elemento.id]) - this.existenciasNievesCrepaD[index].inventario) + ' para poder continuar con su compra'
                 inventario.push(warn)
                 console.log(obj)
                 nieves.push(obj)
               }else if(this.authService.lang() === 'en'){
                 const obj = {id: elemento.id, existencia: false, nombre: elemento.nombre, inventario: this.existenciasNievesCrepaD[index].inventario, cantidad : this.existenciasNievesCrepaD[index].cantidad}
-                const warn = 'There are not enough '+ elemento.nombre + ' to make the order, there are only '+ this.existenciasNievesCrepaD[index].inventario + ', please remove at least ' + ((resultados[elemento.id]*this.crepasDulces[indice].cantidad) - this.existenciasNievesCrepaD[index].inventario) + ' to continue with your purchase'
+                const warn = 'There are not enough '+ elemento.nombre + ' to make the order, there are only '+ this.existenciasNievesCrepaD[index].inventario + ', please remove at least ' + ((resultados[elemento.id]) - this.existenciasNievesCrepaD[index].inventario) + ' to continue with your purchase'
                 inventario.push(warn)
                 console.log(obj)
                 nieves.push(obj)
@@ -1447,6 +1650,73 @@ export class CarritoComponent {
       }else{
         this.inventarioNievesCrepaD.push([])
         this.nievesCrepaD1.push([])
+        console.log('Este es un objeto vacio');
+      }
+      })
+    }
+
+    existenciasDecoracionCrepaD(obj:any){
+      const resultados = this.contarRepeticionesDecoraciones(this.decoracionesCrepaD);
+      this.decoracionesCrepaD1 = []
+      this.invenatrioDecoracionesCrepaD = [];
+      obj.forEach((element:any, indice:any) => {
+        var decoraciones:any = [];
+        var inventario:any = [];
+        if(Object.keys(element).length > 0){
+          element.forEach((elemento:any) => {
+            console.log(elemento);
+            const index = this.existenciasDecoracionesCrepaD.findIndex((i:any) => i.decoracion === elemento.nombre)
+            console.log(this.existenciasDecoracionesCrepaD[index])
+            if(index === -1){
+              const obj = {id: elemento.id, existencia: false, nombre: elemento.nombre}
+              console.log(obj)
+              decoraciones.push(obj)
+            }else{
+            if(this.existenciasDecoracionesCrepaD[index].cantidad === 0){
+            if(this.existenciasDecoracionesCrepaD[index].existencia === 1){
+              const obj = {id: elemento.id, existencia: true, nombre: elemento.nombre}
+              console.log(obj)
+              decoraciones.push(obj)
+            }else if(this.existenciasDecoracionesCrepaD[index].existencia === 0){
+              const obj = {id: elemento.id, existencia: false, nombre: elemento.nombre}
+              console.log(obj)
+              decoraciones.push(obj)
+            }
+          }else if(this.existenciasDecoracionesCrepaD[index].cantidad === 1){
+            if(this.existenciasDecoracionesCrepaD[index].existencia === 1 && (resultados[elemento.nombre]) <= this.existenciasDecoracionesCrepaD[index].inventario){
+              const obj = {id: elemento.nombre, existencia: true, nombre: elemento.nombre, inventario: this.existenciasDecoracionesCrepaD[index].inventario, cantidad : this.existenciasDecoracionesCrepaD[index].cantidad}
+              console.log(obj)
+              decoraciones.push(obj)
+            }else if(this.existenciasDecoracionesCrepaD[index].existencia === 1 && (resultados[elemento.nombre]) > this.existenciasDecoracionesCrepaD[index].inventario){
+              if(this.authService.lang() === 'es'){
+                
+                const obj = {id: elemento.nombre, existencia: false, nombre: elemento.nombre, inventario: this.existenciasDecoracionesCrepaD[index].inventario, cantidad : this.existenciasDecoracionesCrepaD[index].cantidad}
+                const warn = 'No hay suficientes '+ elemento.nombre + ' para realizar la orden solo quedan '+ this.existenciasDecoracionesCrepaD[index].inventario + ', por favor elimine almenos ' + (resultados[elemento.nombre] - this.existenciasDecoracionesCrepaD[index].inventario) + ' para poder continuar con su compra'
+                inventario.push(warn)
+                console.log(obj)
+                decoraciones.push(obj)
+              }else if(this.authService.lang() === 'en'){
+                const obj = {id: elemento.nombre, existencia: false, nombre: elemento.nombre, inventario: this.existenciasDecoracionesCrepaD[index].inventario, cantidad : this.existenciasDecoracionesCrepaD[index].cantidad}
+                const warn = 'There are not enough '+ elemento.nombre + ' to make the order, there are only '+ this.existenciasDecoracionesCrepaD[index].inventario + ', please remove at least ' + (resultados[elemento.nombre] - this.existenciasDecoracionesCrepaD[index].inventario) + ' to continue with your purchase'
+                inventario.push(warn)
+                console.log(obj)
+                decoraciones.push(obj)
+              
+              }
+            }
+            else if(this.existenciasDecoracionesCrepaD[index].existencia === 0){
+              const obj = {id: elemento.nombre, existencia: false, nombre: elemento.nombre, inventario: this.existenciasDecoracionesCrepaD[index].inventario, cantidad : this.existenciasDecoracionesCrepaD[index].cantidad}
+              console.log(obj)
+              decoraciones.push(obj)
+            }
+          }
+        }
+          })
+          this.invenatrioDecoracionesCrepaD.push(inventario)
+        this.decoracionesCrepaD1.push(decoraciones)
+      }else{
+        this.invenatrioDecoracionesCrepaD.push([])
+        this.decoracionesCrepaD1.push([])
         console.log('Este es un objeto vacio');
       }
       })
@@ -1484,21 +1754,21 @@ export class CarritoComponent {
             console.log(obj)
             harinas.push(obj)
           }else{
-          if(this.existenciasHarinasCrepaD[index].existencia === 1 && (harinas1[harina.id]*this.crepasDulces[index1].cantidad) <= this.existenciasHarinasCrepaD[index].inventario){
+          if(this.existenciasHarinasCrepaD[index].existencia === 1 && (harinas1[harina.id]) <= this.existenciasHarinasCrepaD[index].inventario){
             const obj = {id: harina.id, existencia: true, harina: harina.harina, inventario: this.existenciasHarinasCrepaD[index].inventario, cantidad : this.existenciasHarinasCrepaD[index].cantidad}
             console.log(obj)
             harinas.push(obj)
             inventario.push()
-          }else if(this.existenciasHarinasCrepaD[index].existencia === 1 && (harinas1[harina.id]*this.crepasDulces[index1].cantidad) > this.existenciasHarinasCrepaD[index].inventario){
+          }else if(this.existenciasHarinasCrepaD[index].existencia === 1 && (harinas1[harina.id]) > this.existenciasHarinasCrepaD[index].inventario){
             if(this.authService.lang() === 'es'){
               const obj = {id: harina.id, existencia: false, harina: harina.harina, inventario: this.existenciasHarinasCrepaD[index].inventario, cantidad : this.existenciasHarinasCrepaD[index].cantidad}
-              const warn = 'No hay suficientes '+ harina.harina + ' para realizar la orden solo quedan '+ this.existenciasHarinasCrepaD[index].inventario + ', por favor elimine almenos ' + ((harinas1[harina.id]*this.crepasDulces[index1].cantidad) - this.existenciasHarinasCrepaD[index].inventario) + ' para poder continuar con su compra'
+              const warn = 'No hay suficientes '+ harina.harina + ' para realizar la orden solo quedan '+ this.existenciasHarinasCrepaD[index].inventario + ', por favor elimine almenos ' + ((harinas1[harina.id]) - this.existenciasHarinasCrepaD[index].inventario) + ' para poder continuar con su compra'
               console.log(obj)
               harinas.push(obj)
               inventario.push(warn)
             }else if(this.authService.lang() === 'en'){
               const obj = {id: harina.id, existencia: false, harina: harina.harina, inventario: this.existenciasHarinasCrepaD[index].inventario, cantidad : this.existenciasHarinasCrepaD[index].cantidad}
-              const warn = 'There are not enough '+ harina.harina + ' to make the order, there are only '+ this.existenciasHarinasCrepaD[index].inventario + ', please remove at least ' + ((harinas1[harina.id]*this.crepasDulces[index1].cantidad) - this.existenciasHarinasCrepaD[index].inventario) + ' to continue with your purchase'
+              const warn = 'There are not enough '+ harina.harina + ' to make the order, there are only '+ this.existenciasHarinasCrepaD[index].inventario + ', please remove at least ' + ((harinas1[harina.id]) - this.existenciasHarinasCrepaD[index].inventario) + ' to continue with your purchase'
               console.log(obj)
               harinas.push(obj)
               inventario.push(warn)
@@ -1529,6 +1799,7 @@ export class CarritoComponent {
       this.existenciasIngComCrepaD(this.ingredientesComCrepaD);
       this.existenciasIngUntCrepaD(this.ingredientesUntCrepaD);
       this.existenciasNievCrepaD(this.nievesCrepaD);
+      this.existenciasDecoracionCrepaD(this.decoracionesCrepaD);
       const harinas:any = [];
       this.crepasDulces.forEach((element:any) => {
         const harina = element.orden.harina;
@@ -1536,13 +1807,13 @@ export class CarritoComponent {
       })
 
       const resultados:any = {};
-      harinas.forEach((element:any) => {
+      harinas.forEach((element:any, index:any) => {
         console.log(element.id);
         const id = element.id;
         if (!resultados[id]) {
           resultados[id] = 0;
         }
-        resultados[id]++;
+        resultados[id] += (parseInt(this.crepasDulces[index].cantidad))
       });
       console.log(resultados);
       this.harinasCrepaD = resultados;
@@ -1554,7 +1825,7 @@ export class CarritoComponent {
     // Waffles
 
     existenciasIngUntWaffle(obj:any){
-      const resultados = this.contarRepeticiones(obj);
+      const resultados = this.contarRepeticionesWaffle(obj);
       this.waffles1IngUnt = [];
       this.inventarioWafflesIngUnt = [];
       obj.forEach((element:any, indice:any) => {
@@ -1587,20 +1858,20 @@ export class CarritoComponent {
               console.log(obj)
               ingredientes.push(obj)
             }else{
-            if(this.existenciasWafflesIngUnt[index].existencia === 1 && (resultados[elemento.id]*this.waffles[indice].cantidad) <= this.existenciasWafflesIngUnt[index].inventario){
+            if(this.existenciasWafflesIngUnt[index].existencia === 1 && (resultados[elemento.id]) <= this.existenciasWafflesIngUnt[index].inventario){
               const obj = {id: elemento.id, existencia: true, nombre: elemento.nombre, inventario: this.existenciasWafflesIngUnt[index].inventario, cantidad : this.existenciasWafflesIngUnt[index].cantidad}
               console.log(obj)
               ingredientes.push(obj)
-            }else if(this.existenciasWafflesIngUnt[index].existencia === 1 && (resultados[elemento.id]*this.waffles[indice].cantidad) > this.existenciasWafflesIngUnt[index].inventario){
+            }else if(this.existenciasWafflesIngUnt[index].existencia === 1 && (resultados[elemento.id]) > this.existenciasWafflesIngUnt[index].inventario){
               if(this.authService.lang() === 'es'){
                 const obj = {id: elemento.id, existencia: false, nombre: elemento.nombre, inventario: this.existenciasWafflesIngUnt[index].inventario, cantidad : this.existenciasWafflesIngUnt[index].cantidad}
-                const warn = 'No hay suficientes '+ elemento.nombre + ' para realizar la orden solo quedan '+ this.existenciasWafflesIngUnt[index].inventario + ', por favor elimine almenos ' + ((resultados[elemento.id]*this.waffles[indice].cantidad) - this.existenciasWafflesIngUnt[index].inventario) + ' para poder continuar con su compra'
+                const warn = 'No hay suficientes '+ elemento.nombre + ' para realizar la orden solo quedan '+ this.existenciasWafflesIngUnt[index].inventario + ', por favor elimine almenos ' + ((resultados[elemento.id]) - this.existenciasWafflesIngUnt[index].inventario) + ' para poder continuar con su compra'
                 console.log(obj)
                 inventario.push(warn)
                 ingredientes.push(obj)
               }else if(this.authService.lang() === 'en'){
                 const obj = {id: elemento.id, existencia: false, nombre: elemento.nombre, inventario: this.existenciasWafflesIngUnt[index].inventario, cantidad : this.existenciasWafflesIngUnt[index].cantidad}
-                const warn = 'There are not enough '+ elemento.nombre + ' to make the order, there are only '+ this.existenciasWafflesIngUnt[index].inventario + ', please remove at least ' + ((resultados[elemento.id]*this.waffles[indice].cantidad) - this.existenciasWafflesIngUnt[index].inventario) + ' to continue with your purchase'
+                const warn = 'There are not enough '+ elemento.nombre + ' to make the order, there are only '+ this.existenciasWafflesIngUnt[index].inventario + ', please remove at least ' + ((resultados[elemento.id]) - this.existenciasWafflesIngUnt[index].inventario) + ' to continue with your purchase'
                 console.log(obj)
                 inventario.push(warn)
                 ingredientes.push(obj)
@@ -1625,7 +1896,7 @@ export class CarritoComponent {
     }
 
     existenciasIngComWaffle(obj:any){
-      const resultados = this.contarRepeticiones(obj);
+      const resultados = this.contarRepeticionesWaffle(obj);
       this.waffles1IngCom = [];
       this.inventarioWafflesIngCom = [];
       obj.forEach((element:any, indice: any) => {
@@ -1658,20 +1929,20 @@ export class CarritoComponent {
               console.log(obj)
               ingredientes.push(obj)
             }else{
-            if(this.existenciasWafflesIngCom[index].existencia === 1 && (resultados[elemento.id]*this.waffles[indice].cantidad) <= this.existenciasWafflesIngCom[index].inventario){
+            if(this.existenciasWafflesIngCom[index].existencia === 1 && (resultados[elemento.id]) <= this.existenciasWafflesIngCom[index].inventario){
               const obj = {id: elemento.id, existencia: true, nombre: elemento.nombre, inventario: this.existenciasWafflesIngCom[index].inventario, cantidad : this.existenciasWafflesIngCom[index].cantidad}
               console.log(obj)
               ingredientes.push(obj)
-            }else if(this.existenciasWafflesIngCom[index].existencia === 1 && (resultados[elemento.id]*this.waffles[indice].cantidad) > this.existenciasWafflesIngCom[index].inventario){
+            }else if(this.existenciasWafflesIngCom[index].existencia === 1 && (resultados[elemento.id]) > this.existenciasWafflesIngCom[index].inventario){
               if(this.authService.lang() === 'es'){
                 const obj = {id: elemento.id, existencia: false, nombre: elemento.nombre, inventario: this.existenciasWafflesIngCom[index].inventario, cantidad : this.existenciasWafflesIngCom[index].cantidad}
-                const warn = 'No hay suficientes '+ elemento.nombre + ' para realizar la orden solo quedan '+ this.existenciasWafflesIngCom[index].inventario + ', por favor elimine almenos ' + ((resultados[elemento.id]*this.waffles[indice].cantidad) - this.existenciasWafflesIngCom[index].inventario) + ' para poder continuar con su compra'
+                const warn = 'No hay suficientes '+ elemento.nombre + ' para realizar la orden solo quedan '+ this.existenciasWafflesIngCom[index].inventario + ', por favor elimine almenos ' + ((resultados[elemento.id]) - this.existenciasWafflesIngCom[index].inventario) + ' para poder continuar con su compra'
                 console.log(obj)
                 inventario.push(warn)
                 ingredientes.push(obj)
               }else if(this.authService.lang() === 'en'){
                 const obj = {id: elemento.id, existencia: false, nombre: elemento.nombre, inventario: this.existenciasWafflesIngCom[index].inventario, cantidad : this.existenciasWafflesIngCom[index].cantidad}
-                const warn = 'There are not enough '+ elemento.nombre + ' to make the order, there are only '+ this.existenciasWafflesIngCom[index].inventario + ', please remove at least ' + ((resultados[elemento.id]*this.waffles[indice].cantidad) - this.existenciasWafflesIngCom[index].inventario) + ' to continue with your purchase'
+                const warn = 'There are not enough '+ elemento.nombre + ' to make the order, there are only '+ this.existenciasWafflesIngCom[index].inventario + ', please remove at least ' + ((resultados[elemento.id]) - this.existenciasWafflesIngCom[index].inventario) + ' to continue with your purchase'
                 console.log(obj)
                 inventario.push(warn)
                 ingredientes.push(obj)
@@ -1696,7 +1967,7 @@ export class CarritoComponent {
     }
 
     existenciasNieveWaffle(obj:any){
-      const resultados = this.contarRepeticiones(obj);
+      const resultados = this.contarRepeticionesWaffle(obj);
       this.waffles1Nieve = [];
       this.inventarioWafflesNieve = [];
       obj.forEach((element:any, indice:any) => {
@@ -1718,20 +1989,20 @@ export class CarritoComponent {
               nieves.push(obj)
             }
           }else if(this.existenciasWafflesNieve[index].cantidad === 1){
-            if(this.existenciasWafflesNieve[index].existencia === 1 && (resultados[elemento.id]*this.waffles[indice].cantidad) <= this.existenciasWafflesNieve[index].inventario){
+            if(this.existenciasWafflesNieve[index].existencia === 1 && (resultados[elemento.id]) <= this.existenciasWafflesNieve[index].inventario){
               const obj = {id: elemento.id, existencia: true, nombre: elemento.nombre, inventario: this.existenciasWafflesNieve[index].inventario, cantidad : this.existenciasWafflesNieve[index].cantidad}
               console.log(obj)
               nieves.push(obj)
-            }else if(this.existenciasWafflesNieve[index].existencia === 1 && (resultados[elemento.id]*this.waffles[indice].cantidad) > this.existenciasWafflesNieve[index].inventario){
+            }else if(this.existenciasWafflesNieve[index].existencia === 1 && (resultados[elemento.id]) > this.existenciasWafflesNieve[index].inventario){
               if(this.authService.lang() === 'es'){
                 const obj = {id: elemento.id, existencia: false, nombre: elemento.nombre, inventario: this.existenciasWafflesNieve[index].inventario, cantidad : this.existenciasWafflesNieve[index].cantidad}
-                const warn = 'No hay suficientes '+ elemento.nombre + ' para realizar la orden solo quedan '+ this.existenciasWafflesNieve[index].inventario + ', por favor elimine almenos ' + ((resultados[elemento.id]*this.waffles[indice].cantidad) - this.existenciasWafflesNieve[index].inventario) + ' para poder continuar con su compra'
+                const warn = 'No hay suficientes '+ elemento.nombre + ' para realizar la orden solo quedan '+ this.existenciasWafflesNieve[index].inventario + ', por favor elimine almenos ' + ((resultados[elemento.id]) - this.existenciasWafflesNieve[index].inventario) + ' para poder continuar con su compra'
                 console.log(obj)
                 inventario.push(warn)
                 nieves.push(obj)
               }else if(this.authService.lang() === 'en'){
                 const obj = {id: elemento.id, existencia: false, nombre: elemento.nombre, inventario: this.existenciasWafflesNieve[index].inventario, cantidad : this.existenciasWafflesNieve[index].cantidad}
-                const warn = 'There are not enough '+ elemento.nombre + ' to make the order, there are only '+ this.existenciasWafflesNieve[index].inventario + ', please remove at least ' + ((resultados[elemento.id]*this.waffles[indice].cantidad) - this.existenciasWafflesNieve[index].inventario) + ' to continue with your purchase'
+                const warn = 'There are not enough '+ elemento.nombre + ' to make the order, there are only '+ this.existenciasWafflesNieve[index].inventario + ', please remove at least ' + ((resultados[elemento.id]) - this.existenciasWafflesNieve[index].inventario) + ' to continue with your purchase'
                 console.log(obj)
                 inventario.push(warn)
                 nieves.push(obj)
@@ -1753,17 +2024,77 @@ export class CarritoComponent {
       })
     }
 
+    existenciasDecoracionWaffle(obj:any){
+      const resultados = this.contarRepeticionesDecoracionesWaffle(obj);
+      console.log('result', resultados)
+      this.waffles1Decoraciones = [];
+      this.inventarioWafflesDecoraciones = [];
+      obj.forEach((element:any, indice:any) => {
+        var decoraciones:any = [];
+        var inventario:any = [];
+        if(Object.keys(element).length > 0){
+          element.forEach((elemento:any) => {
+            console.log(elemento);
+            const index = this.existenciasWafflesDecoraciones.findIndex((i:any) => i.decoracion === elemento.nombre)
+            console.log(this.existenciasWafflesDecoraciones[index])
+            if(this.existenciasWafflesDecoraciones[index].cantidad === 0){
+            if(this.existenciasWafflesDecoraciones[index].existencia === 1){
+              const obj = {id: elemento.id, existencia: true, nombre: elemento.nombre}
+              console.log(obj)
+              decoraciones.push(obj)
+            }else if(this.existenciasWafflesDecoraciones[index].existencia === 0){
+              const obj = {id: elemento.id, existencia: false, nombre: elemento.nombre}
+              console.log(obj)
+              decoraciones.push(obj)
+            }
+          }else if(this.existenciasWafflesDecoraciones[index].cantidad === 1){
+            if(this.existenciasWafflesDecoraciones[index].existencia === 1 && (resultados[elemento.nombre]) <= this.existenciasWafflesDecoraciones[index].inventario){
+              const obj = {id: elemento.nombre, existencia: true, nombre: elemento.nombre, inventario: this.existenciasWafflesDecoraciones[index].inventario, cantidad : this.existenciasWafflesDecoraciones[index].cantidad}
+              console.log(obj)
+              decoraciones.push(obj)
+            }else if(this.existenciasWafflesDecoraciones[index].existencia === 1 && (resultados[elemento.nombre]) > this.existenciasWafflesDecoraciones[index].inventario){
+              if(this.authService.lang() === 'es'){
+                const obj = {id: elemento.nombre, existencia: false, nombre: elemento.nombre, inventario: this.existenciasWafflesDecoraciones[index].inventario, cantidad : this.existenciasWafflesDecoraciones[index].cantidad}
+                const warn = 'No hay suficientes '+ elemento.nombre + ' para realizar la orden solo quedan '+ this.existenciasWafflesDecoraciones[index].inventario + ', por favor elimine almenos ' + ((resultados[elemento.nombre]) - this.existenciasWafflesDecoraciones[index].inventario) + ' para poder continuar con su compra'
+                console.log(obj)
+                inventario.push(warn)
+                decoraciones.push(obj)
+              }else if(this.authService.lang() === 'en'){
+                const obj = {id: elemento.nombre, existencia: false, nombre: elemento.nombre, inventario: this.existenciasWafflesDecoraciones[index].inventario, cantidad : this.existenciasWafflesDecoraciones[index].cantidad}
+                const warn = 'There are not enough '+ elemento.nombre + ' to make the order, there are only '+ this.existenciasWafflesDecoraciones[index].inventario + ', please remove at least ' + ((resultados[elemento.nombre]) - this.existenciasWafflesDecoraciones[index].inventario) + ' to continue with your purchase'
+                console.log(obj)
+                inventario.push(warn)
+                decoraciones.push(obj)
+              }
+            }else if(this.existenciasWafflesDecoraciones[index].existencia === 0){
+              const obj = {id: elemento.nombre, existencia: false, nombre: elemento.nombre, inventario: this.existenciasWafflesDecoraciones[index].inventario, cantidad : this.existenciasWafflesDecoraciones[index].cantidad}
+              console.log(obj)
+              decoraciones.push(obj)
+            }
+          }
+          })
+          this.inventarioWafflesDecoraciones.push(inventario)
+        this.waffles1Decoraciones.push(decoraciones)
+      }else{
+        this.inventarioWafflesDecoraciones.push([])
+        this.waffles1Decoraciones.push([])
+        console.log('Este es un objeto vacio');
+      }
+      })
+    }
+
     OrganizarWaffles(){
       this.existenciasIngUntWaffle(this.wafflesIngUnt);
       this.existenciasIngComWaffle(this.wafflesIngCom);
       this.existenciasNieveWaffle(this.wafflesNieve);
+      this.existenciasDecoracionWaffle(this.wafflesDecoraciones);
       this.detectExistIngWaffle();
     }
 
     // Waffles Canasta
 
     existenciasIngUntWaffleCanasta(obj:any){
-      const resultados = this.contarRepeticiones(obj);
+      const resultados = this.contarRepeticionesWaffleCanasta(obj);
       this.wafflesCanasta1IngUnt = [];
       this.inventarioWafflesIngUntCanasta = [];
       obj.forEach((element:any, indice:any) => {
@@ -1796,20 +2127,20 @@ export class CarritoComponent {
               console.log(obj)
               ingredientes.push(obj)
             }else{
-            if(this.existenciasWafflesIngUntCanasta[index].existencia === 1 &&  (resultados[elemento.id]*this.wafflesCanasta[indice].cantidad) <= this.existenciasWafflesIngUntCanasta[index].inventario){
+            if(this.existenciasWafflesIngUntCanasta[index].existencia === 1 &&  (resultados[elemento.id]) <= this.existenciasWafflesIngUntCanasta[index].inventario){
               const obj = {id: elemento.id, existencia: true, nombre: elemento.nombre, inventario: this.existenciasWafflesIngUntCanasta[index].inventario, cantidad : this.existenciasWafflesIngUntCanasta[index].cantidad}
               console.log(obj)
               ingredientes.push(obj)
-            }else if(this.existenciasWafflesIngUntCanasta[index].existencia === 1 && (resultados[elemento.id]*this.wafflesCanasta[indice].cantidad) > this.existenciasWafflesIngUntCanasta[index].inventario){
+            }else if(this.existenciasWafflesIngUntCanasta[index].existencia === 1 && (resultados[elemento.id]) > this.existenciasWafflesIngUntCanasta[index].inventario){
               if(this.authService.lang() === 'es'){
                 const obj = {id: elemento.id, existencia: false, nombre: elemento.nombre, inventario: this.existenciasWafflesIngUntCanasta[index].inventario, cantidad : this.existenciasWafflesIngUntCanasta[index].cantidad}
-                const warn = 'No hay suficientes '+ elemento.nombre + ' para realizar la orden solo quedan '+ this.existenciasWafflesIngUntCanasta[index].inventario + ', por favor elimine almenos ' + ((resultados[elemento.id]*this.wafflesCanasta[indice].cantidad) - this.existenciasWafflesIngUntCanasta[index].inventario) + ' para poder continuar con su compra'
+                const warn = 'No hay suficientes '+ elemento.nombre + ' para realizar la orden solo quedan '+ this.existenciasWafflesIngUntCanasta[index].inventario + ', por favor elimine almenos ' + ((resultados[elemento.id]) - this.existenciasWafflesIngUntCanasta[index].inventario) + ' para poder continuar con su compra'
                 console.log(obj)
                 inventario.push(warn)
                 ingredientes.push(obj)
               }else if(this.authService.lang() === 'en'){
                 const obj = {id: elemento.id, existencia: false, nombre: elemento.nombre, inventario: this.existenciasWafflesIngUntCanasta[index].inventario, cantidad : this.existenciasWafflesIngUntCanasta[index].cantidad}
-                const warn = 'There are not enough '+ elemento.nombre + ' to make the order, there are only '+ this.existenciasWafflesIngUntCanasta[index].inventario + ', please remove at least ' + ((resultados[elemento.id]*this.wafflesCanasta[indice].cantidad) - this.existenciasWafflesIngUntCanasta[index].inventario) + ' to continue with your purchase'
+                const warn = 'There are not enough '+ elemento.nombre + ' to make the order, there are only '+ this.existenciasWafflesIngUntCanasta[index].inventario + ', please remove at least ' + ((resultados[elemento.id]) - this.existenciasWafflesIngUntCanasta[index].inventario) + ' to continue with your purchase'
                 console.log(obj)
                 inventario.push(warn)
                 ingredientes.push(obj)
@@ -1835,7 +2166,7 @@ export class CarritoComponent {
 
 
     existenciasIngComWaffleCanasta(obj:any){
-      const resultados = this.contarRepeticiones(obj);
+      const resultados = this.contarRepeticionesWaffleCanasta(obj);
       this.wafflesCanasta1IngCom = [];
       this.inventarioWafflesIngComCanasta = [];
       obj.forEach((element:any, indice:any) => {
@@ -1870,20 +2201,20 @@ export class CarritoComponent {
               console.log(obj)
               ingredientes.push(obj)
             }else{
-            if(this.existenciasWafflesIngComCanasta[index].existencia === 1 && (resultados[elemento.id]*this.wafflesCanasta[indice].cantidad) <= this.existenciasWafflesIngComCanasta[index].inventario){
+            if(this.existenciasWafflesIngComCanasta[index].existencia === 1 && (resultados[elemento.id]) <= this.existenciasWafflesIngComCanasta[index].inventario){
               const obj = {id: elemento.id, existencia: true, nombre: elemento.nombre, inventario: this.existenciasWafflesIngComCanasta[index].inventario, cantidad : this.existenciasWafflesIngComCanasta[index].cantidad}
               console.log(obj)
               ingredientes.push(obj)
-            }else if(this.existenciasWafflesIngComCanasta[index].existencia === 1 && (resultados[elemento.id]*this.wafflesCanasta[indice].cantidad) > this.existenciasWafflesIngComCanasta[index].inventario){
+            }else if(this.existenciasWafflesIngComCanasta[index].existencia === 1 && (resultados[elemento.id]) > this.existenciasWafflesIngComCanasta[index].inventario){
               if(this.authService.lang() === 'es'){
                 const obj = {id: elemento.id, existencia: false, nombre: elemento.nombre, inventario: this.existenciasWafflesIngComCanasta[index].inventario, cantidad : this.existenciasWafflesIngComCanasta[index].cantidad}
-                const warn = 'No hay suficientes '+ elemento.nombre + ' para realizar la orden solo quedan '+ this.existenciasWafflesIngComCanasta[index].inventario + ', por favor elimine almenos ' + ((resultados[elemento.id]*this.wafflesCanasta[indice].cantidad) - this.existenciasWafflesIngComCanasta[index].inventario) + ' para poder continuar con su compra'
+                const warn = 'No hay suficientes '+ elemento.nombre + ' para realizar la orden solo quedan '+ this.existenciasWafflesIngComCanasta[index].inventario + ', por favor elimine almenos ' + ((resultados[elemento.id]) - this.existenciasWafflesIngComCanasta[index].inventario) + ' para poder continuar con su compra'
                 console.log(obj)
                 inventario.push(warn)
                 ingredientes.push(obj)
               }else if(this.authService.lang() === 'en'){
                 const obj = {id: elemento.id, existencia: false, nombre: elemento.nombre, inventario: this.existenciasWafflesIngComCanasta[index].inventario, cantidad : this.existenciasWafflesIngComCanasta[index].cantidad}
-                const warn = 'There are not enough '+ elemento.nombre + ' to make the order, there are only '+ this.existenciasWafflesIngComCanasta[index].inventario + ', please remove at least ' + ((resultados[elemento.id]*this.wafflesCanasta[indice].cantidad) - this.existenciasWafflesIngComCanasta[index].inventario) + ' to continue with your purchase'
+                const warn = 'There are not enough '+ elemento.nombre + ' to make the order, there are only '+ this.existenciasWafflesIngComCanasta[index].inventario + ', please remove at least ' + ((resultados[elemento.id]) - this.existenciasWafflesIngComCanasta[index].inventario) + ' to continue with your purchase'
                 console.log(obj)
                 inventario.push(warn)
                 ingredientes.push(obj)
@@ -1909,7 +2240,7 @@ export class CarritoComponent {
 
 
     existenciasNieveWaffleCanasta(obj:any){
-      const resultados = this.contarRepeticiones(obj);
+      const resultados = this.contarRepeticionesWaffleCanasta(obj);
       this.wafflesCanasta1Nieve = [];
       this.inventarioWafflesNieveCanasta = [];
       obj.forEach((element:any, indice:any) => {
@@ -1942,20 +2273,20 @@ export class CarritoComponent {
               console.log(obj)
               nieves.push(obj)
             }else{
-            if(this.existenciasWafflesNieveCanasta[index].existencia === 1 && (resultados[elemento.id]*this.wafflesCanasta[indice].cantidad) <= this.existenciasWafflesNieveCanasta[index].inventario){
+            if(this.existenciasWafflesNieveCanasta[index].existencia === 1 && (resultados[elemento.id]) <= this.existenciasWafflesNieveCanasta[index].inventario){
               const obj = {id: elemento.id, existencia: true, nombre: elemento.nombre, inventario: this.existenciasWafflesNieveCanasta[index].inventario, cantidad : this.existenciasWafflesNieveCanasta[index].cantidad}
               console.log(obj)
               nieves.push(obj)
-            }else if(this.existenciasWafflesNieveCanasta[index].existencia === 1 && (resultados[elemento.id]*this.wafflesCanasta[indice].cantidad) > this.existenciasWafflesNieveCanasta[index].inventario){
+            }else if(this.existenciasWafflesNieveCanasta[index].existencia === 1 && (resultados[elemento.id]) > this.existenciasWafflesNieveCanasta[index].inventario){
               if(this.authService.lang() === 'es'){
                 const obj = {id: elemento.id, existencia: false, nombre: elemento.nombre, inventario: this.existenciasWafflesNieveCanasta[index].inventario, cantidad : this.existenciasWafflesNieveCanasta[index].cantidad}
-                const warn = 'No hay suficientes '+ elemento.nombre + ' para realizar la orden solo quedan '+ this.existenciasWafflesNieveCanasta[index].inventario + ', por favor elimine almenos ' + ((resultados[elemento.id]*this.wafflesCanasta[indice].cantidad) - this.existenciasWafflesNieveCanasta[index].inventario) + ' para poder continuar con su compra'
+                const warn = 'No hay suficientes '+ elemento.nombre + ' para realizar la orden solo quedan '+ this.existenciasWafflesNieveCanasta[index].inventario + ', por favor elimine almenos ' + ((resultados[elemento.id]) - this.existenciasWafflesNieveCanasta[index].inventario) + ' para poder continuar con su compra'
                 console.log(obj)
                 inventario.push(warn)
                 nieves.push(obj)
               }else if(this.authService.lang() === 'en'){
                 const obj = {id: elemento.id, existencia: false, nombre: elemento.nombre, inventario: this.existenciasWafflesNieveCanasta[index].inventario, cantidad : this.existenciasWafflesNieveCanasta[index].cantidad}
-                const warn = 'There are not enough '+ elemento.nombre + ' to make the order, there are only '+ this.existenciasWafflesNieveCanasta[index].inventario + ', please remove at least ' + ((resultados[elemento.id]*this.wafflesCanasta[indice].cantidad) - this.existenciasWafflesNieveCanasta[index].inventario) + ' to continue with your purchase'
+                const warn = 'There are not enough '+ elemento.nombre + ' to make the order, there are only '+ this.existenciasWafflesNieveCanasta[index].inventario + ', please remove at least ' + ((resultados[elemento.id]) - this.existenciasWafflesNieveCanasta[index].inventario) + ' to continue with your purchase'
                 console.log(obj)
                 inventario.push(warn)
                 nieves.push(obj)
@@ -1978,6 +2309,77 @@ export class CarritoComponent {
       })
     }
 
+    existenciasDecoracionesWaffleCanasta(obj:any){
+      const resultados = this.contarRepeticionesDecoracionesWaffleCanasta(obj);
+      this.wafflesCanasta1Decoraciones = [];
+      this.inventarioWafflesDecoracionesCanasta = [];
+      obj.forEach((element:any, indice:any) => {
+        var decoraciones:any = [];
+        var inventario:any = [];
+        if(Object.keys(element).length > 0){
+          element.forEach((elemento:any) => {
+            console.log(elemento);
+            const index = this.existenciasWafflesDecoracionesCanasta.findIndex((i:any) => i.decoracion === elemento.nombre)
+            console.log(this.existenciasWafflesDecoracionesCanasta)
+            if(this.existenciasWafflesDecoracionesCanasta[index].cantidad === 0){
+            if(index === -1){
+              const obj = {id: elemento.id, existencia: false, nombre: elemento.nombre}
+              console.log(obj)
+              decoraciones.push(obj)
+            }else{
+            if(this.existenciasWafflesDecoracionesCanasta[index].existencia === 1){
+              const obj = {id: elemento.id, existencia: true, nombre: elemento.nombre}
+              console.log(obj)
+              decoraciones.push(obj)
+            }else if(this.existenciasWafflesDecoracionesCanasta[index].existencia === 0){
+              const obj = {id: elemento.id, existencia: false, nombre: elemento.nombre}
+              console.log(obj)
+              decoraciones.push(obj)
+            }              
+            }
+          }else if(this.existenciasWafflesDecoracionesCanasta[index].cantidad === 1){
+            if(index === -1){
+              const obj = {id: elemento.id, existencia: false, nombre: elemento.nombre}
+              console.log(obj)
+              decoraciones.push(obj)
+            }else{
+            if(this.existenciasWafflesDecoracionesCanasta[index].existencia === 1 && (resultados[elemento.nombre]) <= this.existenciasWafflesDecoracionesCanasta[index].inventario){
+              const obj = {id: elemento.nombre, existencia: true, nombre: elemento.nombre, inventario: this.existenciasWafflesDecoracionesCanasta[index].inventario, cantidad : this.existenciasWafflesDecoracionesCanasta[index].cantidad}
+              console.log(obj)
+              decoraciones.push(obj)
+            }else if(this.existenciasWafflesDecoracionesCanasta[index].existencia === 1 && (resultados[elemento.nombre]) > this.existenciasWafflesDecoracionesCanasta[index].inventario){
+              if(this.authService.lang() === 'es'){
+                const obj = {id: elemento.nombre, existencia: false, nombre: elemento.nombre, inventario: this.existenciasWafflesDecoracionesCanasta[index].inventario, cantidad : this.existenciasWafflesDecoracionesCanasta[index].cantidad}
+                const warn = 'No hay suficientes '+ elemento.nombre + ' para realizar la orden solo quedan '+ this.existenciasWafflesDecoracionesCanasta[index].inventario + ', por favor elimine almenos ' + ((resultados[elemento.nombre]) - this.existenciasWafflesDecoracionesCanasta[index].inventario) + ' para poder continuar con su compra'
+                console.log(obj)
+                inventario.push(warn)
+                decoraciones.push(obj)
+              }else if(this.authService.lang() === 'en'){
+                const obj = {id: elemento.nombre, existencia: false, nombre: elemento.nombre, inventario: this.existenciasWafflesDecoracionesCanasta[index].inventario, cantidad : this.existenciasWafflesDecoracionesCanasta[index].cantidad}
+                const warn = 'There are not enough '+ elemento.nombre + ' to make the order, there are only '+ this.existenciasWafflesDecoracionesCanasta[index].inventario + ', please remove at least ' + ((resultados[elemento.nombre]) - this.existenciasWafflesDecoracionesCanasta[index].inventario) + ' to continue with your purchase'
+                console.log(obj)
+                inventario.push(warn)
+                decoraciones.push(obj)
+              }
+            }else if(this.existenciasWafflesDecoracionesCanasta[index].existencia === 0){
+              const obj = {id: elemento.nombre, existencia: false, nombre: elemento.nombre, inventario: this.existenciasWafflesDecoracionesCanasta[index].inventario, cantidad : this.existenciasWafflesDecoracionesCanasta[index].cantidad}
+              console.log(obj)
+              decoraciones.push(obj)
+            }
+          }
+          }
+          })
+        this.inventarioWafflesDecoracionesCanasta.push(inventario)
+        this.wafflesCanasta1Decoraciones.push(decoraciones)
+      }else{
+        this.inventarioWafflesDecoracionesCanasta.push([])
+        this.wafflesCanasta1Decoraciones.push([])
+        console.log('Este es un objeto vacio');
+      }
+      })
+    }
+
+
     // Bebidas Frias
 
     existBebidasFrias(obj:any){
@@ -1987,7 +2389,7 @@ export class CarritoComponent {
         const botana = element.orden;
         resultados1.push(botana);
       });
-      const resultados = this.contarRepeticiones1(resultados1);
+      const resultados = this.contarRepeticionesUnit(resultados1, 'bebidaFria');
       console.log(resultados);
       this.bebidasFrias1 = [];
       this.inventarioBebidasFrias = [];
@@ -2015,19 +2417,19 @@ export class CarritoComponent {
             this.inventarioBebidasFrias.push([]);
           }
         }else if(this.existenBebidasFrias[index].cantidad === 1){
-          if(this.existenBebidasFrias[index].existencia === 1 && (resultados[element.orden.id]*this.bebidasFrias[indice].cantidad) <= this.existenBebidasFrias[index].inventario){
+          if(this.existenBebidasFrias[index].existencia === 1 && (resultados[element.orden.id]) <= this.existenBebidasFrias[index].inventario){
             const obj = {id: element.id, existencia: true, orden: element.orden, cantidad: element.cantidad, precio: element.precio, nombre: element.nombre, total: element.total}
             this.bebidasFrias1.push(obj)
             this.inventarioBebidasFrias.push([]);
-          }else if(this.existenBebidasFrias[index].existencia === 1 && (resultados[element.orden.id]*this.bebidasFrias[indice].cantidad) > this.existenBebidasFrias[index].inventario){
+          }else if(this.existenBebidasFrias[index].existencia === 1 && (resultados[element.orden.id]) > this.existenBebidasFrias[index].inventario){
             if(this.authService.lang() === 'es'){
               const obj = {id: element.id, existencia: false, orden: element.orden, cantidad: element.cantidad, precio: element.precio, nombre: element.nombre, total: element.total}
-              const warn = 'No hay suficientes '+ element.orden.bebida + ' para realizar la orden solo quedan '+ this.existenBebidasFrias[index].inventario + ', por favor elimine almenos ' + ((resultados[element.orden.id]*this.bebidasFrias[indice].cantidad) - this.existenBebidasFrias[index].inventario) + ' para poder continuar con su compra'
+              const warn = 'No hay suficientes '+ element.orden.bebida + ' para realizar la orden solo quedan '+ this.existenBebidasFrias[index].inventario + ', por favor elimine almenos ' + ((resultados[element.orden.id]) - this.existenBebidasFrias[index].inventario) + ' para poder continuar con su compra'
               this.inventarioBebidasFrias.push([warn])
               this.bebidasFrias1.push(obj)
             }else if(this.authService.lang() === 'en'){
               const obj = {id: element.id, existencia: false, orden: element.orden, cantidad: element.cantidad, precio: element.precio, nombre: element.nombre, total: element.total}
-              const warn = 'There are not enough '+ element.orden.bebida + ' to make the order, there are only '+ this.existenBebidasFrias[index].inventario + ', please remove at least ' + ((resultados[element.orden.id]*this.bebidasFrias[indice].cantidad) - this.existenBebidasFrias[index].inventario) + ' to continue with your purchase'
+              const warn = 'There are not enough '+ element.orden.bebida + ' to make the order, there are only '+ this.existenBebidasFrias[index].inventario + ', please remove at least ' + ((resultados[element.orden.id]) - this.existenBebidasFrias[index].inventario) + ' to continue with your purchase'
               this.inventarioBebidasFrias.push([warn])
               this.bebidasFrias1.push(obj)
             }
@@ -2051,7 +2453,7 @@ export class CarritoComponent {
         const botana = element.orden;
         resultados1.push(botana);
       });
-      const resultados = this.contarRepeticiones1(resultados1);
+      const resultados = this.contarRepeticionesUnit(resultados1, 'bebidasCalientes');
       this.bebidasCalientes1 = [];
       this.inventarioBebidasCalientes = [];
       obj.forEach((element:any, indice :any) => {
@@ -2078,19 +2480,19 @@ export class CarritoComponent {
           this.bebidasCalientes1.push(obj)
           this.inventarioBebidasCalientes.push([]);
         }else{
-          if(this.existenBebidasCalientes[index].existencia === 1 && (resultados[element.orden.id]*this.bebidasCalientes[indice].cantidad) <= this.existenBebidasCalientes[index].inventario){
+          if(this.existenBebidasCalientes[index].existencia === 1 && (resultados[element.orden.id]) <= this.existenBebidasCalientes[index].inventario){
             const obj = {id: element.id, existencia: true, orden: element.orden, cantidad: element.cantidad, precio: element.precio, nombre: element.nombre, total: element.total}
             this.bebidasCalientes1.push(obj)
             this.inventarioBebidasCalientes.push([]);
-          }else if(this.existenBebidasCalientes[index].existencia === 1 && (resultados[element.orden.id]*this.bebidasCalientes[indice].cantidad) > this.existenBebidasCalientes[index].inventario){
+          }else if(this.existenBebidasCalientes[index].existencia === 1 && (resultados[element.orden.id]) > this.existenBebidasCalientes[index].inventario){
             if(this.authService.lang() === 'es'){
               const obj = {id: element.id, existencia: false, orden: element.orden, cantidad: element.cantidad, precio: element.precio, nombre: element.nombre, total: element.total}
-              const warn = 'No hay suficientes '+ element.orden.bebida + ' para realizar la orden solo quedan '+ this.existenBebidasCalientes[index].inventario + ', por favor elimine almenos ' + ((resultados[element.orden.id]*this.bebidasCalientes[indice].cantidad) - this.existenBebidasCalientes[index].inventario) + ' para poder continuar con su compra'
+              const warn = 'No hay suficientes '+ element.orden.bebida + ' para realizar la orden solo quedan '+ this.existenBebidasCalientes[index].inventario + ', por favor elimine almenos ' + ((resultados[element.orden.id]) - this.existenBebidasCalientes[index].inventario) + ' para poder continuar con su compra'
               this.inventarioBebidasCalientes.push([warn])
               this.bebidasCalientes1.push(obj)
             }else if(this.authService.lang() === 'en'){
               const obj = {id: element.id, existencia: false, orden: element.orden, cantidad: element.cantidad, precio: element.precio, nombre: element.nombre, total: element.total}
-              const warn = 'There are not enough '+ element.orden.bebida + ' to make the order, there are only '+ this.existenBebidasCalientes[index].inventario + ', please remove at least ' + ((resultados[element.orden.id]*this.bebidasCalientes[indice].cantidad) - this.existenBebidasCalientes[index].inventario) + ' to continue with your purchase'
+              const warn = 'There are not enough '+ element.orden.bebida + ' to make the order, there are only '+ this.existenBebidasCalientes[index].inventario + ', please remove at least ' + ((resultados[element.orden.id]) - this.existenBebidasCalientes[index].inventario) + ' to continue with your purchase'
               this.inventarioBebidasCalientes.push([warn])
               this.bebidasCalientes1.push(obj)
             }
@@ -2113,7 +2515,7 @@ export class CarritoComponent {
         const botana = element.orden;
         resultados1.push(botana);
       });
-      const resultados = this.contarRepeticiones1(resultados1);
+      const resultados = this.contarRepeticionesUnit(resultados1, 'Botanas');
       this.botanas1 = [];
       this.inventarioBotanas = [];
       obj.forEach((element:any, indice: any) => {
@@ -2134,19 +2536,19 @@ export class CarritoComponent {
             this.inventarioBotanas.push([]);
           }
         }else if(this.existenBotanas[index].cantidad === 1){
-          if(this.existenBotanas[index].existencia === 1 && (resultados[element.orden.id]*this.botanas[indice].cantidad) <= this.existenBotanas[index].inventario){
+          if(this.existenBotanas[index].existencia === 1 && (resultados[element.orden.id]) <= this.existenBotanas[index].inventario){
             const obj = {id: element.id, existencia: true, orden: element.orden, cantidad: element.cantidad, precio: element.precio, nombre: element.nombre, total: element.total}
             this.botanas1.push(obj)
             this.inventarioBotanas.push([]);
-          }else if(this.existenBotanas[index].existencia === 1 && (resultados[element.orden.id]*this.botanas[indice].cantidad) > this.existenBotanas[index].inventario){
+          }else if(this.existenBotanas[index].existencia === 1 && (resultados[element.orden.id]) > this.existenBotanas[index].inventario){
             if(this.authService.lang() === 'es'){
               const obj = {id: element.id, existencia: false, orden: element.orden, cantidad: element.cantidad, precio: element.precio, nombre: element.nombre, total: element.total}
-              const warn = 'No hay suficientes '+ element.orden.botana + ' para realizar la orden solo quedan '+ this.existenBotanas[index].inventario + ', por favor elimine almenos ' + ((resultados[element.orden.id]*this.botanas[indice].cantidad) - this.existenBotanas[index].inventario) + ' para poder continuar con su compra'
+              const warn = 'No hay suficientes '+ element.orden.botana + ' para realizar la orden solo quedan '+ this.existenBotanas[index].inventario + ', por favor elimine almenos ' + ((resultados[element.orden.id]) - this.existenBotanas[index].inventario) + ' para poder continuar con su compra'
               this.inventarioBotanas.push([warn])
               this.botanas1.push(obj)
             }else if(this.authService.lang() === 'en'){
               const obj = {id: element.id, existencia: false, orden: element.orden, cantidad: element.cantidad, precio: element.precio,nombre: element.nombre, total: element.total}
-              const warn = 'There are not enough '+ element.orden.botana + ' to make the order, there are only '+ this.existenBotanas[index].inventario + ', please remove at least ' + ((resultados[element.orden.id]*this.botanas[indice].cantidad) - this.existenBotanas[index].inventario) + ' to continue with your purchase'
+              const warn = 'There are not enough '+ element.orden.botana + ' to make the order, there are only '+ this.existenBotanas[index].inventario + ', please remove at least ' + ((resultados[element.orden.id]) - this.existenBotanas[index].inventario) + ' to continue with your purchase'
               this.inventarioBotanas.push([warn])
               this.botanas1.push(obj)
             }
@@ -2169,7 +2571,7 @@ export class CarritoComponent {
         const botana = element.orden;
         resultados1.push(botana);
       });
-      const resultados = this.contarRepeticiones1(resultados1);
+      const resultados = this.contarRepeticionesUnit(resultados1, 'Ensaladas');
       this.ensaladasIndividual1 = [];
       this.inventarioEnsaladasIndividual = [];
       obj.forEach((element:any, indice:any) => {
@@ -2193,19 +2595,19 @@ export class CarritoComponent {
             this.inventarioEnsaladasIndividual.push([]);
           }
         }else if(this.existenEnsaladasIndividual[index].cantidad === 1){
-          if(this.existenEnsaladasIndividual[index].existencia === 1 && (resultados[element.orden.id]*this.ensaladasIndividual[indice].cantidad) <= this.existenEnsaladasIndividual[index].inventario){
+          if(this.existenEnsaladasIndividual[index].existencia === 1 && (resultados[element.orden.id]) <= this.existenEnsaladasIndividual[index].inventario){
             const obj = {id: element.id, existencia: true, orden: element.orden, cantidad: element.cantidad, precio: element.precio, nombre: element.nombre, total: element.total} 
             this.ensaladasIndividual1.push(obj)
             this.inventarioEnsaladasIndividual.push([]);
-          }else if(this.existenEnsaladasIndividual[index].existencia === 1 && (resultados[element.orden.id]*this.ensaladasIndividual[indice].cantidad) > this.existenEnsaladasIndividual[index].inventario){
+          }else if(this.existenEnsaladasIndividual[index].existencia === 1 && (resultados[element.orden.id]) > this.existenEnsaladasIndividual[index].inventario){
             if(this.authService.lang() === 'es'){
               const obj = {id: element.id, existencia: false, orden: element.orden, cantidad: element.cantidad, precio: element.precio, nombre: element.nombre,total: element.total}
-              const warn = 'No hay suficientes '+ element.orden.ensalada + ' para realizar la orden solo quedan '+ this.existenEnsaladasIndividual[index].inventario + ', por favor elimine almenos ' + ((resultados[element.orden.id]*this.ensaladasIndividual[indice].cantidad) - this.existenEnsaladasIndividual[index].inventario) + ' para poder continuar con su compra'
+              const warn = 'No hay suficientes '+ element.orden.ensalada + ' para realizar la orden solo quedan '+ this.existenEnsaladasIndividual[index].inventario + ', por favor elimine almenos ' + ((resultados[element.orden.id]) - this.existenEnsaladasIndividual[index].inventario) + ' para poder continuar con su compra'
               this.inventarioEnsaladasIndividual.push([warn])
               this.ensaladasIndividual1.push(obj)
             }else if(this.authService.lang() === 'en'){
               const obj = {id: element.id, existencia: false, orden: element.orden, cantidad: element.cantidad, precio: element.precio,nombre: element.nombre, total: element.total}
-              const warn = 'There are not enough '+ element.orden.ensalada + ' to make the order, there are only '+ this.existenEnsaladasIndividual[index].inventario + ', please remove at least ' + ((resultados[element.orden.id]*this.ensaladasIndividual[indice].cantidad) - this.existenEnsaladasIndividual[index].inventario) + ' to continue with your purchase'
+              const warn = 'There are not enough '+ element.orden.ensalada + ' to make the order, there are only '+ this.existenEnsaladasIndividual[index].inventario + ', please remove at least ' + ((resultados[element.orden.id]) - this.existenEnsaladasIndividual[index].inventario) + ' to continue with your purchase'
               this.inventarioEnsaladasIndividual.push([warn])
               this.ensaladasIndividual1.push(obj)
             }
@@ -2224,6 +2626,7 @@ export class CarritoComponent {
       this.existenciasIngUntWaffleCanasta(this.wafflesCanastaIngUnt);
       this.existenciasIngComWaffleCanasta(this.wafflesCanastaIngCom);
       this.existenciasNieveWaffleCanasta(this.wafflesCanastaNieve);
+      this.existenciasDecoracionesWaffleCanasta(this.wafflesCanastaDecoraciones);
       this.detectExistIngWaffleCanasta();
     }
 
@@ -2252,10 +2655,12 @@ export class CarritoComponent {
         const ingredientesUntables = orden.orden.ingredientes_unt;
         const ingredientesComplementos = orden.orden.ingredientes_com;
         const nieves = orden.orden.nieve;
+        const decoarciones = orden.orden.decoracion;
         this.crepasDulces.push(orden);
         this.nievesCrepaD.push(nieves);
         this.ingredientesComCrepaD.push(ingredientesComplementos);
         this.ingredientesUntCrepaD.push(ingredientesUntables);
+        this.decoracionesCrepaD.push(decoarciones)
       });
 
       this.OrganizarCrepasDulces();
@@ -2281,10 +2686,12 @@ export class CarritoComponent {
         const ingredientesUntables = orden.orden.ingredientes_unt;
         const ingredientesComplementos = orden.orden.ingredientes_com;
         const nieves = orden.orden.nieve;
+        const decoraciones = orden.orden.decoracion;
         this.waffles.push(orden);
         this.wafflesIngUnt.push(ingredientesUntables);
         this.wafflesIngCom.push(ingredientesComplementos);
         this.wafflesNieve.push(nieves);
+        this.wafflesDecoraciones.push(decoraciones);
       });
 
       this.OrganizarWaffles();
@@ -2294,10 +2701,12 @@ export class CarritoComponent {
         const ingredientesUntables = orden.orden.ingredientes_unt;
         const ingredientesComplementos = orden.orden.ingredientes_com;
         const nieves = orden.orden.nieve;
+        const decoraciones = orden.orden.decoracion;
         this.wafflesCanasta.push(orden);
         this.wafflesCanastaIngUnt.push(ingredientesUntables);
         this.wafflesCanastaIngCom.push(ingredientesComplementos);
         this.wafflesCanastaNieve.push(nieves);
+        this.wafflesCanastaDecoraciones.push(decoraciones);
       })
       this.OrganizarWafflesCanasta();
     }
@@ -2589,7 +2998,7 @@ export class CarritoComponent {
     idOrden.orden.ingredientes_com.splice(index, 1);
     console.log(idOrden.orden);
     console.log(idOrden.id); 
-    const precio = this.calcularPrecioCrepaDulce(idOrden.orden.ingredientes_unt, idOrden.orden.ingredientes_com,  idOrden.orden.nieve, idOrden.orden.harina.harina);
+    const precio = this.calcularPrecioCrepaDulce(idOrden.orden.ingredientes_unt, idOrden.orden.ingredientes_com,  idOrden.orden.nieve, idOrden.orden.harina.harina, idOrden.orden.decoracion);
     const index1 = this.crepasDulces.findIndex((i:any) => i.id === id1);
     console.log(this.ingredientesComCrepaD1[index1]);
     console.log(this.crepasDulces[index1]);
@@ -2647,7 +3056,7 @@ export class CarritoComponent {
     idOrden.orden.ingredientes_unt.splice(index, 1);
     console.log(idOrden.orden);
     console.log(idOrden.id); 
-    const precio = this.calcularPrecioCrepaDulce(idOrden.orden.ingredientes_unt, idOrden.orden.ingredientes_com,  idOrden.orden.nieve, idOrden.orden.harina.harina);
+    const precio = this.calcularPrecioCrepaDulce(idOrden.orden.ingredientes_unt, idOrden.orden.ingredientes_com,  idOrden.orden.nieve, idOrden.orden.harina.harina, idOrden.orden.decoracion);
     const index1 = this.crepasDulces.findIndex((i:any) => i.id === id1);
     console.log(this.ingredientesUntCrepaD1[index1]);
     console.log(this.crepasDulces[index1]);
@@ -2704,7 +3113,7 @@ export class CarritoComponent {
     idOrden.orden.nieve.splice(index, 1);
     console.log(idOrden.orden);
     console.log(idOrden.id); 
-    const precio = this.calcularPrecioCrepaDulce(idOrden.orden.ingredientes_unt, idOrden.orden.ingredientes_com,  idOrden.orden.nieve, idOrden.orden.harina.harina);
+    const precio = this.calcularPrecioCrepaDulce(idOrden.orden.ingredientes_unt, idOrden.orden.ingredientes_com,  idOrden.orden.nieve, idOrden.orden.harina.harina, idOrden.orden.decoracion);
     const index1 = this.crepasDulces.findIndex((i:any) => i.id === id1);
     console.log(this.nievesCrepaD1[index1]);
     console.log(this.crepasDulces[index1]);
@@ -2745,6 +3154,54 @@ export class CarritoComponent {
     )}
   }
 
+  deleteDecoracion(idOrden:any, nombre:any, id1:any){
+    if(idOrden.nombre === crepasDulce){
+    const index = idOrden.orden.decoracion.findIndex((i:any) => i.nombre === nombre);
+    console.log(index);
+    idOrden.orden.decoracion.splice(index, 1);
+    console.log(idOrden.orden);
+    console.log(idOrden.id); 
+    const precio = this.calcularPrecioCrepaDulce(idOrden.orden.ingredientes_unt, idOrden.orden.ingredientes_com,  idOrden.orden.nieve, idOrden.orden.harina.harina, idOrden.orden.decoracion);
+    const index1 = this.crepasDulces.findIndex((i:any) => i.id === id1);
+    console.log(this.nievesCrepaD1[index1]);
+    console.log(this.crepasDulces[index1]);
+    const orden:any = {
+      cantidad: idOrden.cantidad,
+      nombre: idOrden.nombre,
+      orden:idOrden.orden,
+      precio: precio,
+      total: precio*idOrden.cantidad,
+     userId: idOrden.userId
+    }
+    console.log(orden);
+    
+    this.service.updateOrden(id1, orden).subscribe(
+      res => {
+        console.log(res);
+        this.service.selectOrden(id1).subscribe(
+          (res:any) => {
+            this.decoracionesCrepaD[index1] = [];
+            const decoraciones:any = [];
+            res[0].orden.decoracion.forEach((element:any) => {
+  
+              decoraciones.push(element)
+
+            }
+            )
+            this.crepasDulces[index1].precio = res[0].precio
+            this.crepasDulces[index1].total = res[0].total
+            this.decoracionesCrepaD[index1] = decoraciones
+              this.existenciasDecoracionCrepaD(this.decoracionesCrepaD);
+            this.detectExistIngCrepaD();
+            this.calcularTotal();
+          },
+          err => console.log(err)
+        )
+      },
+      err => console.log(err)
+    )}
+  }
+
 
   deletharinas(){
     if(this.authService.lang() === 'es'){
@@ -2767,7 +3224,7 @@ export class CarritoComponent {
       console.log(idOrden.orden);
       console.log(idOrden.id);
       const index1 = this.waffles.findIndex((i:any) => i.id === id1);
-      const precio = this.calcuarPrecioWaffle(idOrden.orden.ingredientes_com, idOrden.orden.ingredientes_unt,  idOrden.orden.nieve);
+      const precio = this.calcuarPrecioWaffle(idOrden.orden.ingredientes_com, idOrden.orden.ingredientes_unt,  idOrden.orden.nieve,  idOrden.orden.decoracion);
       console.log(this.waffles1IngCom[index1]);
       console.log(this.waffles[index1]);
       const orden:any = {
@@ -2823,7 +3280,7 @@ export class CarritoComponent {
     console.log(idOrden.orden);
     console.log(idOrden.id);
     const index1 = this.waffles.findIndex((i:any) => i.id === id1);
-    const precio = this.calcuarPrecioWaffle(idOrden.orden.ingredientes_com, idOrden.orden.ingredientes_unt,  idOrden.orden.nieve);
+    const precio = this.calcuarPrecioWaffle(idOrden.orden.ingredientes_com, idOrden.orden.ingredientes_unt,  idOrden.orden.nieve,  idOrden.orden.decoracion);
     console.log(this.wafflesIngUnt[index1]);
     console.log(this.waffles[index1]);
     const orden:any = {
@@ -2875,7 +3332,7 @@ export class CarritoComponent {
     console.log(idOrden.orden);
     console.log(idOrden.id);
     const index1 = this.waffles.findIndex((i:any) => i.id === id1);
-    const precio = this.calcuarPrecioWaffle(idOrden.orden.ingredientes_com, idOrden.orden.ingredientes_unt,  idOrden.orden.nieve);
+    const precio = this.calcuarPrecioWaffle(idOrden.orden.ingredientes_com, idOrden.orden.ingredientes_unt,  idOrden.orden.nieve,  idOrden.orden.decoracion);
     console.log(this.waffles1Nieve[index1]);
     console.log(this.waffles[index1]);
     const orden:any = {
@@ -2914,6 +3371,53 @@ export class CarritoComponent {
 
   }
 
+  deleteDecoracionWaffle(idOrden:any, nombre:any, id1:any){
+    if(idOrden.nombre === waffles){
+    const index = idOrden.orden.decoracion.findIndex((i:any) => i.nombre === nombre);
+    console.log(index);
+    idOrden.orden.decoracion.splice(index, 1);
+    console.log(idOrden.orden);
+    console.log(idOrden.id);
+    const index1 = this.waffles.findIndex((i:any) => i.id === id1);
+    const precio = this.calcuarPrecioWaffle(idOrden.orden.ingredientes_com, idOrden.orden.ingredientes_unt,  idOrden.orden.nieve,  idOrden.orden.decoracion);
+    console.log(this.waffles1Decoraciones[index1]);
+    console.log(this.waffles[index1]);
+    const orden:any = {
+      cantidad: idOrden.cantidad,
+      nombre: idOrden.nombre,
+      orden:idOrden.orden,
+      precio: precio,
+      total: precio*idOrden.cantidad,
+     userId: idOrden.userId
+    }
+    console.log(orden);
+
+    this.service.updateOrden(id1, orden).subscribe(
+      res => {
+        console.log(res);
+        this.service.selectOrden(id1).subscribe(
+          (res:any) => {
+            this.wafflesDecoraciones[index1] = [];
+            const decoracions:any = [];
+            res[0].orden.decoracion.forEach((element:any) => {
+                decoracions.push(element)
+            }
+            )
+            this.waffles[index1].precio = res[0].precio
+            this.waffles[index1].total = res[0].total
+            this.wafflesDecoraciones[index1] = decoracions
+              this.existenciasDecoracionWaffle(this.wafflesDecoraciones);
+            this.detectExistIngWaffle();
+            this.calcularTotal();
+          },
+          err => console.log(err)
+        )
+      },
+      err => console.log(err)
+    )}
+
+  }
+
       // Waffle Canasta
 
     deleteIngredienteComWaffleCanasta(idOrden:any, id:any, id1:any){
@@ -2927,7 +3431,7 @@ export class CarritoComponent {
       console.log(idOrden.orden);
       console.log(idOrden.id);
       const index1 = this.wafflesCanasta.findIndex((i:any) => i.id === id1);
-      const precio = this.calcuarPrecioWaffleCanasta(idOrden.orden.ingredientes_com, idOrden.orden.ingredientes_unt);
+      const precio = this.calcuarPrecioWaffleCanasta(idOrden.orden.ingredientes_com, idOrden.orden.ingredientes_unt, idOrden.orden.decoracion);
       console.log(this.wafflesCanasta1IngCom[index1]);
       console.log(this.wafflesCanasta[index1]);
       const orden:any = {
@@ -2983,7 +3487,7 @@ export class CarritoComponent {
     console.log(idOrden.orden);
     console.log(idOrden.id);
     const index1 = this.wafflesCanasta.findIndex((i:any) => i.id === id1);
-    const precio = this.calcuarPrecioWaffleCanasta(idOrden.orden.ingredientes_com, idOrden.orden.ingredientes_unt);
+    const precio = this.calcuarPrecioWaffleCanasta(idOrden.orden.ingredientes_com, idOrden.orden.ingredientes_unt, idOrden.orden.decoracion);
     console.log(this.wafflesCanasta1IngUnt[index1]);
     console.log(this.wafflesCanasta[index1]);
     const orden:any = {
@@ -3034,7 +3538,7 @@ export class CarritoComponent {
     console.log(idOrden.orden);
     console.log(idOrden.id);
     const index1 = this.wafflesCanasta.findIndex((i:any) => i.id === id1);
-    const precio = this.calcuarPrecioWaffleCanasta(idOrden.orden.ingredientes_com, idOrden.orden.ingredientes_unt);
+    const precio = this.calcuarPrecioWaffleCanasta(idOrden.orden.ingredientes_com, idOrden.orden.ingredientes_unt, idOrden.orden.decoracion);
     console.log(this.wafflesCanasta1Nieve[index1]);
     console.log(this.wafflesCanasta[index1]);
     const orden:any = {
@@ -3062,6 +3566,53 @@ export class CarritoComponent {
             this.wafflesCanasta[index1].total = res[0].total
             this.wafflesCanastaNieve[index1] = nieves
               this.existenciasNieveWaffleCanasta(this.wafflesCanastaNieve);
+            this.detectExistIngWaffleCanasta();
+            this.calcularTotal();
+          },
+          err => console.log(err)
+        )
+      },
+      err => console.log(err)
+    )}
+
+  }
+
+  deleteDecoracionWaffleCanasta(idOrden:any, nombre:any, id1:any){
+    if(idOrden.nombre === waffleCanasta){
+    const index = idOrden.orden.decoracion.findIndex((i:any) => i.nombre === nombre);
+    console.log(index);
+    idOrden.orden.decoracion.splice(index, 1);
+    console.log(idOrden.orden);
+    console.log(idOrden.id);
+    const index1 = this.wafflesCanasta.findIndex((i:any) => i.id === id1);
+    const precio = this.calcuarPrecioWaffleCanasta(idOrden.orden.ingredientes_com, idOrden.orden.ingredientes_unt, idOrden.orden.decoracion);
+    console.log(this.wafflesCanasta1Decoraciones[index1]);
+    console.log(this.wafflesCanasta[index1]);
+    const orden:any = {
+      cantidad: idOrden.cantidad,
+      nombre: idOrden.nombre,
+      orden:idOrden.orden,
+      precio: precio,
+      total: precio*idOrden.cantidad,
+     userId: idOrden.userId
+    }
+    console.log(orden);
+
+    this.service.updateOrden(id1, orden).subscribe(
+      res => {
+        console.log(res);
+        this.service.selectOrden(id1).subscribe(
+          (res:any) => {
+            this.wafflesCanastaDecoraciones[index1] = [];
+            const decoracions:any = [];
+            res[0].orden.decoracion.forEach((element:any) => {
+                decoracions.push(element)
+            }
+            )
+            this.wafflesCanasta[index1].precio = res[0].precio
+            this.wafflesCanasta[index1].total = res[0].total
+            this.wafflesCanastaDecoraciones[index1] = decoracions
+              this.existenciasDecoracionesWaffleCanasta(this.wafflesCanastaDecoraciones);
             this.detectExistIngWaffleCanasta();
             this.calcularTotal();
           },
@@ -3159,8 +3710,36 @@ export class CarritoComponent {
       console.log('-----Nieves-----')
       console.log(r2)
 
+      const i3:any = [];
+      this.waffles1Decoraciones.forEach((element:any) => {
+        if(element.length === 0){
+          i3.push([0])
+        }else if (element.length > 0){
+          var e:any = 0;
+          element.forEach((elemento:any) => {
+            if(elemento.existencia === true){
+   
+            }else if(elemento.existencia === false){
+              e ++;
+            }
+          })
+          i3.push([e]);
+        }
+      })
+      const r3:any = [];
+      i3.forEach((element:any) => {
+        if(element[0] === 0){
+          r3.push(false)
+        }else if(element[0] > 0){
+          r3.push(true)
+        }
+
+      })
+      console.log('---------decoraciones---------')
+      console.log(r3)
+
       const mergedArray = r.map((value:any, index:any) => {
-        return value || r1[index] || r2[index];
+        return value || r1[index] || r2[index] || r3[index];
       });
 
       console.log(mergedArray);
@@ -3253,6 +3832,34 @@ export class CarritoComponent {
       console.log('---------Nieves---------')
       console.log(r2)
 
+      const i4:any = [];
+      this.decoracionesCrepaD1.forEach((element:any) => {
+        if(element.length === 0){
+          i4.push([0])
+        }else if (element.length > 0){
+          var e:any = 0;
+          element.forEach((elemento:any) => {
+            if(elemento.existencia === true){
+   
+            }else if(elemento.existencia === false){
+              e ++;
+            }
+          })
+          i4.push([e]);
+        }
+      })
+      const r4:any = [];
+      i4.forEach((element:any) => {
+        if(element[0] === 0){
+          r4.push(false)
+        }else if(element[0] > 0){
+          r4.push(true)
+        }
+
+      })
+      console.log('---------decoraciones---------')
+      console.log(r4)
+
       const i3:any = [];
       this.crepasDulces.forEach((element:any) => {
         if(Object.keys(element.orden.harina).length === 0){
@@ -3280,7 +3887,7 @@ export class CarritoComponent {
       console.log(r3)
 
       const mergedArray = r.map((value:any, index:any) => {
-        return value || r1[index] || r2[index] || r3[index];
+        return value || r1[index] || r2[index] || r3[index] || r4[index];
       });
 
       console.log(mergedArray);
@@ -3493,8 +4100,36 @@ export class CarritoComponent {
       console.log('-----Nieves-----')
       console.log(r2)
 
+      const i3:any = [];
+      this.wafflesCanasta1Decoraciones.forEach((element:any) => {
+        if(element.length === 0){
+          i3.push([0])
+        }else if (element.length > 0){
+          var e:any = 0;
+          element.forEach((elemento:any) => {
+            if(elemento.existencia === true){
+   
+            }else if(elemento.existencia === false){
+              e ++;
+            }
+          })
+          i3.push([e]);
+        }
+      })
+      const r3:any = [];
+      i3.forEach((element:any) => {
+        if(element[0] === 0){
+          r3.push(false)
+        }else if(element[0] > 0){
+          r3.push(true)
+        }
+
+      })
+      console.log('---------decoraciones---------')
+      console.log(r3)
+
       const mergedArray = r.map((value:any, index:any) => {
-        return value || r1[index] || r2[index];
+        return value || r1[index] || r2[index] || r3[index];
       });
 
       console.log(mergedArray);
@@ -3589,9 +4224,12 @@ export class CarritoComponent {
   }
     
 
-  calcularPrecioCrepaDulce(ingredientes_unt:any, ingredientes_com:any, nieve:any, harina: any){
+  calcularPrecioCrepaDulce(ingredientes_unt:any, ingredientes_com:any, nieve:any, harina: any, decoracion: any){
     const long = ingredientes_unt.length + ingredientes_com.length
-
+    const longDec = decoracion.length   
+    console.log('Decoracion: lon' + longDec)
+    console.log(this.precioRegularCrepaDulce[0], this.precioExtraCrepaDulce[0], this.precioNieveCrepaDulce[0], this.precioDecoracionCrepaDulce[0]);
+  if(longDec < 2){
     if(long > 1){
     if (harina === sabor){
      const precio = this.precioRegularCrepaDulce[0] + this.precioExtraCrepaDulce[0]*(long - 2) + this.precioNieveCrepaDulce[0]*(nieve.length); 
@@ -3606,21 +4244,74 @@ export class CarritoComponent {
         return precio
       }else if(harina !== sabor){
         const precio = this.precioRegularCrepaDulce[0] + this.precioExtraCrepaDulce[0] + this.precioNieveCrepaDulce[0]*(nieve.length); 
+        return precio
       }
   
     }
+  }else if(longDec > 1){
+    if(long > 1){
+      if (harina === sabor){
+    
+        const precio = this.precioRegularCrepaDulce[0] + this.precioExtraCrepaDulce[0]*(long - 2) + this.precioNieveCrepaDulce[0]*(nieve.length); 
+        return precio + (this.precioDecoracionCrepaDulce[0]*(longDec - 1))    
+       }else if(harina !== sabor){
+        const precio = this.precioRegularCrepaDulce[0] + this.precioExtraCrepaDulce[0]*(long -2 + 1) + this.precioNieveCrepaDulce[0]*(nieve.length); 
+              return precio + (this.precioDecoracionCrepaDulce[0]*(longDec - 1))  
+       }
+      }else{
+        if(harina === sabor){
+          return this.precioRegularCrepaDulce[0] + this.precioNieveCrepaDulce[0]*(nieve.length) + (this.precioDecoracionCrepaDulce[0]*(longDec - 1))  ; 
+        }else if(harina !== sabor){
+          return this.precioRegularCrepaDulce[0] + this.precioExtraCrepaDulce[0] + this.precioNieveCrepaDulce[0]*(nieve.length) + (this.precioDecoracionCrepaDulce[0]*(longDec - 1)); 
+        }
+    
+      }
+  }
   }
 
-  calcuarPrecioWaffle(ingredientes_com:any, ingredientes_unt:any, nieve:any){
-    const long = ingredientes_com.length + ingredientes_unt.length;
-    const precio = this.precioRegularWaffle[0] + this.precioExtraWaffle[0]*(long - 2) + this.precioNieveWaffle[0]*(nieve.length); 
-    return precio;
+  calcuarPrecioWaffle(ingredientes_com:any, ingredientes_unt:any, nieve:any, decoracion: any){
+
+    const long = ingredientes_unt.length + ingredientes_com.length
+    const longDec = decoracion.length
+    if(long > 1){
+      if(longDec < 2){
+       const precio = this.precioRegularWaffle[0] + this.precioExtraWaffle[0]*(long - 2) + this.precioNieveWaffle[0]*nieve.length; 
+      return precio         
+      }else if(longDec > 1){
+        const precio = this.precioRegularWaffle[0] + this.precioExtraWaffle[0]*(long - 2) + this.precioNieveWaffle[0]*nieve.length; 
+        return precio + (this.precioDecoracionWaffle[0]*(longDec - 1 ))   
+      }
+       
+    }else{  
+      if(longDec < 2){        
+      return this.precioRegularWaffle[0];
+      }else if(longDec > 1){
+      const precio = this.precioRegularWaffle[0] + (this.precioDecoracionWaffle[0]*(longDec - 1 )) ;
+      return precio
+      }
+    }
   }
 
-    calcuarPrecioWaffleCanasta(ingredientes_com:any, ingredientes_unt:any){
-    const long = ingredientes_com.length + ingredientes_unt.length;
-    const precio = this.precioRegularWaffle[0] + this.precioExtraWaffle[0]*(long - 1)
-    return precio;
+    calcuarPrecioWaffleCanasta(ingredientes_com:any, ingredientes_unt:any, decoracion:any){
+      const long = ingredientes_unt.length + ingredientes_com.length
+      const longDec = decoracion.length
+      if(longDec < 2){
+      if(long > 0){
+        const precio = this.precioRegularWaffleCanasta[0] + this.precioExtraWaffleCanasta[0]*(long - 1);
+        return precio
+      }else{      
+        const precio = this.precioRegularWaffleCanasta[0];
+        return precio
+      }
+    }else if(longDec > 1){
+      if(long > 0){
+        const precio = this.precioRegularWaffleCanasta[0] + this.precioExtraWaffleCanasta[0]*(long - 1);
+       return precio + (this.precioDecoracionWaffleCanasta[0]*(longDec - 1 )) 
+  }else{      
+      const precio = this.precioRegularWaffleCanasta[0] + (this.precioDecoracionWaffleCanasta[0]*(longDec - 1 )) ;
+      return precio
+  }
+    }  
   }  
 
   comprar(){
@@ -3727,7 +4418,7 @@ export class CarritoComponent {
     }else if(result === false){
       const date = new Date();
       const dateString = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}:${String(date.getSeconds()).padStart(2, '0')}`;
-      this.ventas.sales(this.ordenes, dateString).subscribe((res:any) => {
+      this.ventas.sales(this.ordenes, dateString, this.mesa).subscribe((res:any) => {
         console.log(res);      
         if(this.authService.lang() === 'es'){
           this.alertService.mostrarAlerta('Compra realizada con exito')
@@ -3819,6 +4510,7 @@ export class CarritoComponent {
       
       let info:any = `<div style="position: relative; width: 855px;"><div class="info">Fecha y hora: ${this.invoice[0].fecha_hora}</div>
       <div class="info">Factura ID: ${this.invoice[0].id}</div>
+      <div class="info">Mesa: ${this.invoice[0].mesa}</div>
       <div class="info">Numero de caja: ${this.invoice[0].numero_caja}</div>
       <div class="info">Numero de productos: ${this.invoice[0].numero_productos}</div>
       <div class="info">Sucursal ID: ${this.invoice[0].sucursal_id}</div>
@@ -4170,11 +4862,12 @@ export class CarritoComponent {
           });
         }else if(language === 'en'){
                 
-      let info:any = `<div style="position: relative; width: 855px;"><div class="info">Fecha y hora: ${this.invoice[0].fecha_hora}</div>
-      <div class="info">Factura ID: ${this.invoice[0].id}</div>
-      <div class="info">Numero de caja: ${this.invoice[0].numero_caja}</div>
-      <div class="info">Numero de productos: ${this.invoice[0].numero_productos}</div>
-      <div class="info">Sucursal ID: ${this.invoice[0].sucursal_id}</div>
+      let info:any = `<div style="position: relative; width: 855px;"><div class="info">Date and time: ${this.invoice[0].fecha_hora}</div>
+      <div class="info">Invoice ID: ${this.invoice[0].id}</div>
+      <div class="info">Table: ${this.invoice[0].mesa}</div>
+      <div class="info">Box number: ${this.invoice[0].numero_caja}</div>
+      <div class="info">Number of products: ${this.invoice[0].numero_productos}</div>
+      <div class="info">Branch ID: ${this.invoice[0].sucursal_id}</div>
       <div class="info">Total: ${this.invoice[0].total}</div>
       <div class="info">User ID: ${this.invoice[0].userId}</div></div>
       `
@@ -4553,82 +5246,13 @@ export class CarritoComponent {
 
         this.service.deleteAll().subscribe((res:any) => {
           console.log(res);
-          this.grupos = [];
-          this.ordenes = [];
-          this.saladasWarning = [];
-          this.dulcesWarning = [];
-          this.wafflesWarning = [];
-          this.wafflesCanastaWarning = [];
-          this.bebidasFriasWarning = [];
-          this.bebidasCalientesWarning = [];
-          this.ensaladasWarning = [];
-          this.botanasWarning = [];
-      
-          // Crepa Dulce 
-          this.crepasDulces = [];
-          this.ingredientesComCrepaD = [];
-          this.ingredientesComCrepaD1 = [];
-          this.ingredientesUntCrepaD = [];
-          this.ingredientesUntCrepaD1 = [];
-          this.nievesCrepaD = [];
-          this.nievesCrepaD1 = [];
-      
-      
-      
-          // Crepa Salada
-          this.crepasSaladas = [];
-          this.ingredientesCrepaS = [];
-          this.ingredientesCrepaS1 = [];
-      
-          this.aderesosCrepaS = [];
-          this.aderesosCrepaS1 = [];
-          this.ingredientesBaseCrepaS = [];
-          this.ingredientesBaseCrepaS1 = [];
-          this.aderesosBaseCrepaS = [];
-          this.aderesosBaseCrepaS1 = [];
-      
-          // Waffles
-          this.waffles = [];
-          this.wafflesIngUnt = [];
-          this.waffles1IngUnt = [];
-          this.wafflesIngCom = [];
-          this.waffles1IngCom = [];
-          this.wafflesNieve = [];
-          this.waffles1Nieve = [];
-      
-          // Waffles Canasta
-          this.wafflesCanasta = [];
-          this.wafflesCanastaIngUnt = [];
-          this.wafflesCanasta1IngUnt = [];
-      
-          this.wafflesCanastaIngCom = [];
-          this.wafflesCanasta1IngCom = [];
-          this.wafflesCanastaNieve = [];
-          this.wafflesCanasta1Nieve = [];
-      
-      
-          // Bebidas Calientes
-          this.bebidasCalientes = [];
-          this.bebidasCalientes1 = [];
-      
-      
-          // Bebidas Frias
-          this.bebidasFrias = [];
-          this.bebidasFrias1 = [];
-      
-      
-          // Botanas
-          this.botanas = [];
-          this.botanas1 = [];
-          // Ensalada Indivudual
-          this.ensaladasIndividual = [];
-          this.ensaladasIndividual1 = [];
-          this.stock();
+          this.stockInsuficiente();
         },
         err => console.log(err)
         )
       },
       err => {     
+        this.stockInsuficiente();
         if(err.error.message === '404'){
           if(this.authService.lang() === 'es'){
             this.alertService.mostrarAlerta('No hay suficiente inventario para completar su compra por favor revise su carrito de compra')
@@ -4661,6 +5285,878 @@ export class CarritoComponent {
     return arrays.some(arr => arr.some(variable => variable === true));
     
 }
+
+imprimir(){
+  let body = document.createElement('body');
+  let div = document.createElement('div');
+
+  div.classList.add('tabla-container');
+  body.innerHTML = `
+<style>
+.tabla-container {
+padding-bottom: 40px;
+}
+.tabla-container table {
+width: 900px;
+}
+
+.tabla-container th,
+.tabla-container td {
+
+text-align: inherit;
+width: 5%;
+}
+.tabla-container li {
+list-style: none;
+
+}
+
+ul{
+margin: 0px;
+padding: 0px;
+}
+
+.tabla-container a {
+text-decoration: none;
+}
+
+.total{
+border-radius: 10px;
+height: 50px;
+width: 870px;
+}
+
+.totalCant p{
+display: block;
+float: right;
+height: 50px;
+width: 10%;
+padding: 0px;
+padding-top: 12px;
+padding-left: 165px;
+}
+
+.one{
+width: 1000px;
+}
+
+.info{
+margin-bottom: 5px;
+}
+
+</style>`;
+
+const token:any = localStorage.getItem('token');
+const tokenData = token.split('.')[1]; // Obtén la parte de los datos del token
+const decodedTokenData = JSON.parse(atob(tokenData)); // Decodifica y parsea los datos
+console.log(tokenData)
+// Accede a los datos del usuario
+const userData = {
+
+lang: decodedTokenData.lang,
+// Agrega otros datos del usuario si los necesitas
+};     
+const language = userData.lang;
+if(language === 'es'){
+
+  let info:any = `<div style="position: relative; width: 855px;">
+  <div class="info">Mesa: ${this.mesa}</div>
+  </div>
+  `
+div.innerHTML += info;
+  this.ordenes.forEach((objeto:any) => {
+    console.log(objeto.nombre);
+    let tabla = '';
+    switch (objeto.nombre) {
+
+      case crepasDulce:
+    tabla = `
+<div class='tabla-container'>
+<table style="width: 902px;">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Cantidad</th>
+      <th>Precio</th>
+      <th>Complementos</th>
+      <th>Untables</th>
+      <th>Harina</th>
+      <th>Nieve</th>
+      <th>Decoracion</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>${objeto.nombre}</td>
+      <td>${objeto.cantidad}</td>
+      <td>${objeto.precio}</td>
+      <td>
+        <ul class="ingredient-list">
+          ${objeto.orden.ingredientes_com.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
+        </ul>
+      </td>
+      <td>
+        <ul>
+          ${objeto.orden.ingredientes_unt.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
+        </ul>
+      </td>
+      <td>${objeto.orden.harina.harina}</td>
+      <td>
+        <ul>
+          ${objeto.orden.nieve.map((nieve: any) => `<li>${nieve.nombre}</li>`).join('')}
+        </ul>
+      </td>
+      <td>
+      <ul>
+      ${objeto.orden.decoracion.map((decoracion: any) => `<li>${decoracion.nombre}</li>`).join('')}
+      </ul>
+    </td>
+      <td>${objeto.total}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+`;
+
+div.innerHTML += tabla;
+break;
+case crepasSalada:
+tabla = `
+<div  class='tabla-container'>
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Cantidad</th>
+      <th>Precio</th>
+      <th>Ingredientes Base</th>
+      <th>Adereso Base</th>
+      <th>Ingredientes</th>
+      <th>Aderesos</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>${objeto.nombre}</td>
+      <td>${objeto.cantidad}</td>
+      <td>${objeto.precio}</td>
+      <td>
+        <ul class="ingredient-list">
+          ${objeto.orden.ingredientes_base.map((ing: any) => `<li>${ing.ingrediente_base}</li>`).join('')}
+        </ul>
+      </td>
+      <td>
+        <ul>
+          ${objeto.orden.adereso_base.map((ing: any) => `<li>${ing.adereso_base}</li>`).join('')}
+        </ul>
+      </td>
+      <td>
+      <ul class="ingredient-list">
+        ${objeto.orden.ingredientes.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
+      </ul>
+    </td>
+    <td>
+      <ul>
+        ${objeto.orden.aderesos.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
+      </ul>
+    </td>
+      <td>${objeto.total}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+`
+div.innerHTML += tabla;
+break;
+
+case waffles:
+  tabla = `
+<div class='tabla-container'>
+<table style="width: 920px;">
+<thead>
+  <tr>
+    <th>Nombre</th>
+    <th>Cantidad</th>
+    <th>Precio</th>
+    <th>Complementos</th>
+    <th>Untables</th>
+    <th>Nieve</th>
+    <th>Decoracion</th>
+    <th>Total</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>${objeto.nombre}</td>
+    <td>${objeto.cantidad}</td>
+    <td>${objeto.precio}</td>
+    <td>
+      <ul class="ingredient-list">
+        ${objeto.orden.ingredientes_com.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
+      </ul>
+    </td>
+    <td>
+      <ul>
+        ${objeto.orden.ingredientes_unt.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
+      </ul>
+    </td>
+    <td>
+      <ul>
+        ${objeto.orden.nieve.map((nieve: any) => `<li>${nieve.nombre}</li>`).join('')}
+      </ul>
+    </td>
+    <td>
+    <ul>
+    ${objeto.orden.decoracion.map((decoracion: any) => `<li>${decoracion.nombre}</li>`).join('')}
+    </ul>
+  </td>
+    <td>${objeto.total}</td>
+  </tr>
+</tbody>
+</table>
+</div>
+`;
+
+div.innerHTML += tabla;
+break;
+
+case waffleCanasta:
+tabla = `
+<div class='tabla-container'>
+<table style="width: 923px;">
+<thead>
+<tr>
+<th>Nombre</th>
+<th>Cantidad</th>
+<th>Precio</th>
+<th>Complementos</th>
+<th>Untables</th>
+<th>Nieve</th>
+<th>Decoracion</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>${objeto.nombre}</td>
+<td>${objeto.cantidad}</td>
+<td>${objeto.precio}</td>
+<td>
+  <ul class="ingredient-list">
+    ${objeto.orden.ingredientes_com.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
+  </ul>
+</td>
+<td>
+  <ul>
+    ${objeto.orden.ingredientes_unt.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
+  </ul>
+</td>
+<td>
+  <ul>
+    ${objeto.orden.nieve.map((nieve: any) => `<li>${nieve.nombre}</li>`).join('')}
+  </ul>
+</td>
+<td>
+<ul>
+${objeto.orden.decoracion.map((decoracion: any) => `<li>${decoracion.nombre}</li>`).join('')}
+</ul>
+</td>
+<td>${objeto.total}</td>
+</tr>
+</tbody>
+</table>
+</div>
+`;
+
+div.innerHTML += tabla;
+break;
+
+case bebidasCalientes:
+tabla = `
+<div class='tabla-container'>
+<table style="width: 1005px;">
+<thead>
+<tr>
+<th>Nombre</th>
+<th>Cantidad</th>
+<th>Precio</th>
+<th>Bebida</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>${objeto.nombre}</td>
+<td>${objeto.cantidad}</td>
+<td>${objeto.precio}</td>
+<td>
+  <ul class="ingredient-list">
+    ${objeto.orden.bebida}
+  </ul>
+</td>
+<td>${objeto.total}</td>
+</tr>
+</tbody>
+</table>
+</div>
+`;
+
+div.innerHTML += tabla;
+break;
+
+case bebidasFrias:
+tabla = `
+<div class='tabla-container'>
+<table style="width: 1005px;">
+<thead>
+<tr>
+<th>Nombre</th>
+<th>Cantidad</th>
+<th>Precio</th>
+<th>Bebida</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>${objeto.nombre}</td>
+<td>${objeto.cantidad}</td>
+<td>${objeto.precio}</td>
+<td>
+  <ul class="ingredient-list">
+    ${objeto.orden.bebida}
+  </ul>
+</td>
+<td>${objeto.total}</td>
+</tr>
+</tbody>
+</table>
+</div>
+`;
+
+div.innerHTML += tabla;
+break;
+
+case botanas:
+tabla = `
+<div class='tabla-container'>
+<table style="width: 1005px;">
+<thead>
+<tr>
+<th>Nombre</th>
+<th>Cantidad</th>
+<th>Precio</th>
+<th>Botana</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>${objeto.nombre}</td>
+<td>${objeto.cantidad}</td>
+<td>${objeto.precio}</td>
+<td>
+  <ul class="ingredient-list">
+    ${objeto.orden.botana}
+  </ul>
+</td>
+<td>${objeto.total}</td>
+</tr>
+</tbody>
+</table>
+</div>
+`;
+
+div.innerHTML += tabla;
+break;
+
+case ensaladas:
+tabla = `
+<div class='tabla-container'>
+<table style="width: 1000px;">
+<thead>
+<tr>
+<th>Nombre</th>
+<th>Cantidad</th>
+<th>Precio</th>
+<th>Ensalada</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>${objeto.nombre}</td>
+<td>${objeto.cantidad}</td>
+<td>${objeto.precio}</td>
+<td>
+  <ul class="ingredient-list">
+    ${objeto.orden.ensalada}
+  </ul>
+</td>
+<td>${objeto.total}</td>
+</tr>
+</tbody>
+</table>
+</div>
+`;
+
+div.innerHTML += tabla;
+break;
+    }
+  });
+}else if(language === 'en'){
+        
+let info:any = `<div style="position: relative; width: 855px;">
+<div class="info">Table: ${this.mesa}</div>
+</div>
+`
+div.innerHTML += info;
+  this.ordenes.forEach((objeto:any) => {
+    console.log(objeto.nombre);
+    let tabla = '';
+    switch (objeto.nombre) {
+
+      case crepasDulce:
+    tabla = `
+<div class='tabla-container'>
+<table style="width: 902px;">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Amount</th>
+      <th>Price</th>
+      <th>Complements</th>
+      <th>Spreads</th>
+      <th>Flour</th>
+      <th>Snow</th>
+      <th>Decor</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>${objeto.nombre}</td>
+      <td>${objeto.cantidad}</td>
+      <td>${objeto.precio}</td>
+      <td>
+        <ul class="ingredient-list">
+          ${objeto.orden.ingredientes_com.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
+        </ul>
+      </td>
+      <td>
+        <ul>
+          ${objeto.orden.ingredientes_unt.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
+        </ul>
+      </td>
+      <td>${objeto.orden.harina.harina}</td>
+      <td>
+        <ul>
+          ${objeto.orden.nieve.map((nieve: any) => `<li>${nieve.nombre}</li>`).join('')}
+        </ul>
+      </td>
+      <td>
+      <ul>
+      ${objeto.orden.decoracion.map((decoracion: any) => `<li>${decoracion.nombre}</li>`).join('')}
+      </ul>
+    </td>
+      <td>${objeto.total}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+`;
+
+div.innerHTML += tabla;
+break;
+case crepasSalada:
+tabla = `
+<div  class='tabla-container'>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Amount</th>
+      <th>Price</th>
+      <th>Base Ingredients</th>
+      <th>Base Dressings</th>
+      <th>Ingredients</th>
+      <th>Dressings</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>${objeto.nombre}</td>
+      <td>${objeto.cantidad}</td>
+      <td>${objeto.precio}</td>
+      <td>
+        <ul class="ingredient-list">
+          ${objeto.orden.ingredientes_base.map((ing: any) => `<li>${ing.ingrediente_base}</li>`).join('')}
+        </ul>
+      </td>
+      <td>
+        <ul>
+          ${objeto.orden.adereso_base.map((ing: any) => `<li>${ing.adereso_base}</li>`).join('')}
+        </ul>
+      </td>
+      <td>
+      <ul class="ingredient-list">
+        ${objeto.orden.ingredientes.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
+      </ul>
+    </td>
+    <td>
+      <ul>
+        ${objeto.orden.aderesos.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
+      </ul>
+    </td>
+      <td>${objeto.total}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+`
+div.innerHTML += tabla;
+break;
+
+case waffles:
+  tabla = `
+<div class='tabla-container'>
+<table style="width: 920px;">
+<thead>
+  <tr>
+    <th>Name</th>
+    <th>Amount</th>
+    <th>Price</th>
+    <th>Complements</th>
+    <th>Spreads</th>
+    <th>Snow</th>
+    <th>Decor</th>
+    <th>Total</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>${objeto.nombre}</td>
+    <td>${objeto.cantidad}</td>
+    <td>${objeto.precio}</td>
+    <td>
+      <ul class="ingredient-list">
+        ${objeto.orden.ingredientes_com.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
+      </ul>
+    </td>
+    <td>
+      <ul>
+        ${objeto.orden.ingredientes_unt.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
+      </ul>
+    </td>
+    <td>
+      <ul>
+        ${objeto.orden.nieve.map((nieve: any) => `<li>${nieve.nombre}</li>`).join('')}
+      </ul>
+    </td>
+    <td>
+    <ul>
+    ${objeto.orden.decoracion.map((decoracion: any) => `<li>${decoracion.nombre}</li>`).join('')}
+    </ul>
+  </td>
+    <td>${objeto.total}</td>
+  </tr>
+</tbody>
+</table>
+</div>
+`;
+
+div.innerHTML += tabla;
+break;
+
+case waffleCanasta:
+tabla = `
+<div class='tabla-container'>
+<table style="width: 923px;">
+<thead>
+<tr>
+<th>Name</th>
+<th>Amount</th>
+<th>Price</th>
+<th>Complements</th>
+<th>Spreads</th>
+<th>Snow</th>
+<th>Decor</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>${objeto.nombre}</td>
+<td>${objeto.cantidad}</td>
+<td>${objeto.precio}</td>
+<td>
+  <ul class="ingredient-list">
+    ${objeto.orden.ingredientes_com.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
+  </ul>
+</td>
+<td>
+  <ul>
+    ${objeto.orden.ingredientes_unt.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
+  </ul>
+</td>
+<td>
+  <ul>
+    ${objeto.orden.nieve.map((nieve: any) => `<li>${nieve.nombre}</li>`).join('')}
+  </ul>
+</td>
+<td>
+<ul>
+${objeto.orden.decoracion.map((decoracion: any) => `<li>${decoracion.nombre}</li>`).join('')}
+</ul>
+</td>
+<td>${objeto.total}</td>
+</tr>
+</tbody>
+</table>
+</div>
+`;
+
+div.innerHTML += tabla;
+break;
+
+case bebidasCalientes:
+tabla = `
+<div class='tabla-container'>
+<table style="width: 1005px;">
+<thead>
+<tr>
+<th>Name</th>
+<th>Amount</th>
+<th>Price</th>
+<th>Drink</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>${objeto.nombre}</td>
+<td>${objeto.cantidad}</td>
+<td>${objeto.precio}</td>
+<td>
+  <ul class="ingredient-list">
+    ${objeto.orden.bebida}
+  </ul>
+</td>
+<td>${objeto.total}</td>
+</tr>
+</tbody>
+</table>
+</div>
+`;
+
+div.innerHTML += tabla;
+break;
+
+case bebidasFrias:
+tabla = `
+<div class='tabla-container'>
+<table style="width: 1005px;">
+<thead>
+<tr>
+<th>Name</th>
+<th>Amount</th>
+<th>Price</th>
+<th>Drink</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>${objeto.nombre}</td>
+<td>${objeto.cantidad}</td>
+<td>${objeto.precio}</td>
+<td>
+  <ul class="ingredient-list">
+    ${objeto.orden.bebida}
+  </ul>
+</td>
+<td>${objeto.total}</td>
+</tr>
+</tbody>
+</table>
+</div>
+`;
+
+div.innerHTML += tabla;
+break;
+
+case botanas:
+tabla = `
+<div class='tabla-container'>
+<table style="width: 1005px;">
+<thead>
+<tr>
+<th>Name</th>
+<th>Amount</th>
+<th>Price</th>
+<th>Snack</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>${objeto.nombre}</td>
+<td>${objeto.cantidad}</td>
+<td>${objeto.precio}</td>
+<td>
+  <ul class="ingredient-list">
+    ${objeto.orden.botana}
+  </ul>
+</td>
+<td>${objeto.total}</td>
+</tr>
+</tbody>
+</table>
+</div>
+`;
+
+div.innerHTML += tabla;
+break;
+
+case ensaladas:
+tabla = `
+<div class='tabla-container'>
+<table style="width: 1000px;">
+<thead>
+<tr>
+<th>Name</th>
+<th>Amount</th>
+<th>Price</th>
+<th>Salad</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>${objeto.nombre}</td>
+<td>${objeto.cantidad}</td>
+<td>${objeto.precio}</td>
+<td>
+  <ul class="ingredient-list">
+    ${objeto.orden.ensalada}
+  </ul>
+</td>
+<td>${objeto.total}</td>
+</tr>
+</tbody>
+</table>
+</div>
+`;
+
+div.innerHTML += tabla;
+break;
+    }
+  });
+}
+
+  let div2 = document.createElement('div');
+  div2.innerHTML = div.innerHTML;
+  div2.style.width = '100%';
+
+  body.appendChild(div2);
+
+const doc = new jsPDF('p', 'pt', 'letter');
+doc.html(body, {
+x: 10,
+y: 10,
+html2canvas: {
+  scale: 0.68,
+
+},
+callback: function (doc) {
+  doc.save("carrito.pdf");
+}
+})
 }
 
 
+stockInsuficiente(){
+  this.grupos = [];
+  this.ordenes = [];
+  this.saladasWarning = [];
+  this.dulcesWarning = [];
+  this.wafflesWarning = [];
+  this.wafflesCanastaWarning = [];
+  this.bebidasFriasWarning = [];
+  this.bebidasCalientesWarning = [];
+  this.ensaladasWarning = [];
+  this.botanasWarning = [];
+
+  // Crepa Dulce 
+  this.crepasDulces = [];
+  this.ingredientesComCrepaD = [];
+  this.ingredientesComCrepaD1 = [];
+  this.ingredientesUntCrepaD = [];
+  this.ingredientesUntCrepaD1 = [];
+  this.nievesCrepaD = [];
+  this.nievesCrepaD1 = [];
+  this.decoracionesCrepaD = [];
+  this.decoracionesCrepaD1 = [];
+
+
+
+  // Crepa Salada
+  this.crepasSaladas = [];
+  this.ingredientesCrepaS = [];
+  this.ingredientesCrepaS1 = [];
+
+  this.aderesosCrepaS = [];
+  this.aderesosCrepaS1 = [];
+  this.ingredientesBaseCrepaS = [];
+  this.ingredientesBaseCrepaS1 = [];
+  this.aderesosBaseCrepaS = [];
+  this.aderesosBaseCrepaS1 = [];
+
+  // Waffles
+  this.waffles = [];
+  this.wafflesIngUnt = [];
+  this.waffles1IngUnt = [];
+  this.wafflesIngCom = [];
+  this.waffles1IngCom = [];
+  this.wafflesNieve = [];
+  this.waffles1Nieve = [];
+  this.waffles1Decoraciones = [];
+  this.wafflesDecoraciones = [];
+
+  // Waffles Canasta
+  this.wafflesCanasta = [];
+  this.wafflesCanastaIngUnt = [];
+  this.wafflesCanasta1IngUnt = [];
+
+  this.wafflesCanastaIngCom = [];
+  this.wafflesCanasta1IngCom = [];
+  this.wafflesCanastaNieve = [];
+  this.wafflesCanasta1Nieve = [];
+  this.wafflesCanasta1Decoraciones = [];
+  this.wafflesCanastaDecoraciones = [];
+
+
+  // Bebidas Calientes
+  this.bebidasCalientes = [];
+  this.bebidasCalientes1 = [];
+
+
+  // Bebidas Frias
+  this.bebidasFrias = [];
+  this.bebidasFrias1 = [];
+
+
+  // Botanas
+  this.botanas = [];
+  this.botanas1 = [];
+  // Ensalada Indivudual
+  this.ensaladasIndividual = [];
+  this.ensaladasIndividual1 = [];
+  this.stock();
+}
+
+
+}

@@ -18,6 +18,7 @@ export class CrepaDulceComponent {
   precioRegular:any = [];
   precioExtra:any = [];
   precioNieve:any = [];
+  precioDecoracion:any = [];
 
   harinas:any = [];
   ingredientes_unt:any = [];
@@ -26,6 +27,7 @@ export class CrepaDulceComponent {
   frutos_secos:any = [];
   Otros:any = [];
   nieves:any = [];
+  decoraciones:any = [];
   crepa:any = {
     harina: [],
     ingredientes_unt: [],
@@ -90,6 +92,13 @@ export class CrepaDulceComponent {
       },
       err => console.error(err)
     ) 
+    this.service.getDecoraciones().subscribe(
+      res => {
+        console.log(res);
+        this.decoraciones = res;
+      },
+      err => console.error(err)
+    ) 
     this.service.getNieves().subscribe(
       res => {
         console.log(res);
@@ -112,9 +121,11 @@ export class CrepaDulceComponent {
         const regular = precios.findIndex((objeto:any)=> objeto.descripcion === 'Regular');
         const extra = precios.findIndex((objeto:any)=> objeto.descripcion === 'Extra');
         const nieve = precios.findIndex((objeto:any)=> objeto.descripcion === 'Nieve');
+        const decoracion = precios.findIndex((objeto:any)=> objeto.descripcion === 'Decoracion');
         this.precioRegular.push(precios[regular].precio);
         this.precioExtra.push(precios[extra].precio);
         this.precioNieve.push(precios[nieve].precio);
+        this.precioDecoracion.push(precios[decoracion].precio);
       },
       err => console.error(err)
     )
@@ -292,6 +303,8 @@ anadirOrden(){
   
   const long = this.crepa.ingredientes_unt.length + this.crepa.ingredientes_com.length
   console.log(this.crepa)
+  const longDec = this.crepa.decoracion.length
+  if(longDec < 2){
   if(long > 1){
   if (this.crepa.harina.harina === sabor){
 
@@ -300,7 +313,9 @@ anadirOrden(){
     console.log(this.crepa.precio)
    }else if(this.crepa.harina.harina !== sabor){
     const precio = this.precioRegular[0] + this.precioExtra[0]*(long -2 + 1) + this.precioNieve[0]*(this.crepa.nieve.length); 
-    this.crepa.precio = precio
+          this.crepa.precio = precio
+
+
     console.log(this.crepa.precio)
    }
   }else{
@@ -311,6 +326,27 @@ anadirOrden(){
     }
 
   }
+}else if(longDec > 1){
+  if(long > 1){
+    if (this.crepa.harina.harina === sabor){
+  
+      const precio = this.precioRegular[0] + this.precioExtra[0]*(long - 2) + this.precioNieve[0]*(this.crepa.nieve.length); 
+      this.crepa.precio = precio + (this.precioExtra[0]*(longDec - 1))    
+      console.log(this.crepa.precio)
+     }else if(this.crepa.harina.harina !== sabor){
+      const precio = this.precioRegular[0] + this.precioExtra[0]*(long -2 + 1) + this.precioNieve[0]*(this.crepa.nieve.length); 
+            this.crepa.precio = precio + (this.precioExtra[0]*(longDec - 1))  
+      console.log(this.crepa.precio)
+     }
+    }else{
+      if(this.crepa.harina.harina === sabor){
+        this.crepa.precio = this.precioRegular[0] + this.precioNieve[0]*(this.crepa.nieve.length) + (this.precioDecoracion[0]*(longDec - 1))  ; 
+      }else if(this.crepa.harina.harina !== sabor){
+        this.crepa.precio = this.precioRegular[0] + this.precioExtra[0] + this.precioNieve[0]*(this.crepa.nieve.length) + (this.precioDecoracion[0]*(longDec - 1)); 
+      }
+  
+    }
+}
 }
 
 anadirCrepa(){
@@ -425,26 +461,48 @@ eliminarDecoracion(nieve: string) {
   if (index !== -1) {
     this.crepa.decoracion.splice(index, 1); // Elimina el ingrediente del array
   }
+  this.anadirOrden()
 }
 
   // Función para agregar o mostrar mensaje si el ingrediente ya existe
   actualizarDecoracion(ingrediente: string) {
     // Verifica si ya hay 7 ingredientes en el array
     const long = this.crepa.decoracion.length
-    if (long === 2) {
-      this.alertService.mostrarAlerta('No se pueden agregar más decoraciones, ya hay 2.');
+    if (long === 4) {
+      
+      if(this.authService.lang() === 'es'){
+      this.alertService.mostrarAlerta('No se pueden agregar más decoraciones, ya hay 4.');
+      } else if(this.authService.lang() === 'en'){
+        this.alertService.mostrarAlerta('No more decorations can be added, there are already 4.');
+        }
     }else{
     // Busca la posición del ingrediente en el array de ingredientes
     const index = this.crepa.decoracion.findIndex((i:any) => i.nombre === ingrediente);
   
     if (index === -1) {
+      const index1 = this.decoraciones.findIndex((i:any) => i.decoracion === ingrediente);
+      const decoracion = this.decoraciones[index1];
+      console.log(this.decoraciones[index1])
+      if(decoracion.existencia === 0){
+        if(this.authService.lang() === 'es'){
+          this.alertService.mostrarAlerta('Por el momento esta decoracion no se encuentra en existencia');
+          }else if(this.authService.lang() === 'en'){
+            this.alertService.mostrarAlerta('At the moment this decoration is not in stock');
+          }
+      }else{
       // Si el ingrediente no está en el array, agrégalo
       this.crepa.decoracion.push({nombre: ingrediente});
+      }
     } else {
       // Si el ingrediente está en el array, muestra un mensaje en la consola
+      if(this.authService.lang() === 'es'){
       this.alertService.mostrarAlerta('La decoracion ya existe en la crepa.');
+      }else if(this.authService.lang() === 'en'){
+        this.alertService.mostrarAlerta('The decoration already exists on the crepe.');
+        }
     }      
     }
+    this.anadirOrden()
   
 
   }

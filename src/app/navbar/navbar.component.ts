@@ -138,4 +138,31 @@ export class NavbarComponent {
     this.router.navigate(['accountConfig']);
     this.desaparecer();
   }
+
+  lenguage(): any{
+    const token:any = localStorage.getItem('token');
+    if(!token){
+      return false
+    }else{
+    const tokenData = token.split('.')[1]; // Obtén la parte de los datos del token
+const decodedTokenData = JSON.parse(atob(tokenData)); // Decodifica y parsea los datos
+console.log(tokenData)
+// Accede a los datos del usuario
+const userData = {
+
+  lang: decodedTokenData.lang,
+  // Agrega otros datos del usuario si los necesitas
+};     
+const language = userData.lang;
+
+
+if(language === 'es'){
+return true;
+} else if(language === 'en') {
+  return false;
+}
+  
+    }
+
+  }
 }

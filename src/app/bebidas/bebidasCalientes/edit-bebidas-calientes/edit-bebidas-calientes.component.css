@@ -1060,6 +1060,12 @@ li:hover{
   }
 }
 
+@media (max-width: 420px){
+  .header {
+    height: 400px;
+  }
+}
+
 @media (max-width: 353px){
   .header {
     height: 566px;

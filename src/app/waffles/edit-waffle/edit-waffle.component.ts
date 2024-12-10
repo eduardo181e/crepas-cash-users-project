@@ -16,6 +16,7 @@ export class EditWaffleComponent {
   precioRegular: any = [];
   precioExtra: any = [];
   precioNieve: any = [];
+  precioDecoracion: any = [];
   frutas:any = [];
   frutos_secos:any = [];
   Otros:any = [];
@@ -23,7 +24,7 @@ export class EditWaffleComponent {
   ingredientes_unt:any = [];
   ingredientes_com:any = [];
   nieves:any = [];
-
+  decoraciones:any = [];
   waffle:any = {
     ingredientes_unt: [],
     ingredientes_com: [],
@@ -78,7 +79,13 @@ export class EditWaffleComponent {
       },
       err => console.error(err)
     )  
-
+    this.service.getDecoraciones().subscribe(
+      res => {
+        console.log(res);
+        this.decoraciones = res;
+      },
+      err => console.error(err)
+    ) 
     this.service.getPrecios().subscribe(
       (res:any) => {
         console.log(res);
@@ -86,9 +93,11 @@ export class EditWaffleComponent {
         const regular = precios.findIndex((objeto:any)=> objeto.descripcion === 'Regular');
         const extra = precios.findIndex((objeto:any)=> objeto.descripcion === 'Extra');
         const nieve = precios.findIndex((objeto:any)=> objeto.descripcion === 'Nieve');
+        const decoracion = precios.findIndex((objeto:any)=> objeto.descripcion === 'Decoracion');
         this.precioRegular.push(precios[regular].precio);
         this.precioExtra.push(precios[extra].precio);
         this.precioNieve.push(precios[nieve].precio);
+        this.precioDecoracion.push(precios[decoracion].precio);
       },
       err => console.error(err)
     )
@@ -333,12 +342,23 @@ export class EditWaffleComponent {
   anadirOrden(){
 
     const long = this.waffle.ingredientes_unt.length + this.waffle.ingredientes_com.length
+    const longDec = this.waffle.decoracion.length
     console.log(this.waffle)
     if(long > 1){
-      const precio = this.precioRegular[0] + this.precioExtra[0]*(long - 2) + this.precioNieve[0]*this.waffle.nieve.length; 
+      if(longDec < 2){
+       const precio = this.precioRegular[0] + this.precioExtra[0]*(long - 2) + this.precioNieve[0]*this.waffle.nieve.length; 
       this.waffle.precio = precio         
-    }else{          
+      }else if(longDec > 1){
+        const precio = this.precioRegular[0] + this.precioExtra[0]*(long - 2) + this.precioNieve[0]*this.waffle.nieve.length; 
+        this.waffle.precio = precio + (this.precioDecoracion[0]*(longDec - 1 ))   
+      }
+       
+    }else{  
+      if(longDec < 2){        
       this.waffle.precio = this.precioRegular[0];
+      }else if(longDec > 1){
+      this.waffle.precio = this.precioRegular[0] + (this.precioDecoracion[0]*(longDec - 1 )) ;
+      }
     }
   }
 
@@ -445,25 +465,36 @@ export class EditWaffleComponent {
     if (index !== -1) {
       this.waffle.decoracion.splice(index, 1); // Elimina el ingrediente del array
     }
+    this.anadirOrden()
   }
   
     // Función para agregar o mostrar mensaje si el ingrediente ya existe
     actualizarDecoracion(ingrediente: string) {
       // Verifica si ya hay 7 ingredientes en el array
       const long = this.waffle.decoracion.length
-      if (long === 2) {
+      if (long === 4) {
         if(this.authService.lang() === 'es'){
-          this.alertService.mostrarAlerta('No se pueden agregar más decoraciones, ya hay 2.');
+          this.alertService.mostrarAlerta('No se pueden agregar más decoraciones, ya hay 4.');
           }else if(this.authService.lang() === 'en'){
-            this.alertService.mostrarAlerta('You can not add more decorations, there are already 2.');
+            this.alertService.mostrarAlerta('You can not add more decorations, there are already 4.');
           }
       }else{
       // Busca la posición del ingrediente en el array de ingredientes
       const index = this.waffle.decoracion.findIndex((i:any) => i.nombre === ingrediente);
     
       if (index === -1) {
+        const index1 = this.decoraciones.findIndex((i:any) => i.decoracion === ingrediente);
+        const decoracion = this.decoraciones[index1];
+        if(decoracion.existencia === 0){
+          if(this.authService.lang() === 'es'){
+            this.alertService.mostrarAlerta('Por el momento esta decoracion no se encuentra en existencia');
+            }else if(this.authService.lang() === 'en'){
+              this.alertService.mostrarAlerta('At the moment this decoration is not in stock');
+            }
+        }else{
         // Si el ingrediente no está en el array, agrégalo
         this.waffle.decoracion.push({nombre: ingrediente});
+        }
       } else {
         // Si el ingrediente está en el array, muestra un mensaje en la consola
         if(this.authService.lang() === 'es'){
@@ -474,6 +505,6 @@ export class EditWaffleComponent {
       }      
       }
     
-  
+      this.anadirOrden()
     }
 }

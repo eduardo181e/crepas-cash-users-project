@@ -296,6 +296,7 @@
 
     "crepa.dulce.describe.precio": "Sweet crepe in vanilla flavored flour with two ingredients of your choice",
     "crepa.dulce.describe.precio.1": "Each extra ingredient or flour flavor change has a",
+    "crepa.dulce.describe.precio.2": "Each extra decoration after the first one has a",
     "crepa.dulce.describe.precio.nieve": "Snow:",
 
     "crepa.dulce.describe": "Create your Crepe with 3 simple steps",
@@ -360,7 +361,11 @@
     "carrito.ensalada": "Salad",
     "carrito.botana": "Snack",
     "generate": "Generate",
-    "caja": "cash register"
+    "caja": "cash register",
+
+    "imprimir": "Print order",
+
+    "mesa": "Table"
 
 
 

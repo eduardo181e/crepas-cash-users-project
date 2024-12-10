@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { API_BASE_URL } from './environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WaffleCanastaService {
-  API_URI = 'https://crepas-cash-users-proyect-api.onrender.com/waffleCanasta'
+  API_URI = API_BASE_URL+'/waffleCanasta'
   constructor(private http: HttpClient) { }
   // Ingrediente Untable
   getIngredientesU(){
@@ -34,6 +35,15 @@ export class WaffleCanastaService {
     getNieve(id: any){
       return this.http.get((this.API_URI)+'/N'+ '/'+ id);
     }
+
+  // Decoracion
+  getDecoraciones() {
+    return this.http.get((this.API_URI) + '/D/');
+  }
+
+  getDecoracion(id: any) {
+    return this.http.get((this.API_URI) + '/D' + '/' + id);
+  }
 
     // Precio
     getPrecios(){

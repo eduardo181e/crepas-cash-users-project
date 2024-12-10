@@ -118,7 +118,7 @@ export class CrepaSaladaComponent {
         console.log(this.precioRegular);
         setTimeout(() => {
           this.anadirOrden()
-        }, 200);
+        }, 500);
 
       },
       err => console.error(err)

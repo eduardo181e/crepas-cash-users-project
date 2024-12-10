@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { API_BASE_URL } from './environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarritoService {
-  API_URI = 'https://crepas-cash-users-proyect-api.onrender.com/carrito'
+  API_URI = API_BASE_URL+'/carrito'
   constructor(private http: HttpClient) { }
 
   addOrden(Orden:any) {
@@ -18,6 +19,10 @@ export class CarritoService {
 
   deleteOrden(id: number){
     return this.http.delete((this.API_URI) + '/delete/' + id);
+  }
+
+  updateMesaOrden(mesa1: number){
+    return this.http.put((this.API_URI) + '/update',  {mesa: mesa1});
   }
 
   selectOrden(id: any){

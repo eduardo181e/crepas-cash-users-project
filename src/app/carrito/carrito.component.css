@@ -360,8 +360,21 @@ div{
 }
 
 @media(max-width: 850px){
+    .inventarioCom{
+        height: auto;
+        width: 97%;
+    }
+
+    .danger1, .danger{
+        height: auto;
+        width: 97%;
+    }
     .containerRes{
         display: block;
+    }
+
+    .trashS{
+        left: 7px;
     }
 
     .container{
