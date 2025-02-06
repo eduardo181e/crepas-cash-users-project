@@ -65,7 +65,7 @@
         </thead>
         <tbody>
             <tr >
-                <td class="border-cell dulce1 r4">{{ dulce.nombre }}</td>
+                <td class="border-cell dulce1 r4">{{'crepas.dulces' | translate}}</td>
                 <td class="border-cell dulce1">
                 <select  (change)="actualizarCantidad(dulce, dulce.id)" [(ngModel)]="dulce.cantidad" class="form-control" name="cantidad">
                     <option  [value]= "1">
@@ -155,7 +155,7 @@
         </thead>
         <tbody>
             <tr>
-                <td class="border-cell salado1 r4">{{ salada.nombre }}</td>
+                <td class="border-cell salado1 r4">{{'crepas.saladas' | translate}}</td>
                 <td class="border-cell salado1">
                 <select (change)="actualizarCantidad(salada, salada.id)" [(ngModel)]="salada.cantidad" class="form-control" name="cantidad">
                     <option  [value]= "1">
@@ -240,7 +240,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td class="border-cell caliente1 r4">{{ caliente.nombre }}</td>
+                    <td class="border-cell caliente1 r4">{{'bebidas.calientes' | translate}}</td>
                     <td class="border-cell caliente1">
                     <select (change)="actualizarCantidad(caliente, caliente.id)" [(ngModel)]="caliente.cantidad" class="form-control" name="cantidad">
                         <option  [value]= "1">
@@ -305,7 +305,7 @@
                     </thead>
                     <tbody>
                         <tr >
-                            <td class="border-cell frio1 r4">{{ frias.nombre }}</td>
+                            <td class="border-cell frio1 r4">{{'bebidas.frias' | translate}}</td>
                             <td class="border-cell frio1">
                             <select (change)="actualizarCantidad(frias, frias.id)" [(ngModel)]="frias.cantidad" class="form-control" name="cantidad">
                                 <option  [value]= "1">
@@ -377,7 +377,7 @@
         </thead>
         <tbody>
             <tr >
-                <td class="border-cell waffle1 r4">{{ waffle.nombre }}</td>
+                <td class="border-cell waffle1 r4">{{'waffles' | translate}}</td>
                 <td class="border-cell waffle1"> 
                 <select (change)="actualizarCantidad(waffle, waffle.id)" [(ngModel)]="waffle.cantidad" class="form-control" name="cantidad">
                     <option  [value]= "1">
@@ -466,7 +466,7 @@
             </thead>
             <tbody>
                 <tr >
-                    <td class="border-cell canasta1 r4">{{ waffle.nombre }}</td>
+                    <td class="border-cell canasta1 r4">{{'waffles.canasta' | translate}}</td>
                     <td class="border-cell canasta1">
                     <select  (change)="actualizarCantidad(waffle, waffle.id)" [(ngModel)]="waffle.cantidad" class="form-control" name="cantidad">
                         <option  [value]= "1">
@@ -548,7 +548,7 @@
     </thead>
     <tbody>
         <tr >
-            <td class="border-cell botana1 r4">{{ botana.nombre }}</td>
+            <td class="border-cell botana1 r4">{{'botanas' | translate}}</td>
             <td class="border-cell botana1">
             <select  (change)="actualizarCantidad(botana, botana.id)" [(ngModel)]="botana.cantidad" class="form-control" name="cantidad">
                 <option  [value]= "1">
@@ -615,7 +615,7 @@
     </thead>
     <tbody>
         <tr >
-            <td class="border-cell ensalada1 r4">{{ ensalada.nombre }}</td>
+            <td class="border-cell ensalada1 r4">{{'ensaladas.individuales' | translate}}</td>
             <td class="border-cell ensalada1">
             <select  (change)="actualizarCantidad(ensalada, ensalada.id)" [(ngModel)]="ensalada.cantidad" class="form-control" name="cantidad">
                 <option  [value]= "1">
@@ -721,7 +721,7 @@ margin-top: 20px;">
     <div class="dulceRes">
         <div class="Col">
                 <div class="dulce">{{'name' | translate}}</div>
-                <div class="padd">{{ dulce.nombre }}</div>
+                <div class="padd">{{'crepas.dulces' | translate}}</div>
         </div>
         <div class="Col">
             <div class="dulce">{{'carrito.cantidad' | translate}}</div>
@@ -825,7 +825,7 @@ margin-top: 20px;">
         <div class="saladaRes">
             <div class="Col">
                     <div class="salado">{{'name' | translate}}</div>
-                    <div class="padd">{{ salada.nombre }}</div>
+                    <div class="padd">{{'crepas.saladas' | translate}}</div>
             </div>
             <div class="Col">
                 <div class="salado">{{'carrito.cantidad' | translate}}</div>
@@ -928,7 +928,7 @@ margin-top: 20px;">
             <div class="waffleRes">
                 <div class="Col">
                         <div class="waffle">{{'name' | translate}}</div>
-                        <div class="padd">{{ waffle.nombre }}</div>
+                        <div class="padd">{{'waffles' | translate}}</div>
                 </div>
                 <div class="Col">
                     <div class="waffle">{{'carrito.cantidad' | translate}}</div>
@@ -1030,7 +1030,7 @@ margin-top: 20px;">
                 <div class="canastaRes">
                     <div class="Col">
                             <div class="canasta">{{'name' | translate}}</div>
-                            <div class="padd">{{ waffle.nombre }}</div>
+                            <div class="padd">{{'waffles.canasta' | translate}}</div>
                     </div>
                     <div class="Col">
                         <div class="canasta">{{'carrito.cantidad' | translate}}</div>
@@ -1129,7 +1129,7 @@ margin-top: 20px;">
                 <div class="calientesRes">
                     <div class="Col">
                             <div class="caliente">{{'name' | translate}}</div>
-                            <div class="padd">{{ dulce.nombre }}</div>
+                            <div class="padd">{{'bebidas.calientes' | translate}}</div>
                     </div>
                     <div class="Col">
                         <div class="caliente">{{'carrito.cantidad' | translate}}</div>
@@ -1201,7 +1201,7 @@ margin-top: 20px;">
                 <div class="friasRes">
                     <div class="Col">
                             <div class="frio">{{'name' | translate}}</div>
-                            <div class="padd">{{ dulce.nombre }}</div>
+                            <div class="padd">{{'bebidas.frias' | translate}}</div>
                     </div>
                     <div class="Col">
                         <div class="frio">{{'carrito.cantidad' | translate}}</div>
@@ -1273,7 +1273,7 @@ margin-top: 20px;">
                 <div class="botanasRes">
                     <div class="Col">
                             <div class="botana">{{'name' | translate}}</div>
-                            <div class="padd">{{ dulce.nombre }}</div>
+                            <div class="padd">{{'botanas' | translate}}</div>
                     </div>
                     <div class="Col">
                         <div class="botana">{{'carrito.cantidad' | translate}}</div>
@@ -1345,7 +1345,7 @@ margin-top: 20px;">
                 <div class="ensaladaRes">
                     <div class="Col">
                             <div class="ensalada">{{'name' | translate}}</div>
-                            <div class="padd">{{ dulce.nombre }}</div>
+                            <div class="padd">{{'ensaladas.individuales' | translate}}</div>
                     </div>
                     <div class="Col">
                         <div class="ensalada">{{'carrito.cantidad' | translate}}</div>
