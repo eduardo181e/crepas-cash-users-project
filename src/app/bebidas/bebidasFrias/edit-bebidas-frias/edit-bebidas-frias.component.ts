@@ -5,6 +5,7 @@ import { BebidasFriasService } from 'src/app/services/bebidas-frias.service';
 import { CarritoService } from 'src/app/services/carrito.service';
 import { bebidasFrias } from 'src/app/models/nameCrepas';
 import { AuthService } from 'src/app/services/auth-service.service';
+import { switchMap } from 'rxjs';
 @Component({
   selector: 'app-edit-bebidas-frias',
   templateUrl: './edit-bebidas-frias.component.html',
@@ -18,52 +19,56 @@ export class EditBebidasFriasComponent {
   bebidaSeleccionada:any = {};
   bebidas:any = [];
   constructor(private service: BebidasFriasService, private add: CarritoService, private router: Router, private alertService: AlertDialogService, private activatedRoute: ActivatedRoute, private authService: AuthService){}
-  ngOnInit(){
+  ngOnInit() {
     this.nombre = bebidasFrias;
-    this.service.getBebidas().subscribe(
-      res => (
-        this.bebidas = res
-      ),
-      err => console.log(err)
-    )
-
-    setTimeout(() => {
-      const params = this.activatedRoute.snapshot.params;
-      const id:string = params['id'];
   
-      this.add.selectOrden(id).subscribe(
-        (res:any) => {
-          this.cantidad = res[0].cantidad;
+    this.service.getBebidas().pipe(
+      switchMap((res: any) => {
+        this.bebidas = res;
+  
+        // Ahora obtenemos la orden solo cuando las bebidas están listas
+        const params = this.activatedRoute.snapshot.params;
+        const id: string = params['id'];
+        return this.add.selectOrden(id);
+      })
+    ).subscribe({
+      next: (res: any) => {
+        res[0].orden = JSON.parse(res[0].orden);
+        this.cantidad = res[0].cantidad;
+        console.log(res[0].orden);
+  
+        const id = res[0].orden.id;
+        console.log(id);
+  
+        // Buscamos la bebida en la lista
+        const index = this.bebidas.findIndex((e: any) => e.product_id === id);
+        console.log(this.bebidas[index]);
+  
+        if (this.bebidas[index].existencia === 1) {
           console.log(res[0].orden);
-          const id = res[0].orden.id;
-          console.log(id);
-          const index = this.bebidas.findIndex((e:any) => e.product_id === id);
-          console.log(this.bebidas[index]);
-          if(this.bebidas[index].existencia === 1){
-            console.log(res[0].orden);
           this.cantidad = res[0].cantidad;
           this.bebidaSeleccionada.bebida = this.bebidas[index].bebida;
           this.bebidaSeleccionada.descripcion = this.bebidas[index].descripcion;
           this.bebidaSeleccionada.product_id = this.bebidas[index].product_id;
-          this.bebidaSeleccionada.precio = this.bebidas[index].precio;
-          console.log(this.bebidaSeleccionada);
-          }else{            
-            if(this.authService.lang() === 'es'){
-            this.alertService.mostrarAlerta('La bebida '+res[0].orden.bebida+ ' no esta disponible por el momento');
-            }else if(this.authService.lang() === 'en'){
-              this.alertService.mostrarAlerta('The drink '+res[0].orden.bebida+ ' is not available at the moment');
-            }
-            this.cantidad = res[0].cantidad;
-            this.bebidaSeleccionada = {};
-            return;
-
-          }
   
-        },
-        err => console.log(err)
-      )
-    }, 500)
-}
+          const index1 = this.bebidas.findIndex((botana: any) => botana.product_id === res[0].orden.id);
+          this.bebidaSeleccionada.precio = this.bebidas[index1].precio;
+          console.log(this.bebidaSeleccionada);
+        } else {
+          const mensaje = this.authService.lang() === 'es'
+            ? `La bebida ${res[0].orden.bebida} no está disponible por el momento`
+            : `The drink ${res[0].orden.bebida} is not available at the moment`;
+  
+          this.alertService.mostrarAlerta(mensaje);
+          this.cantidad = res[0].cantidad;
+          this.bebidaSeleccionada = {};
+          return;
+        }
+      },
+      error: (err) => console.log(err)
+    });
+  }
+  
 addBebida(bebida:any){
   if (bebida.existencia === 0) {
     if(this.authService.lang() === 'es'){

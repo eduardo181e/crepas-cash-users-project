@@ -108,13 +108,6 @@ export class CrepaDulceComponent {
     )  
 
     this.service.getPrecios().subscribe(
-      res => {
-        console.log(res);
-      },
-      err => console.error(err)
-    ) 
-
-    this.service.getPrecios().subscribe(
       (res:any) => {
         console.log(res);
         const precios:any = res

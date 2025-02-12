@@ -1,1 +1,1 @@
-export const API_BASE_URL = 'http://192.168.0.11:3001';
+export const API_BASE_URL = 'https://caja-api-git-main-eduardos-projects-54b91559.vercel.app';

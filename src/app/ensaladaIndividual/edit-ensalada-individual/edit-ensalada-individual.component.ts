@@ -5,6 +5,7 @@ import { CarritoService } from 'src/app/services/carrito.service';
 import { CrepaSaladaService } from 'src/app/services/crepa-salada.service';
 import { ensaladas } from 'src/app/models/nameCrepas';
 import { AuthService } from 'src/app/services/auth-service.service';
+import { forkJoin, switchMap } from 'rxjs';
 @Component({
   selector: 'app-edit-ensalada-individual',
   templateUrl: './edit-ensalada-individual.component.html',
@@ -14,59 +15,66 @@ export class EditEnsaladaIndividualComponent {
       Orden:any;
       nombre: string = '';
       precio:number = 0;
-      precioEnsalada:any = [55];
+      precioEnsalada:any = [];
       ensaladas:any = [];
       ensaladaSeleccionada:any = {};
       cantidad:any;
   constructor(private service: CrepaSaladaService, private router: Router, private add: CarritoService, private alertService: AlertDialogService, private activatedRoute: ActivatedRoute, private authService: AuthService){}
-  ngOnInit(){
+  ngOnInit() {
     this.nombre = ensaladas;
-    this.service.getEnsaladas().subscribe(res=>{
-      this.ensaladas = res;
-      console.log(this.ensaladas);
-    },
-    err=>{
-      console.log(err);
-    });
-
-    setTimeout(() => {
-      const params = this.activatedRoute.snapshot.params;
-      const id:string = params['id'];
   
-      this.add.selectOrden(id).subscribe(
-        (res:any) => {
-          this.cantidad = res[0].cantidad;
-          console.log(res[0].orden);
-          const id = res[0].orden.id;
-          console.log(id);
-          const index = this.ensaladas.findIndex((e:any) => e.product_id === id);
-          console.log(this.ensaladas[index]);
-          if(this.ensaladas[index].existencia === 1){
-            console.log(res[0].orden);
-          this.cantidad = res[0].cantidad;
+    // Usamos forkJoin para ejecutar las peticiones en paralelo
+    forkJoin({
+      ensaladas: this.service.getEnsaladas(),
+      precios: this.service.getPrecios()
+    }).pipe(
+      switchMap(({ ensaladas, precios }) => {
+        // Guardamos las ensaladas
+        this.ensaladas = ensaladas;
+        console.log(this.ensaladas);
+        const precios1:any = precios
+        // Procesamos los precios
+        const index = precios1.findIndex((objeto: any) => objeto.descripcion === 'Ensalada');
+        this.precioEnsalada.push(precios1[index].precio);
+        console.log('problem', this.precioEnsalada);
+  
+        // Ahora que las ensaladas y precios están cargados, obtenemos la orden
+        const params = this.activatedRoute.snapshot.params;
+        const id: string = params['id'];
+        return this.add.selectOrden(id); // Se hace la llamada para obtener la orden
+      })
+    ).subscribe({
+      next: (res: any) => {
+        res[0].orden = JSON.parse(res[0].orden);
+        this.cantidad = res[0].cantidad;
+        console.log(res[0].orden);
+  
+        // Procesamos la ensalada seleccionada
+        const id = res[0].orden.id;
+        const index = this.ensaladas.findIndex((e: any) => e.product_id === id);
+        if (this.ensaladas[index].existencia === 1) {
           this.ensaladaSeleccionada.ensalada_ind = this.ensaladas[index].ensalada_ind;
           this.ensaladaSeleccionada.descripcion = this.ensaladas[index].descripcion;
           this.ensaladaSeleccionada.product_id = this.ensaladas[index].product_id;
           console.log(this.ensaladaSeleccionada);
-          }else{
-            if(this.authService.lang() === 'es'){
-              this.alertService.mostrarAlerta('La ensalada '+res[0].orden.ensalada+ ' no esta disponible por el momento');
-              }else if(this.authService.lang() === 'en'){
-                this.alertService.mostrarAlerta('The salad '+res[0].orden.ensalada+ ' is not available at the moment');
-              }
-            this.cantidad = res[0].cantidad;
-            this.ensaladaSeleccionada = {};
-            return;
-
-          }
+        } else {
+          // Si la ensalada no está disponible
+          const mensaje = this.authService.lang() === 'es'
+            ? `La ensalada ${res[0].orden.ensalada} no está disponible por el momento`
+            : `The salad ${res[0].orden.ensalada} is not available at the moment`;
   
-        },
-        err => console.log(err)
-      )
-    }, 500)
-
+          this.alertService.mostrarAlerta(mensaje);
+          this.cantidad = res[0].cantidad;
+          this.ensaladaSeleccionada = {};
+          return;
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
   }
-
+  
   addEnsalada(ensalada:any){
     if(ensalada.existencia === 0){
       if(this.authService.lang() === 'es'){

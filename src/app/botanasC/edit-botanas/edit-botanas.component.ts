@@ -5,6 +5,7 @@ import { CarritoService } from 'src/app/services/carrito.service';
 import { CrepaSaladaService } from 'src/app/services/crepa-salada.service';
 import { botanas } from 'src/app/models/nameCrepas';
 import { AuthService } from 'src/app/services/auth-service.service';
+import { switchMap } from 'rxjs';
 @Component({
   selector: 'app-edit-botanas',
   templateUrl: './edit-botanas.component.html',
@@ -22,51 +23,53 @@ export class EditBotanasComponent {
   cantidad: any;
   botanas:any = [];
   constructor(private service: CrepaSaladaService, private add: CarritoService, private router: Router, private alertService: AlertDialogService, private activatedRoute: ActivatedRoute, private authService: AuthService){}
-  ngOnInit(){
-
-
+  ngOnInit() {
     this.nombre = botanas;
-    this.service.getBotanas().subscribe(
-      res => (
-        this.botanas = res
-      ),
-      err => console.log(err)
-    )
-
-    setTimeout(() => {
-      const params = this.activatedRoute.snapshot.params;
-      const id:string = params['id'];
   
-      this.add.selectOrden(id).subscribe(
-        (res:any) => {
-          console.log(res[0].orden);
-          const id = res[0].orden.id;
-          console.log(id);
-          const index = this.botanas.findIndex((e:any) => e.product_id === id);
-          console.log(this.botanas[index]);
-          if(this.botanas[index].existencia === 1){
+    this.service.getBotanas().pipe(
+      switchMap((res: any) => {
+        this.botanas = res;
+  
+        // Ahora obtenemos la orden solo cuando las botanas están listas
+        const params = this.activatedRoute.snapshot.params;
+        const id: string = params['id'];
+        return this.add.selectOrden(id);
+      })
+    ).subscribe({
+      next: (res: any) => {
+        res[0].orden = JSON.parse(res[0].orden);
+        console.log(res[0].orden);
+  
+        const id = res[0].orden.id;
+        console.log(id);
+  
+        // Buscamos la botana en la lista
+        const index = this.botanas.findIndex((e: any) => e.product_id === id);
+        console.log(this.botanas[index]);
+  
+        if (this.botanas[index].existencia === 1) {
           this.cantidad = res[0].cantidad;
           this.botanaSeleccionada.botana = res[0].orden.botana;
           this.botanaSeleccionada.product_id = res[0].orden.id;
-          this.botanaSeleccionada.precio = res[0].precio;
-          console.log(this.botanaSeleccionada);
-          }else{
-            if(this.authService.lang() === 'es'){
-              this.alertService.mostrarAlerta('La botana '+res[0].orden.botana+ ' no esta disponible por el momento');
-              }else if(this.authService.lang() === 'en'){
-                this.alertService.mostrarAlerta('The snack '+res[0].orden.botana+ ' is not available at the moment');
-              }
-            this.cantidad = res[0].cantidad;
-            this.botanaSeleccionada = {};
-            return;
-
-          }
   
-        },
-        err => console.log(err)
-      )
-    }, 500)
-}
+          const index1 = this.botanas.findIndex((botana: any) => botana.product_id === res[0].orden.id);
+          this.botanaSeleccionada.precio = this.botanas[index1].precio;
+          console.log(this.botanaSeleccionada);
+        } else {
+          const mensaje = this.authService.lang() === 'es'
+            ? `La botana ${res[0].orden.botana} no está disponible por el momento`
+            : `The snack ${res[0].orden.botana} is not available at the moment`;
+  
+          this.alertService.mostrarAlerta(mensaje);
+          this.cantidad = res[0].cantidad;
+          this.botanaSeleccionada = {};
+          return;
+        }
+      },
+      error: (err) => console.log(err)
+    });
+  }
+  
 addBotana(botana:any){
   if (botana.existencia === 0) {    
     if(this.authService.lang() === 'es'){
@@ -112,6 +115,7 @@ addOrden(){
         }else if(this.authService.lang() === 'en'){
           this.alertService.mostrarAlerta('Your snack has been updated');
         }
+        this.router.navigate(['carrito']);
     },
     err => console.log(err)
   )  

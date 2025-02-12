@@ -14,6 +14,7 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { SalesServiceService } from '../services/sales-service.service';
 import { AuthService } from '../services/auth-service.service';
+import { forkJoin, switchMap } from 'rxjs';
 @Component({
   selector: 'app-carrito',
   templateUrl: './carrito.component.html',
@@ -69,6 +70,7 @@ export class CarritoComponent {
     // Crepa Salada
     precioExtraCrepaSalada:any = [];
     precioRegularCrepaSalada:any = [];
+    precioEnsalada:any = [];
     crepasSaladas:any = [];
     ingredientesCrepaS:any = [];
     ingredientesCrepaS1:any = [];
@@ -159,9 +161,9 @@ export class CarritoComponent {
     private crepaSaladaService: CrepaSaladaService,private waffleService: WaffleService,private waffleCanastaService: WaffleCanastaService, private bebidasFriasService: BebidasFriasService,
     private bebidasCalientesService: BebidasCalientesService, private ventas: SalesServiceService, private authService: AuthService){}
 
-    ngOnInit() {
-      this.stock();
-    }
+  ngOnInit() {
+    this.stock()
+  }
 
     ordenes1(){
       if((this.crepasSaladas.length + this.crepasDulces.length + this.bebidasCalientes.length + this.bebidasFrias.length + this.botanas.length + this.ensaladasIndividual.length + this.waffles.length + this.wafflesCanasta.length) > 0){
@@ -171,324 +173,131 @@ export class CarritoComponent {
       }
     }
 
- stock(){    
-        // Creppas Saladas
-
-        this.crepaSaladaService.getIngredientesP().subscribe(
-          res => {
-            this.existenciasIngredientesCrepaS = res;
-            console.log(res)
-          },
-          err => {
-            console.log(err)
-          }
-        )  
-  
-        this.crepaSaladaService.getAderesos().subscribe(
-        res => {
-          this.existenciasAderesosCrepaS = res;
-          console.log(res)
-        },
-        err => {
-          console.log(err)
-        }
-      )
-  
-      this.crepaSaladaService.getIngredientesB().subscribe(
-        res => {
-          this.existenciasIngredientesBaseCrepaS = res;
-          console.log(res)
-        },
-        err => {
-          console.log(err)
-        }
-      )
-  
-      this.crepaSaladaService.getAderesosB().subscribe(
-        res => {
-          this.existenciasAderesosBaseCrepaS = res;
-          console.log(res)
-        },
-        err => {
-          console.log(err)
-        }
-      )
-  
-  
-      this.crepaSaladaService.getPrecios().subscribe(
-        (res:any) => {
-          console.log(res);
-          const precios:any = res
+    stock() {
+    
+      // Usamos forkJoin para ejecutar las peticiones en paralelo
+      forkJoin({
+        ingredientesP: this.crepaSaladaService.getIngredientesP(),
+        aderezos: this.crepaSaladaService.getAderesos(),
+        ingredientesB: this.crepaSaladaService.getIngredientesB(),
+        aderezosB: this.crepaSaladaService.getAderesosB(),
+        preciosCrepaS: this.crepaSaladaService.getPrecios(),
+        harinas: this.crepaDulceService.getHarinas(),
+        ingredientesC: this.crepaDulceService.getIngredientesC(),
+        ingredientesU: this.crepaDulceService.getIngredientesU(),
+        nieves: this.crepaDulceService.getNieves(),
+        decoraciones: this.crepaDulceService.getDecoraciones(),
+        preciosCrepaD: this.crepaDulceService.getPrecios(),
+        ingredientesUWaffles: this.waffleService.getIngredientesU(),
+        ingredientesCwaffles: this.waffleService.getIngredientesC(),
+        nievesWaffles: this.waffleService.getNieves(),
+        decoracionesWaffles: this.waffleService.getDecoraciones(),
+        preciosWaffles: this.waffleService.getPrecios(),
+        ingredientesUWaffleCanasta: this.waffleCanastaService.getIngredientesU(),
+        ingredientesCwaffleCanasta: this.waffleCanastaService.getIngredientesC(),
+        nievesWaffleCanasta: this.waffleCanastaService.getNieves(),
+        decoracionesWaffleCanasta: this.waffleCanastaService.getDecoraciones(),
+        preciosWaffleCanasta: this.waffleCanastaService.getPrecios(),
+        bebidasFrias: this.bebidasFriasService.getBebidas(),
+        bebidasCalientes: this.bebidasCalientesService.getBebidas(),
+        botanas: this.crepaSaladaService.getBotanas(),
+        ensaladas: this.crepaSaladaService.getEnsaladas()
+      }).pipe(
+        switchMap(({
+          ingredientesP, aderezos, ingredientesB, aderezosB, preciosCrepaS,
+          harinas, ingredientesC, ingredientesU, nieves, decoraciones, preciosCrepaD,
+          ingredientesUWaffles, ingredientesCwaffles, nievesWaffles, decoracionesWaffles,
+          preciosWaffles, ingredientesUWaffleCanasta, ingredientesCwaffleCanasta, nievesWaffleCanasta,
+          decoracionesWaffleCanasta, preciosWaffleCanasta, bebidasFrias, bebidasCalientes, botanas, ensaladas
+        }) => {
+          // Guardamos los datos de las peticiones
+          this.existenciasIngredientesCrepaS = ingredientesP;
+          this.existenciasAderesosCrepaS = aderezos;
+          this.existenciasIngredientesBaseCrepaS = ingredientesB;
+          this.existenciasAderesosBaseCrepaS = aderezosB;
+          const precios:any = preciosCrepaS
           const regular = precios.findIndex((objeto:any)=> objeto.descripcion === 'Regular');
           const extra = precios.findIndex((objeto:any)=> objeto.descripcion === 'Extra');
           const ensalada = precios.findIndex((objeto:any)=> objeto.descripcion === 'Ensalada');
           this.precioRegularCrepaSalada.push(precios[regular].precio);
           this.precioExtraCrepaSalada.push(precios[extra].precio);
+          this.precioEnsalada.push(precios[ensalada].precio);
+    
+          this.existenciasHarinasCrepaD = harinas;
+          this.existenciasingredientesComCrepaD = ingredientesC;
+          this.existenciasingredientesUntCrepaD = ingredientesU;
+          this.existenciasNievesCrepaD = nieves;
+          this.existenciasDecoracionesCrepaD = decoraciones;
+          const precios1:any = preciosCrepaD
+          const regular1 = precios1.findIndex((objeto:any)=> objeto.descripcion === 'Regular');
+          const extra1 = precios1.findIndex((objeto:any)=> objeto.descripcion === 'Extra');
+          const nieve1 = precios1.findIndex((objeto:any)=> objeto.descripcion === 'Nieve');
+          const decoracion1 = precios1.findIndex((objeto:any)=> objeto.descripcion === 'Decoracion');
+          this.precioRegularCrepaDulce.push(precios1[regular1].precio);
+          this.precioExtraCrepaDulce.push(precios1[extra1].precio);
+          this.precioNieveCrepaDulce.push(precios1[nieve1].precio);
+          this.precioDecoracionCrepaDulce.push(precios1[decoracion1].precio);
+          
+          this.existenciasWafflesIngUnt = ingredientesUWaffles;
+          this.existenciasWafflesIngCom = ingredientesCwaffles;
+          this.existenciasWafflesNieve = nievesWaffles;
+          this.existenciasWafflesDecoraciones = decoracionesWaffles;
+          const precios2:any = preciosWaffles
+          const regular2 = precios2.findIndex((objeto:any)=> objeto.descripcion === 'Regular');
+          const extra2 = precios2.findIndex((objeto:any)=> objeto.descripcion === 'Extra');
+          const nieve2 = precios2.findIndex((objeto:any)=> objeto.descripcion === 'Nieve');
+          const decoracion2 = precios2.findIndex((objeto:any)=> objeto.descripcion === 'Decoracion');
+          this.precioRegularWaffle.push(precios2[regular2].precio);
+          this.precioExtraWaffle.push(precios2[extra2].precio);
+          this.precioNieveWaffle.push(precios2[nieve2].precio);
+          this.precioDecoracionWaffle.push(precios2[decoracion2].precio);
+          
+          this.existenciasWafflesIngUntCanasta = ingredientesUWaffleCanasta;
+          this.existenciasWafflesIngComCanasta = ingredientesCwaffleCanasta;
+          this.existenciasWafflesNieveCanasta = nievesWaffleCanasta;
+          this.existenciasWafflesDecoracionesCanasta = decoracionesWaffleCanasta;
+          const precios3:any = preciosWaffleCanasta
+          const regular3 = precios3.findIndex((objeto:any)=> objeto.descripcion === 'Regular');
+          const extra3 = precios3.findIndex((objeto:any)=> objeto.descripcion === 'Extra');
+          const decoracion3 = precios3.findIndex((objeto:any)=> objeto.descripcion === 'Decoracion');
+          this.precioRegularWaffleCanasta.push(precios3[regular3].precio);
+          this.precioExtraWaffleCanasta.push(precios3[extra3].precio);
+          this.precioDecoracionWaffleCanasta.push(precios3[decoracion3].precio);
+    
+          this.existenBebidasFrias = bebidasFrias;
+          this.existenBebidasCalientes = bebidasCalientes;
+          this.existenBotanas = botanas;
+          this.existenEnsaladasIndividual = ensaladas;
+    
+          return this.service.viewOrdem();
+        })
+      ).subscribe({
+        next: (res: any) => {
+          this.mesa = res[0].mesa;
+          this.ordenes = res.map((obj: any) => ({
+            ...obj,
+            orden: JSON.parse(obj.orden)
+          }));
+    
+          // Organizar la orden
+          const grupos = this.ordenes.reduce((acc: any, obj: any) => {
+            if (!acc[obj.nombre]) {
+              acc[obj.nombre] = [];
+            }
+            acc[obj.nombre].push(obj);
+            return acc;
+          }, {});
+    
+          this.grupos = grupos;
+    
+            this.organizarOrdenes();
         },
-        err => console.error(err)
-      )
-      
-      // Crepas Dulces
-      
-      this.crepaDulceService.getHarinas().subscribe(
-        res => {
-          this.existenciasHarinasCrepaD = res;
-          console.log(res)
-        },
-        err => {
-          console.log(err)
+        error: (err) => {
+          console.log(err);
         }
-      )
-  
-      this.crepaDulceService.getIngredientesC().subscribe(
-        res => {
-          this.existenciasingredientesComCrepaD = res;
-          console.log('-----------Complementario----------')
-          console.log(res)
-        },
-        err => {
-          console.log(err)
-        }
-      )
-  
-      this.crepaDulceService.getIngredientesU().subscribe(
-        res => {
-          this.existenciasingredientesUntCrepaD = res;
-          console.log(res)
-        },
-        err => {
-          console.log(err)
-        }
-      )
-  
-      this.crepaDulceService.getNieves().subscribe(
-        res => {
-          this.existenciasNievesCrepaD = res;
-          console.log(res)
-        },
-        err => {
-          console.log(err)
-        }
-      )
-
-      this.crepaDulceService.getDecoraciones().subscribe(
-        res => {
-          this.existenciasDecoracionesCrepaD = res;
-          console.log(res)
-        },
-        err => {
-          console.log(err)
-        }
-      )
-  
-
-      
-      this.crepaDulceService.getPrecios().subscribe(
-        (res:any) => {
-          console.log(res);
-          const precios:any = res
-          const regular = precios.findIndex((objeto:any)=> objeto.descripcion === 'Regular');
-          const extra = precios.findIndex((objeto:any)=> objeto.descripcion === 'Extra');
-          const nieve = precios.findIndex((objeto:any)=> objeto.descripcion === 'Nieve');
-          const decoracion = precios.findIndex((objeto:any)=> objeto.descripcion === 'Decoracion');
-          this.precioRegularCrepaDulce.push(precios[regular].precio);
-          this.precioExtraCrepaDulce.push(precios[extra].precio);
-          this.precioNieveCrepaDulce.push(precios[nieve].precio);
-          this.precioDecoracionCrepaDulce.push(precios[decoracion].precio);
-        },
-        err => console.error(err)
-      )
-
-  
-      // Waffles
-  
-      this.waffleService.getIngredientesU().subscribe(
-        res => {
-          this.existenciasWafflesIngUnt = res;
-          console.log(res)
-        },
-        err => {
-          console.log(err)
-        }
-      )
-  
-      this.waffleService.getIngredientesC().subscribe(
-        res => {
-          this.existenciasWafflesIngCom = res;
-          console.log(res)
-        },
-        err => {
-          console.log(err)
-        }
-      )
-  
-      this.waffleService.getNieves().subscribe(
-        res => {
-          this.existenciasWafflesNieve = res;
-          console.log(res)
-        },
-        err => {
-          console.log(err)
-        }
-      )
-
-      this.waffleService.getDecoraciones().subscribe(
-        res => {
-          this.existenciasWafflesDecoraciones = res;
-          console.log(res)
-        },
-        err => {
-          console.log(err)
-        }
-      )
-  
-      this.waffleService.getPrecios().subscribe(
-        (res:any) => {
-          console.log(res);
-          const precios:any = res
-          const regular = precios.findIndex((objeto:any)=> objeto.descripcion === 'Regular');
-          const extra = precios.findIndex((objeto:any)=> objeto.descripcion === 'Extra');
-          const nieve = precios.findIndex((objeto:any)=> objeto.descripcion === 'Nieve');
-          const decoracion = precios.findIndex((objeto:any)=> objeto.descripcion === 'Decoracion');
-          this.precioRegularWaffle.push(precios[regular].precio);
-          this.precioExtraWaffle.push(precios[extra].precio);
-          this.precioNieveWaffle.push(precios[nieve].precio);
-          this.precioDecoracionWaffle.push(precios[decoracion].precio);
-        },
-        err => console.error(err)
-      )
-      
-      // Waffles Canasta
-  
-      this.waffleCanastaService.getIngredientesU().subscribe(
-        res => {
-          this.existenciasWafflesIngUntCanasta = res;
-          console.log(res)
-        },
-        err => {
-          console.log(err)
-        }
-      )
-  
-      this.waffleCanastaService.getIngredientesC().subscribe(
-        res => {
-          this.existenciasWafflesIngComCanasta = res;
-          console.log(res)
-        },
-        err => {
-          console.log(err)
-        }
-      )
-  
-      this.waffleCanastaService.getNieves().subscribe(
-        res => {
-          this.existenciasWafflesNieveCanasta = res;
-          console.log(res)
-        },
-        err => {
-          console.log(err)
-        }
-      )
-
-      this.waffleCanastaService.getDecoraciones().subscribe(
-        res => {
-          this.existenciasWafflesDecoracionesCanasta = res;
-          console.log('-----decoraciones canasta----------------',res)
-        },
-        err => {
-          console.log(err)
-        }
-      )
-  
-      this.waffleCanastaService.getPrecios().subscribe(
-        (res:any) => {
-          console.log(res);
-          const precios:any = res
-          const regular = precios.findIndex((objeto:any)=> objeto.descripcion === 'Regular');
-          const extra = precios.findIndex((objeto:any)=> objeto.descripcion === 'Extra');
-          const decoracion = precios.findIndex((objeto:any)=> objeto.descripcion === 'Decoracion');
-          this.precioRegularWaffleCanasta.push(precios[regular].precio);
-          this.precioExtraWaffleCanasta.push(precios[extra].precio);
-          this.precioDecoracionWaffleCanasta.push(precios[decoracion].precio);
-        },
-        err => console.error(err)
-      )
-  
-  
-      // Bebidas Frias
-  
-      this.bebidasFriasService.getBebidas().subscribe(
-        res => {
-          this.existenBebidasFrias = res;
-          console.log(res)
-        },
-        err => {
-          console.log(err)
-        }
-      )
-  
-      this.bebidasCalientesService.getBebidas().subscribe(
-        res => {
-          this.existenBebidasCalientes = res;
-          console.log(res)
-        },
-        err => {
-          console.log(err)
-        }
-      )
-  
-  
-      this.crepaSaladaService.getBotanas().subscribe(
-        res => {
-          this.existenBotanas = res;
-          console.log(res)
-        },
-        err => {
-          console.log(err)
-        }
-      )
-  
-      this.crepaSaladaService.getEnsaladas().subscribe(
-        res => {
-          this.existenEnsaladasIndividual = res;
-          console.log(res)
-        },
-        err => {
-          console.log(err)
-        }
-      )
-
-     // Organizar Ordenes 
-     this.service.viewOrdem().subscribe(
-      (res:any) => {
-        console.log('orden')
-        console.log(res)
-        this.mesa = res[0].mesa
-        this.ordenes = res;
-        console.log(this.ordenes);
-        const grupos = this.ordenes.reduce((acc:any, obj:any) => {
-          if (!acc[obj.nombre]) {
-            acc[obj.nombre] = [];
-          }
-          acc[obj.nombre].push(obj);
-          return acc;
-        }, {});
-        this.grupos = grupos;
-        setTimeout(() => {
-          this.organizarOrdenes();
-
-        }, 600)
-      },
-      err => {
-        console.log(err);
-      }
-    );
-
-
-
-
-
- }
+      });
+    }
+    
 
   
 
@@ -2778,7 +2587,7 @@ export class CarritoComponent {
               (res:any) => {
                 this.aderesosCrepaS[index1] = [];
                 const aderezos:any = [];
-                res[0].orden.aderesos.forEach((element:any) => {
+                JSON.parse(res[0].orden).aderesos.forEach((element:any) => {
                   aderezos.push(element)
                 })
                 this.crepasSaladas[index1].precio = res[0].precio
@@ -2841,13 +2650,14 @@ export class CarritoComponent {
           (res:any) => {
             this.ingredientesCrepaS[index1] = [];
             const ingredientes:any = [];
-            res[0].orden.ingredientes.forEach((element:any) => {
+            JSON.parse(res[0].orden).ingredientes.forEach((element:any) => {
               ingredientes.push(element)
             })
             this.crepasSaladas[index1].precio = res[0].precio
             this.crepasSaladas[index1].total = res[0].total
             this.ingredientesCrepaS[index1] = ingredientes
-              this.existenciasIngCrepaS(this.ingredientesCrepaS);
+           
+            this.existenciasIngCrepaS(this.ingredientesCrepaS);
             this.detectExistIngCrepaS();
             this.calcularTotal();
           },
@@ -2903,14 +2713,14 @@ export class CarritoComponent {
           (res:any) => {
             this.aderesosBaseCrepaS[index1] = [];
             const aderezos:any = [];
-            res[0].orden.adereso_base.forEach((element:any) => {
+            JSON.parse(res[0].orden).adereso_base.forEach((element:any) => {
               aderezos.push(element)
             })
             this.crepasSaladas[index1].precio = res[0].precio
             this.crepasSaladas[index1].total = res[0].total
             this.aderesosBaseCrepaS[index1] = aderezos
+            this.existenciasAdBaseCrepaS(this.aderesosBaseCrepaS);
             this.detectExistIngCrepaS();
-              this.existenciasAdBaseCrepaS(this.aderesosBaseCrepaS);
             this.calcularTotal();
           },
           err => {
@@ -2935,6 +2745,7 @@ export class CarritoComponent {
 
     if(long > 1){
     if(idOrden.nombre === crepasSalada){
+      console.log('problem', id)
     const index = idOrden.orden.ingredientes_base.findIndex((i:any) => i.id === id);
     console.log(index);
     idOrden.orden.ingredientes_base.splice(index, 1);
@@ -2960,7 +2771,7 @@ export class CarritoComponent {
           (res:any) => {
             this.ingredientesBaseCrepaS[index1] = [];
             const ingredientes:any = [];
-            res[0].orden.ingredientes_base.forEach((element:any) => {
+            JSON.parse(res[0].orden).ingredientes_base.forEach((element:any) => {
               ingredientes.push(element)
             })
             this.crepasSaladas[index1].precio = res[0].precio
@@ -3017,11 +2828,10 @@ export class CarritoComponent {
         console.log(res);
         this.service.selectOrden(id1).subscribe(
           (res:any) => {
-
               this.ingredientesComCrepaD[index1] = [];
             
               const ingredientes:any = [];
-              res[0].orden.ingredientes_com.forEach((element:any) => {
+              JSON.parse(res[0].orden).ingredientes_com.forEach((element:any) => {
                 ingredientes.push(element)
               })
               this.crepasDulces[index1].precio = res[0].precio
@@ -3077,7 +2887,7 @@ export class CarritoComponent {
           (res:any) => {
             this.ingredientesUntCrepaD[index1] = [];
             const ingredientes:any = [];
-            res[0].orden.ingredientes_unt.forEach((element:any) => {
+            JSON.parse(res[0].orden).ingredientes_unt.forEach((element:any) => {
 
               ingredientes.push(element)
             }
@@ -3134,7 +2944,7 @@ export class CarritoComponent {
           (res:any) => {
             this.nievesCrepaD[index1] = [];
             const nieves:any = [];
-            res[0].orden.nieve.forEach((element:any) => {
+            JSON.parse(res[0].orden).nieve.forEach((element:any) => {
   
               nieves.push(element)
 
@@ -3182,7 +2992,7 @@ export class CarritoComponent {
           (res:any) => {
             this.decoracionesCrepaD[index1] = [];
             const decoraciones:any = [];
-            res[0].orden.decoracion.forEach((element:any) => {
+            JSON.parse(res[0].orden).decoracion.forEach((element:any) => {
   
               decoraciones.push(element)
 
@@ -3244,7 +3054,7 @@ export class CarritoComponent {
             (res:any) => {
               this.wafflesIngCom[index1] = [];
               const ingredientes:any = [];
-              res[0].orden.ingredientes_com.forEach((element:any) => {
+              JSON.parse(res[0].orden).ingredientes_com.forEach((element:any) => {
                 ingredientes.push(element)
               })
               this.waffles[index1].precio = res[0].precio
@@ -3300,7 +3110,7 @@ export class CarritoComponent {
           (res:any) => {
             this.wafflesIngUnt[index1] = [];
             const ingredientes:any = [];
-            res[0].orden.ingredientes_unt.forEach((element:any) => {         
+            JSON.parse(res[0].orden).ingredientes_unt.forEach((element:any) => {         
                 ingredientes.push(element)
             })
             this.waffles[index1].precio = res[0].precio
@@ -3352,7 +3162,7 @@ export class CarritoComponent {
           (res:any) => {
             this.wafflesNieve[index1] = [];
             const nieves:any = [];
-            res[0].orden.nieve.forEach((element:any) => {
+            JSON.parse(res[0].orden).nieve.forEach((element:any) => {
                 nieves.push(element)
             }
             )
@@ -3399,7 +3209,7 @@ export class CarritoComponent {
           (res:any) => {
             this.wafflesDecoraciones[index1] = [];
             const decoracions:any = [];
-            res[0].orden.decoracion.forEach((element:any) => {
+            JSON.parse(res[0].orden).decoracion.forEach((element:any) => {
                 decoracions.push(element)
             }
             )
@@ -3451,7 +3261,7 @@ export class CarritoComponent {
             (res:any) => {
               this.wafflesCanastaIngCom[index1] = [];
               const ingredientes:any = [];
-              res[0].orden.ingredientes_com.forEach((element:any) => {
+              JSON.parse(res[0].orden).ingredientes_com.forEach((element:any) => {
                 ingredientes.push(element)
               })
               this.wafflesCanasta[index1].precio = res[0].precio
@@ -3507,7 +3317,7 @@ export class CarritoComponent {
           (res:any) => {
             this.wafflesCanastaIngUnt[index1] = [];
             const ingredientes:any = [];
-            res[0].orden.ingredientes_unt.forEach((element:any) => {
+            JSON.parse(res[0].orden).ingredientes_unt.forEach((element:any) => {
                 ingredientes.push(element)
             })
             this.wafflesCanasta[index1].precio = res[0].precio
@@ -3558,7 +3368,7 @@ export class CarritoComponent {
           (res:any) => {
             this.wafflesCanastaNieve[index1] = [];
             const nieves:any = [];
-            res[0].orden.nieve.forEach((element:any) => {
+            JSON.parse(res[0].orden).nieve.forEach((element:any) => {
                 nieves.push(element)
             }
             )
@@ -3605,7 +3415,7 @@ export class CarritoComponent {
           (res:any) => {
             this.wafflesCanastaDecoraciones[index1] = [];
             const decoracions:any = [];
-            res[0].orden.decoracion.forEach((element:any) => {
+            JSON.parse(res[0].orden).decoracion.forEach((element:any) => {
                 decoracions.push(element)
             }
             )
@@ -4315,9 +4125,15 @@ export class CarritoComponent {
   }  
 
   comprar(){
-    this.grupos = [];
+    this.total = 0;
+    this.invoice = null;
+  
+    this.seleccionHabilitada = false;
+  
+    // Configuraciones principales
+    this.grupos = null;
     this.ordenes = [];
-    this.saladasWarning = [];
+    this.saladasWarning  = [];
     this.dulcesWarning = [];
     this.wafflesWarning = [];
     this.wafflesCanastaWarning = [];
@@ -4325,66 +4141,129 @@ export class CarritoComponent {
     this.bebidasCalientesWarning = [];
     this.ensaladasWarning = [];
     this.botanasWarning = [];
-
+  
     // Crepa Dulce 
+    this.precioExtraCrepaDulce = [];
+    this.precioRegularCrepaDulce = [];
+    this.precioNieveCrepaDulce = [];
+    this.precioDecoracionCrepaDulce = [];
+    this.conteorepeticionesCrepaD = 0;
+    this.resultadosUntCrepaD = [];
+    this.resultadosComCrepaD = [];
     this.crepasDulces = [];
     this.ingredientesComCrepaD = [];
     this.ingredientesComCrepaD1 = [];
+    this.inventarioIngredientesComCrepaD = [];
+    this.existenciasingredientesComCrepaD = [];
     this.ingredientesUntCrepaD = [];
     this.ingredientesUntCrepaD1 = [];
+    this.inventarioIngredientesUntCrepaD = [];
+    this.existenciasingredientesUntCrepaD = [];
     this.nievesCrepaD = [];
     this.nievesCrepaD1 = [];
-
-
-
+    this.inventarioNievesCrepaD = [];
+    this.existenciasNievesCrepaD = [];
+    this.existenciasDecoracionesCrepaD = [];
+    this.invenatrioDecoracionesCrepaD = [];
+    this.decoracionesCrepaD = [];
+    this.decoracionesCrepaD1 = [];
+    this.invenatrioHarinasCrepaD = [];
+    this.existenciasHarinasCrepaD = [];
+    this.harinasCrepaD = [];
+  
     // Crepa Salada
+    this.precioExtraCrepaSalada = [];
+    this.precioRegularCrepaSalada = [];
+    this.precioEnsalada = [];
     this.crepasSaladas = [];
     this.ingredientesCrepaS = [];
     this.ingredientesCrepaS1 = [];
-
+    this.inventarioIngredientesCrepaS = [];
+    this.existenciasIngredientesCrepaS = [];
     this.aderesosCrepaS = [];
     this.aderesosCrepaS1 = [];
+    this.inventarioAderesosCrepaS = [];
+    this.existenciasAderesosCrepaS = [];
     this.ingredientesBaseCrepaS = [];
     this.ingredientesBaseCrepaS1 = [];
+    this.inventarioIngredientesBaseCrepaS = [];
+    this.existenciasIngredientesBaseCrepaS = [];
     this.aderesosBaseCrepaS = [];
     this.aderesosBaseCrepaS1 = [];
-
+    this.inventarioAderesosBaseCrepaS = [];
+    this.existenciasAderesosBaseCrepaS = [];
+  
     // Waffles
+    this.precioExtraWaffle = [];
+    this.precioRegularWaffle = [];
+    this.precioNieveWaffle = [];
+    this.precioDecoracionWaffle = [];
     this.waffles = [];
     this.wafflesIngUnt = [];
     this.waffles1IngUnt = [];
+    this.inventarioWafflesIngUnt = [];
+    this.existenciasWafflesIngUnt = [];
     this.wafflesIngCom = [];
     this.waffles1IngCom = [];
+    this.inventarioWafflesIngCom = [];
+    this.existenciasWafflesIngCom = [];
     this.wafflesNieve = [];
     this.waffles1Nieve = [];
-
+    this.inventarioWafflesNieve = [];
+    this.existenciasWafflesNieve = [];
+    this.existenciasWafflesDecoraciones = [];
+    this.inventarioWafflesDecoraciones = [];
+    this.wafflesDecoraciones = [];
+    this.waffles1Decoraciones = [];
+  
     // Waffles Canasta
+    this.precioExtraWaffleCanasta = [];
+    this.precioRegularWaffleCanasta = [];
+    this.precioDecoracionWaffleCanasta = [];
     this.wafflesCanasta = [];
     this.wafflesCanastaIngUnt = [];
     this.wafflesCanasta1IngUnt = [];
-
+    this.inventarioWafflesIngUntCanasta = [];
+    this.existenciasWafflesIngUntCanasta = [];
     this.wafflesCanastaIngCom = [];
     this.wafflesCanasta1IngCom = [];
+    this.inventarioWafflesIngComCanasta = [];
+    this.existenciasWafflesIngComCanasta = [];
     this.wafflesCanastaNieve = [];
     this.wafflesCanasta1Nieve = [];
-
-
+    this.inventarioWafflesNieveCanasta = [];
+    this.existenciasWafflesNieveCanasta = [];
+    this.existenciasWafflesDecoracionesCanasta = [];
+    this.inventarioWafflesDecoracionesCanasta = [];
+    this.wafflesCanastaDecoraciones = [];
+    this.wafflesCanasta1Decoraciones = [];
+  
     // Bebidas Calientes
     this.bebidasCalientes = [];
     this.bebidasCalientes1 = [];
-
-
+    this.inventarioBebidasCalientes = [];
+    this.existenBebidasCalientes = [];
+  
     // Bebidas Frias
     this.bebidasFrias = [];
     this.bebidasFrias1 = [];
-
-
+    this.inventarioBebidasFrias = [];
+    this.existenBebidasFrias = [];
+  
     // Botanas
     this.botanas = [];
     this.botanas1 = [];
-    // Ensalada Indivudual
+    this.inventarioBotanas = [];
+    this.existenBotanas = [];
+  
+    // Ensalada Individual
     this.ensaladasIndividual = [];
     this.ensaladasIndividual1 = [];
+    this.inventarioEnsaladasIndividual = [];
+    this.existenEnsaladasIndividual = [];
+  
+    // Reset Mesa
+    this.mesa = 0;
     this.stock();
     setTimeout(() => {
       console.log(this.saladasWarning);
@@ -4506,361 +4385,7 @@ export class CarritoComponent {
         // Agrega otros datos del usuario si los necesitas
       };     
      const language = userData.lang;
-     if(language === 'es'){
-      
-      let info:any = `<div style="position: relative; width: 855px;"><div class="info">Fecha y hora: ${this.invoice[0].fecha_hora}</div>
-      <div class="info">Factura ID: ${this.invoice[0].id}</div>
-      <div class="info">Mesa: ${this.invoice[0].mesa}</div>
-      <div class="info">Numero de caja: ${this.invoice[0].numero_caja}</div>
-      <div class="info">Numero de productos: ${this.invoice[0].numero_productos}</div>
-      <div class="info">Sucursal ID: ${this.invoice[0].sucursal_id}</div>
-      <div class="info">Total: ${this.invoice[0].total}</div>
-      <div class="info">User ID: ${this.invoice[0].userId}</div></div>
-      `
-      div.innerHTML += info;
-          this.invoice[0].orden.forEach((objeto:any) => {
-            console.log(objeto.nombre);
-            let tabla = '';
-            switch (objeto.nombre) {
-      
-              case crepasDulce:
-            tabla = `
-        <div class='tabla-container'>
-        <table style="width: 902px;">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Cantidad</th>
-              <th>Precio</th>
-              <th>Complementos</th>
-              <th>Untables</th>
-              <th>Harina</th>
-              <th>Nieve</th>
-              <th>Decoracion</th>
-              <th>Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>${objeto.nombre}</td>
-              <td>${objeto.cantidad}</td>
-              <td>${objeto.precio}</td>
-              <td>
-                <ul class="ingredient-list">
-                  ${objeto.orden.ingredientes_com.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
-                </ul>
-              </td>
-              <td>
-                <ul>
-                  ${objeto.orden.ingredientes_unt.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
-                </ul>
-              </td>
-              <td>${objeto.orden.harina.harina}</td>
-              <td>
-                <ul>
-                  ${objeto.orden.nieve.map((nieve: any) => `<li>${nieve.nombre}</li>`).join('')}
-                </ul>
-              </td>
-              <td>
-              <ul>
-              ${objeto.orden.decoracion.map((decoracion: any) => `<li>${decoracion.nombre}</li>`).join('')}
-              </ul>
-            </td>
-              <td>${objeto.total}</td>
-            </tr>
-          </tbody>
-        </table>
-        </div>
-      `;
-      
-      div.innerHTML += tabla;
-      break;
-      case crepasSalada:
-        tabla = `
-        <div  class='tabla-container'>
-        <table>
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Cantidad</th>
-              <th>Precio</th>
-              <th>Ingredientes Base</th>
-              <th>Adereso Base</th>
-              <th>Ingredientes</th>
-              <th>Aderesos</th>
-              <th>Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>${objeto.nombre}</td>
-              <td>${objeto.cantidad}</td>
-              <td>${objeto.precio}</td>
-              <td>
-                <ul class="ingredient-list">
-                  ${objeto.orden.ingredientes_base.map((ing: any) => `<li>${ing.ingrediente_base}</li>`).join('')}
-                </ul>
-              </td>
-              <td>
-                <ul>
-                  ${objeto.orden.adereso_base.map((ing: any) => `<li>${ing.adereso_base}</li>`).join('')}
-                </ul>
-              </td>
-              <td>
-              <ul class="ingredient-list">
-                ${objeto.orden.ingredientes.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
-              </ul>
-            </td>
-            <td>
-              <ul>
-                ${objeto.orden.aderesos.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
-              </ul>
-            </td>
-              <td>${objeto.total}</td>
-            </tr>
-          </tbody>
-        </table>
-        </div>
-        `
-        div.innerHTML += tabla;
-        break;
-      
-        case waffles:
-          tabla = `
-      <div class='tabla-container'>
-      <table style="width: 920px;">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Cantidad</th>
-            <th>Precio</th>
-            <th>Complementos</th>
-            <th>Untables</th>
-            <th>Nieve</th>
-            <th>Decoracion</th>
-            <th>Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>${objeto.nombre}</td>
-            <td>${objeto.cantidad}</td>
-            <td>${objeto.precio}</td>
-            <td>
-              <ul class="ingredient-list">
-                ${objeto.orden.ingredientes_com.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
-              </ul>
-            </td>
-            <td>
-              <ul>
-                ${objeto.orden.ingredientes_unt.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
-              </ul>
-            </td>
-            <td>
-              <ul>
-                ${objeto.orden.nieve.map((nieve: any) => `<li>${nieve.nombre}</li>`).join('')}
-              </ul>
-            </td>
-            <td>
-            <ul>
-            ${objeto.orden.decoracion.map((decoracion: any) => `<li>${decoracion.nombre}</li>`).join('')}
-            </ul>
-          </td>
-            <td>${objeto.total}</td>
-          </tr>
-        </tbody>
-      </table>
-      </div>
-      `;
-      
-      div.innerHTML += tabla;
-      break;
-      
-      case waffleCanasta:
-      tabla = `
-      <div class='tabla-container'>
-      <table style="width: 923px;">
-      <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Cantidad</th>
-        <th>Precio</th>
-        <th>Complementos</th>
-        <th>Untables</th>
-        <th>Nieve</th>
-        <th>Decoracion</th>
-        <th>Total</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>${objeto.nombre}</td>
-        <td>${objeto.cantidad}</td>
-        <td>${objeto.precio}</td>
-        <td>
-          <ul class="ingredient-list">
-            ${objeto.orden.ingredientes_com.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
-          </ul>
-        </td>
-        <td>
-          <ul>
-            ${objeto.orden.ingredientes_unt.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
-          </ul>
-        </td>
-        <td>
-          <ul>
-            ${objeto.orden.nieve.map((nieve: any) => `<li>${nieve.nombre}</li>`).join('')}
-          </ul>
-        </td>
-        <td>
-        <ul>
-        ${objeto.orden.decoracion.map((decoracion: any) => `<li>${decoracion.nombre}</li>`).join('')}
-        </ul>
-      </td>
-        <td>${objeto.total}</td>
-      </tr>
-      </tbody>
-      </table>
-      </div>
-      `;
-      
-      div.innerHTML += tabla;
-      break;
-      
-      case bebidasCalientes:
-      tabla = `
-      <div class='tabla-container'>
-      <table style="width: 1005px;">
-      <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Cantidad</th>
-        <th>Precio</th>
-        <th>Bebida</th>
-        <th>Total</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>${objeto.nombre}</td>
-        <td>${objeto.cantidad}</td>
-        <td>${objeto.precio}</td>
-        <td>
-          <ul class="ingredient-list">
-            ${objeto.orden.bebida}
-          </ul>
-        </td>
-        <td>${objeto.total}</td>
-      </tr>
-      </tbody>
-      </table>
-      </div>
-      `;
-      
-      div.innerHTML += tabla;
-      break;
-      
-      case bebidasFrias:
-      tabla = `
-      <div class='tabla-container'>
-      <table style="width: 1005px;">
-      <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Cantidad</th>
-        <th>Precio</th>
-        <th>Bebida</th>
-        <th>Total</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>${objeto.nombre}</td>
-        <td>${objeto.cantidad}</td>
-        <td>${objeto.precio}</td>
-        <td>
-          <ul class="ingredient-list">
-            ${objeto.orden.bebida}
-          </ul>
-        </td>
-        <td>${objeto.total}</td>
-      </tr>
-      </tbody>
-      </table>
-      </div>
-      `;
-      
-      div.innerHTML += tabla;
-      break;
-      
-      case botanas:
-      tabla = `
-      <div class='tabla-container'>
-      <table style="width: 1005px;">
-      <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Cantidad</th>
-        <th>Precio</th>
-        <th>Botana</th>
-        <th>Total</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>${objeto.nombre}</td>
-        <td>${objeto.cantidad}</td>
-        <td>${objeto.precio}</td>
-        <td>
-          <ul class="ingredient-list">
-            ${objeto.orden.botana}
-          </ul>
-        </td>
-        <td>${objeto.total}</td>
-      </tr>
-      </tbody>
-      </table>
-      </div>
-      `;
-      
-      div.innerHTML += tabla;
-      break;
-      
-      case ensaladas:
-      tabla = `
-      <div class='tabla-container'>
-      <table style="width: 1000px;">
-      <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Cantidad</th>
-        <th>Precio</th>
-        <th>Ensalada</th>
-        <th>Total</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>${objeto.nombre}</td>
-        <td>${objeto.cantidad}</td>
-        <td>${objeto.precio}</td>
-        <td>
-          <ul class="ingredient-list">
-            ${objeto.orden.ensalada}
-          </ul>
-        </td>
-        <td>${objeto.total}</td>
-      </tr>
-      </tbody>
-      </table>
-      </div>
-      `;
-      
-      div.innerHTML += tabla;
-      break;
-            }
-          });
-        }else if(language === 'en'){
+if(language === 'en'){
                     
   let info:any = `<div style="position: relative; width: 855px;"><div class="info">Date and time: ${this.invoice[0].fecha_hora}</div>
   <div class="info">Invoice ID: ${this.invoice[0].id}</div>
@@ -5214,7 +4739,362 @@ export class CarritoComponent {
           break;
               }
             });
-          }
+          }else{
+
+                    
+            let info:any = `<div style="position: relative; width: 855px;"><div class="info">Fecha y hora: ${this.invoice[0].fecha_hora}</div>
+            <div class="info">Factura ID: ${this.invoice[0].id}</div>
+            <div class="info">Mesa: ${this.invoice[0].mesa}</div>
+            <div class="info">Numero de caja: ${this.invoice[0].numero_caja}</div>
+            <div class="info">Numero de productos: ${this.invoice[0].numero_productos}</div>
+            <div class="info">Sucursal ID: ${this.invoice[0].sucursal_id}</div>
+            <div class="info">Total: ${this.invoice[0].total}</div>
+            <div class="info">User ID: ${this.invoice[0].userId}</div></div>
+            `
+            div.innerHTML += info;
+                      this.ordenes.forEach((objeto:any) => {
+                        console.log(objeto.nombre);
+                        let tabla = '';
+                        switch (objeto.nombre) {
+                    
+                          case crepasDulce:
+                        tabla = `
+              <div class='tabla-container'>
+              <table style="width: 902px;">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Complementos</th>
+                    <th>Untables</th>
+                    <th>Harina</th>
+                    <th>Nieve</th>
+                    <th>Decoracion</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>${objeto.nombre}</td>
+                    <td>${objeto.cantidad}</td>
+                    <td>${objeto.precio}</td>
+                    <td>
+                      <ul class="ingredient-list">
+                        ${objeto.orden.ingredientes_com.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
+                      </ul>
+                    </td>
+                    <td>
+                      <ul>
+                        ${objeto.orden.ingredientes_unt.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
+                      </ul>
+                    </td>
+                    <td>${objeto.orden.harina.harina}</td>
+                    <td>
+                      <ul>
+                        ${objeto.orden.nieve.map((nieve: any) => `<li>${nieve.nombre}</li>`).join('')}
+                      </ul>
+                    </td>
+                    <td>
+                    <ul>
+                    ${objeto.orden.decoracion.map((decoracion: any) => `<li>${decoracion.nombre}</li>`).join('')}
+                    </ul>
+                  </td>
+                    <td>${objeto.total}</td>
+                  </tr>
+                </tbody>
+              </table>
+              </div>
+                    `;
+                    
+                    div.innerHTML += tabla;
+                    break;
+                    case crepasSalada:
+                    tabla = `
+              <div  class='tabla-container'>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Ingredientes Base</th>
+                    <th>Adereso Base</th>
+                    <th>Ingredientes</th>
+                    <th>Aderesos</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>${objeto.nombre}</td>
+                    <td>${objeto.cantidad}</td>
+                    <td>${objeto.precio}</td>
+                    <td>
+                      <ul class="ingredient-list">
+                        ${objeto.orden.ingredientes_base.map((ing: any) => `<li>${ing.ingrediente_base}</li>`).join('')}
+                      </ul>
+                    </td>
+                    <td>
+                      <ul>
+                        ${objeto.orden.adereso_base.map((ing: any) => `<li>${ing.adereso_base}</li>`).join('')}
+                      </ul>
+                    </td>
+                    <td>
+                    <ul class="ingredient-list">
+                      ${objeto.orden.ingredientes.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
+                    </ul>
+                  </td>
+                  <td>
+                    <ul>
+                      ${objeto.orden.aderesos.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
+                    </ul>
+                  </td>
+                    <td>${objeto.total}</td>
+                  </tr>
+                </tbody>
+              </table>
+              </div>
+                    `
+                    div.innerHTML += tabla;
+                    break;
+                    
+                    case waffles:
+                      tabla = `
+            <div class='tabla-container'>
+            <table style="width: 920px;">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Cantidad</th>
+                  <th>Precio</th>
+                  <th>Complementos</th>
+                  <th>Untables</th>
+                  <th>Nieve</th>
+                  <th>Decoracion</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>${objeto.nombre}</td>
+                  <td>${objeto.cantidad}</td>
+                  <td>${objeto.precio}</td>
+                  <td>
+                    <ul class="ingredient-list">
+                      ${objeto.orden.ingredientes_com.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
+                    </ul>
+                  </td>
+                  <td>
+                    <ul>
+                      ${objeto.orden.ingredientes_unt.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
+                    </ul>
+                  </td>
+                  <td>
+                    <ul>
+                      ${objeto.orden.nieve.map((nieve: any) => `<li>${nieve.nombre}</li>`).join('')}
+                    </ul>
+                  </td>
+                  <td>
+                  <ul>
+                  ${objeto.orden.decoracion.map((decoracion: any) => `<li>${decoracion.nombre}</li>`).join('')}
+                  </ul>
+                </td>
+                  <td>${objeto.total}</td>
+                </tr>
+              </tbody>
+            </table>
+            </div>
+                    `;
+                    
+                    div.innerHTML += tabla;
+                    break;
+                    
+                    case waffleCanasta:
+                    tabla = `
+            <div class='tabla-container'>
+            <table style="width: 923px;">
+            <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Cantidad</th>
+              <th>Precio</th>
+              <th>Complementos</th>
+              <th>Untables</th>
+              <th>Nieve</th>
+              <th>Decoracion</th>
+              <th>Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>${objeto.nombre}</td>
+              <td>${objeto.cantidad}</td>
+              <td>${objeto.precio}</td>
+              <td>
+                <ul class="ingredient-list">
+                  ${objeto.orden.ingredientes_com.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
+                </ul>
+              </td>
+              <td>
+                <ul>
+                  ${objeto.orden.ingredientes_unt.map((ing: any) => `<li>${ing.nombre}</li>`).join('')}
+                </ul>
+              </td>
+              <td>
+                <ul>
+                  ${objeto.orden.nieve.map((nieve: any) => `<li>${nieve.nombre}</li>`).join('')}
+                </ul>
+              </td>
+              <td>
+              <ul>
+              ${objeto.orden.decoracion.map((decoracion: any) => `<li>${decoracion.nombre}</li>`).join('')}
+              </ul>
+            </td>
+              <td>${objeto.total}</td>
+            </tr>
+            </tbody>
+            </table>
+            </div>
+                    `;
+                    
+                    div.innerHTML += tabla;
+                    break;
+                    
+                    case bebidasCalientes:
+                    tabla = `
+            <div class='tabla-container'>
+            <table style="width: 1005px;">
+            <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Cantidad</th>
+              <th>Precio</th>
+              <th>Bebida</th>
+              <th>Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>${objeto.nombre}</td>
+              <td>${objeto.cantidad}</td>
+              <td>${objeto.precio}</td>
+              <td>
+                <ul class="ingredient-list">
+                  ${objeto.orden.bebida}
+                </ul>
+              </td>
+              <td>${objeto.total}</td>
+            </tr>
+            </tbody>
+            </table>
+            </div>
+                    `;
+                    
+                    div.innerHTML += tabla;
+                    break;
+                    
+                    case bebidasFrias:
+                    tabla = `
+            <div class='tabla-container'>
+            <table style="width: 1005px;">
+            <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Cantidad</th>
+              <th>Precio</th>
+              <th>Bebida</th>
+              <th>Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>${objeto.nombre}</td>
+              <td>${objeto.cantidad}</td>
+              <td>${objeto.precio}</td>
+              <td>
+                <ul class="ingredient-list">
+                  ${objeto.orden.bebida}
+                </ul>
+              </td>
+              <td>${objeto.total}</td>
+            </tr>
+            </tbody>
+            </table>
+            </div>
+                    `;
+                    
+                    div.innerHTML += tabla;
+                    break;
+                    
+                    case botanas:
+                    tabla = `
+            <div class='tabla-container'>
+            <table style="width: 1005px;">
+            <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Cantidad</th>
+              <th>Precio</th>
+              <th>Botana</th>
+              <th>Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>${objeto.nombre}</td>
+              <td>${objeto.cantidad}</td>
+              <td>${objeto.precio}</td>
+              <td>
+                <ul class="ingredient-list">
+                  ${objeto.orden.botana}
+                </ul>
+              </td>
+              <td>${objeto.total}</td>
+            </tr>
+            </tbody>
+            </table>
+            </div>
+                    `;
+                    
+                    div.innerHTML += tabla;
+                    break;
+                    
+                    case ensaladas:
+                    tabla = `
+            <div class='tabla-container'>
+            <table style="width: 1000px;">
+            <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Cantidad</th>
+              <th>Precio</th>
+              <th>Ensalada</th>
+              <th>Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>${objeto.nombre}</td>
+              <td>${objeto.cantidad}</td>
+              <td>${objeto.precio}</td>
+              <td>
+                <ul class="ingredient-list">
+                  ${objeto.orden.ensalada}
+                </ul>
+              </td>
+              <td>${objeto.total}</td>
+            </tr>
+            </tbody>
+            </table>
+            </div>
+                    `;
+                    
+                    div.innerHTML += tabla;
+                    break;
+                        }
+                      });
+              }
       
           let div2 = document.createElement('div');
           div2.innerHTML = div.innerHTML;

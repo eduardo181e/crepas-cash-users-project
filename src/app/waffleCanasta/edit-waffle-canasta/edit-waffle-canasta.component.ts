@@ -5,6 +5,7 @@ import { CarritoService } from 'src/app/services/carrito.service';
 import { WaffleCanastaService } from 'src/app/services/waffle-canasta.service';
 import { waffleCanasta } from 'src/app/models/nameCrepas';
 import { AuthService } from 'src/app/services/auth-service.service';
+import { forkJoin, switchMap } from 'rxjs';
 @Component({
   selector: 'app-edit-waffle-canasta',
   templateUrl: './edit-waffle-canasta.component.html',
@@ -38,13 +39,22 @@ export class EditWaffleCanastaComponent {
   precio:number = 0;
   constructor(private service: WaffleCanastaService, private add: CarritoService, private router: Router, private alertService: AlertDialogService, private activatedRoute: ActivatedRoute, private authService: AuthService){}
 
-  ngOnInit(){
+  ngOnInit() {
     this.nombre = waffleCanasta;
-    this.waffle.precio = this.precioRegular[0]
-    this.service.getIngredientesC().subscribe(
-      (res:any) => {
-        console.log(res);
-        res.forEach((element:any) => {
+    this.waffle.precio = this.precioRegular[0];
+  
+    // Usamos forkJoin para ejecutar las peticiones en paralelo
+    forkJoin({
+      ingredientesCom: this.service.getIngredientesC(),
+      ingredientesUnt: this.service.getIngredientesU(),
+      nieves: this.service.getNieves(),
+      decoraciones: this.service.getDecoraciones(),
+      precios: this.service.getPrecios()
+    }).pipe(
+      switchMap(({ ingredientesCom, ingredientesUnt, nieves, decoraciones, precios }) => {
+        // Guardamos los ingredientes y precios
+        this.ingredientes_com = ingredientesCom;
+        this.ingredientes_com.forEach((element:any) => {
           if(element.tipo === 'Fruta'){
             this.frutas.push(element);
           }else if(element.tipo === 'Frutos Secos'){
@@ -53,134 +63,135 @@ export class EditWaffleCanastaComponent {
             this.Otros.push(element);
           }
         });
-        this.ingredientes_com = res;
-      },
-      err => console.error(err)
-    ) 
-
-    this.service.getIngredientesU().subscribe(
-      res => {
-        this.ingredientes_unt = res;
-      },
-      err => console.error(err)
-    ) 
-    this.service.getNieves().subscribe(
-      res => {
-        this.nieves = res;
-      },
-      err => console.error(err)
-    )  
-    this.service.getDecoraciones().subscribe(
-      res => {
-        console.log(res);
-        this.decoraciones = res;
-      },
-      err => console.error(err)
-    ) 
-    this.service.getPrecios().subscribe(
-      (res:any) => {
-        console.log(res);
-        const precios:any = res
-        const regular = precios.findIndex((objeto:any)=> objeto.descripcion === 'Regular');
-        const extra = precios.findIndex((objeto:any)=> objeto.descripcion === 'Extra');
-        const decoracion = precios.findIndex((objeto:any)=> objeto.descripcion === 'Decoracion');
-        this.precioRegular.push(precios[regular].precio);
-        this.precioExtra.push(precios[extra].precio);
-        this.precioDecoracion.push(precios[decoracion].precio);
-      },
-      err => console.error(err)
-    )
-
-    setTimeout(() => {
-      const params = this.activatedRoute.snapshot.params;
-      const id:string = params['id'];
-
-      this.add.selectOrden(id).subscribe(
-        (res: any) => {
-          console.log('---------Untables----------');
-          res[0].orden.ingredientes_unt.forEach((element:any) => {
-            const index = this.ingredientes_unt.findIndex((i:any) => i.id === element.id);
-            console.log(this.ingredientes_unt[index]);
-            if(index === -1){
-              if(this.authService.lang() === 'es'){
-                this.alertService.mostrarAlerta('El ingrediente '+ element.nombre + ' fue retirado del menu');
-                }else if(this.authService.lang() === 'en'){
-                  this.alertService.mostrarAlerta('The ingredient '+ element.nombre + ' was removed from the menu');
-                }
-            }else{
-              if(this.ingredientes_unt[index].existencia === 1){
-              this.waffle.ingredientes_unt.push({nombre: this.ingredientes_unt[index].ingrediente_unt, id: this.ingredientes_unt[index].id});
-              this.anadirOrden();
-              }else if(this.ingredientes_unt[index].existencia === 0){
-                if(this.authService.lang() === 'es'){
-                  this.alertService.mostrarAlerta('El ingrediente '+ element.nombre + ' no esta disponible por el momento');
-                  }else if(this.authService.lang() === 'en'){
-                    this.alertService.mostrarAlerta('The ingredient '+ element.nombre + ' is not available at the moment');
-                  }
+        this.ingredientes_unt = ingredientesUnt;
+        this.nieves = nieves;
+        this.decoraciones = decoraciones;
+        const precios1:any = precios
+        // Procesamos los precios
+        const regular = precios1.findIndex((objeto: any) => objeto.descripcion === 'Regular');
+        const extra = precios1.findIndex((objeto: any) => objeto.descripcion === 'Extra');
+        const decoracion = precios1.findIndex((objeto: any) => objeto.descripcion === 'Decoracion');
+        this.precioRegular.push(precios1[regular].precio);
+        this.precioExtra.push(precios1[extra].precio);
+        this.precioDecoracion.push(precios1[decoracion].precio);
+  
+        // Ahora que todas las peticiones están completadas, obtenemos la orden
+        const params = this.activatedRoute.snapshot.params;
+        const id: string = params['id'];
+        return this.add.selectOrden(id);
+      })
+    ).subscribe({
+      next: (res: any) => {
+        res[0].orden = JSON.parse(res[0].orden);
+        console.log('---------Untables----------');
+        res[0].orden.ingredientes_unt.forEach((element:any) => {
+          const index = this.ingredientes_unt.findIndex((i:any) => i.id === element.id);
+          console.log(this.ingredientes_unt[index]);
+          if(index === -1){
+            if(this.authService.lang() === 'es'){
+              this.alertService.mostrarAlerta('El ingrediente '+ element.nombre + ' fue retirado del menu');
+              }else if(this.authService.lang() === 'en'){
+                this.alertService.mostrarAlerta('The ingredient '+ element.nombre + ' was removed from the menu');
               }
-            }
-          })
-          console.log('----------Complementarios---------');
-          console.log(res[0].orden.ingredientes_com);
-          res[0].orden.ingredientes_com.forEach((element:any) => {
-            const index = this.ingredientes_com.findIndex((i:any) => i.id === element.id);
-            console.log(this.ingredientes_com[index]);
-            if(index === -1){
+          }else{
+            if(this.ingredientes_unt[index].existencia === 1){
+            this.waffle.ingredientes_unt.push({nombre: this.ingredientes_unt[index].ingrediente_unt, id: this.ingredientes_unt[index].id});
+            this.anadirOrden();
+            }else if(this.ingredientes_unt[index].existencia === 0){
               if(this.authService.lang() === 'es'){
-                this.alertService.mostrarAlerta('El ingrediente '+ element.nombre + ' fue retirado del menu');
+                this.alertService.mostrarAlerta('El ingrediente '+ element.nombre + ' no esta disponible por el momento');
                 }else if(this.authService.lang() === 'en'){
-                  this.alertService.mostrarAlerta('The ingredient '+ element.nombre + ' was removed from the menu');
+                  this.alertService.mostrarAlerta('The ingredient '+ element.nombre + ' is not available at the moment');
                 }
-            }else{
-              if(this.ingredientes_com[index].existencia === 1){
-              this.waffle.ingredientes_com.push({nombre: this.ingredientes_com[index].ingrediente_com, id: this.ingredientes_com[index].id});
-              this.anadirOrden();
-              }else if(this.ingredientes_com[index].existencia === 0){
-                if(this.authService.lang() === 'es'){
-                  this.alertService.mostrarAlerta('El ingrediente '+ element.nombre + ' no esta disponible por el momento');
-                  }else if(this.authService.lang() === 'en'){
-                    this.alertService.mostrarAlerta('The ingredient '+ element.nombre + ' is not available at the moment');
-                  }
-              }
             }
-          })
-
-          console.log('----------Nieves---------');
-          console.log(res[0].orden.nieve);
-          res[0].orden.nieve.forEach((element:any) => {
-            const index = this.nieves.findIndex((i:any) => i.id === element.id);
-            console.log(this.nieves[index]);
-            if(index === -1){
+          }
+        })
+        console.log('----------Complementarios---------');
+        console.log(res[0].orden.ingredientes_com);
+        res[0].orden.ingredientes_com.forEach((element:any) => {
+          const index = this.ingredientes_com.findIndex((i:any) => i.id === element.id);
+          console.log(this.ingredientes_com[index]);
+          if(index === -1){
+            if(this.authService.lang() === 'es'){
+              this.alertService.mostrarAlerta('El ingrediente '+ element.nombre + ' fue retirado del menu');
+              }else if(this.authService.lang() === 'en'){
+                this.alertService.mostrarAlerta('The ingredient '+ element.nombre + ' was removed from the menu');
+              }
+          }else{
+            if(this.ingredientes_com[index].existencia === 1){
+            this.waffle.ingredientes_com.push({nombre: this.ingredientes_com[index].ingrediente_com, id: this.ingredientes_com[index].id});
+            this.anadirOrden();
+            }else if(this.ingredientes_com[index].existencia === 0){
               if(this.authService.lang() === 'es'){
-                this.alertService.mostrarAlerta('La nieve '+ element.nombre + ' fue retirado del menu');
+                this.alertService.mostrarAlerta('El ingrediente '+ element.nombre + ' no esta disponible por el momento');
                 }else if(this.authService.lang() === 'en'){
-                  this.alertService.mostrarAlerta('The ice cream '+ element.nombre + ' was removed from the menu');
+                  this.alertService.mostrarAlerta('The ingredient '+ element.nombre + ' is not available at the moment');
                 }
-            }else{
-              if(this.nieves[index].existencia === 1){
-              this.waffle.nieve.push({nombre: this.nieves[index].nieve, id: this.nieves[index].id});
-              this.anadirOrden();
-              this.addN = true;
-              }else if(this.nieves[index].existencia === 0){
-                if(this.authService.lang() === 'es'){
-                  this.alertService.mostrarAlerta('La nieve '+ element.nombre + ' no esta disponible por el momento');
-                  }else if(this.authService.lang() === 'en'){
-                    this.alertService.mostrarAlerta('The ice cream '+ element.nombre + ' is not available at the moment');
-                  }
-              }
             }
-          })
+          }
+        })
+
+        console.log('----------Nieves---------');
+        console.log(res[0].orden.nieve);
+        res[0].orden.nieve.forEach((element:any) => {
+          const index = this.nieves.findIndex((i:any) => i.id === element.id);
+          console.log(this.nieves[index]);
+          if(index === -1){
+            if(this.authService.lang() === 'es'){
+              this.alertService.mostrarAlerta('La nieve '+ element.nombre + ' fue retirado del menu');
+              }else if(this.authService.lang() === 'en'){
+                this.alertService.mostrarAlerta('The ice cream '+ element.nombre + ' was removed from the menu');
+              }
+          }else{
+            if(this.nieves[index].existencia === 1){
+            this.waffle.nieve.push({nombre: this.nieves[index].nieve, id: this.nieves[index].id});
+            this.anadirOrden();
+            this.addN = true;
+            }else if(this.nieves[index].existencia === 0){
+              if(this.authService.lang() === 'es'){
+                this.alertService.mostrarAlerta('La nieve '+ element.nombre + ' no esta disponible por el momento');
+                }else if(this.authService.lang() === 'en'){
+                  this.alertService.mostrarAlerta('The ice cream '+ element.nombre + ' is not available at the moment');
+                }
+            }
+          }
+        })
+        this.waffle.decoracion = res[0].orden.decoracion;
+        this.waffle.decoracion.forEach((element:any) => {
+          console.log(element)
+          const index = this.decoraciones.findIndex((i:any) => i.decoracion === element.nombre);
+          console.log(index)
+          console.log('Problem',this.decoraciones, this.waffle.decoracion)
+          if(index === -1){
+            if(this.authService.lang() === 'es'){
+              this.alertService.mostrarAlerta('La decoracion '+ element.nombre + ' fue retirado del menu');
+              }else if(this.authService.lang() === 'en'){
+                this.alertService.mostrarAlerta('The decoration '+ element.nombre + ' was removed from the menu');
+              }
+              const index1 = this.waffle.decoracion.findIndex((i:any) => i.nombre === element.nombre);
+              this.waffle.decoracion.splice(index1, 1);
+            } else if(this.decoraciones[index].existencia === 0){
+              if(this.authService.lang() === 'es'){
+                this.alertService.mostrarAlerta('La decoracion '+ element.nombre + ' no esta disponible por el momento');
+                }else if(this.authService.lang() === 'en'){
+                  this.alertService.mostrarAlerta('The decoration '+ element.nombre + ' is not available at the moment');
+                }
+              const index1 = this.waffle.decoracion.findIndex((i:any) => i.nombre === element.nombre);
+              this.waffle.decoracion.splice(index1, 1);
+            }else{
+              this.anadirOrden();
+            }
+            this.anadirOrden();
+        });
 
 
-          this.waffle.decoracion = res[0].orden.decoracion;
-
-          this.cantidad = res[0].cantidad;
-
-        }, 
-        err => console.error(err)
-      )
-    }, 500);
+        this.cantidad = res[0].cantidad;
+        this.anadirOrden()
+      },
+      error: (err) => console.error(err)
+    });
   }
+  
 
   actualizarIngredienteUnt(ingrediente: string, id: number, existencia: any) {
     if (existencia === 0) {

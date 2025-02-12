@@ -6,6 +6,7 @@ import { CrepaDulceService } from 'src/app/services/crepa-dulce.service';
 import { sabor } from './modelos';
 import { crepasDulce } from 'src/app/models/nameCrepas';
 import { AuthService } from 'src/app/services/auth-service.service';
+import { forkJoin, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-edit-crepa-dulce',
@@ -44,59 +45,51 @@ export class EditCrepaDulceComponent {
   orden:any = {};
   precio:number = 0;
   constructor(private service: CrepaDulceService, private add: CarritoService, private router: Router,private alertService: AlertDialogService, private activatedRoute: ActivatedRoute, private authService: AuthService ){}
-  ngOnInit(){
-
+  ngOnInit() {
     this.nombre = crepasDulce;
-
-    
-
-    this.service.getPrecios().subscribe(
-      (res:any) => {
-        console.log(res);
-        const precios:any = res
-        const regular = precios.findIndex((objeto:any)=> objeto.descripcion === 'Regular');
-        const extra = precios.findIndex((objeto:any)=> objeto.descripcion === 'Extra');
-        const nieve = precios.findIndex((objeto:any)=> objeto.descripcion === 'Nieve');
-        const decoracion = precios.findIndex((objeto:any)=> objeto.descripcion === 'Decoracion');
-        this.precioRegular.push(precios[regular].precio);
-        this.precioExtra.push(precios[extra].precio);
-        this.precioNieve.push(precios[nieve].precio);
-        this.precioDecoracion.push(precios[decoracion].precio);
-        this.crepa.precio = this.precioRegular[0]
-      },
-      err => console.error(err)
-    )
-
-    this.service.getHarinas().subscribe(
-      res => {
-        this.harinas = res;
-        console.log(res);
-        const Vainilla = this.harinas.filter((harina:any) => harina.harina === sabor);
-        if (Vainilla[0].existencia === 0) {
-          if(this.authService.lang() === 'es'){
-            this.alertService.mostrarAlerta('La harina sabor vainilla no esta disponible por el momento');
-            }else if(this.authService.lang() === 'en'){
-              this.alertService.mostrarAlerta('The vanilla flavor flour is not available at the moment');
-            }
-          this.crepa.harina = {};
-          return;
-        }else{
-        this.crepa.harina = Vainilla[0];
-        console.log(Vainilla);          
-        }
-
-      },
-      err => console.error(err)
-    )
-
-    setTimeout(() => {
-
-    const params = this.activatedRoute.snapshot.params;
-    const id:string = params['id'];
-    this.add.selectOrden(id).subscribe(
-      (res:any) => {
+  
+    // Obtener los datos en paralelo
+    forkJoin({
+      precios: this.service.getPrecios(),
+      harinas: this.service.getHarinas(),
+      ingredientesCom: this.service.getIngredientesC(),
+      ingredientesUnt: this.service.getIngredientesU(),
+      nieves: this.service.getNieves(),
+      decoraciones: this.service.getDecoraciones()
+    }).pipe(
+      switchMap(({ precios, harinas, ingredientesCom, ingredientesUnt, nieves, decoraciones }) => {
+        console.log(precios);
+  
+        // Procesar los precios
+        this.procesarPrecios(precios);
+  
+        // Guardar los ingredientes y decoraciones
+        this.ingredientes_com = ingredientesCom;
+        this.ingredientes_com.forEach((element:any) => {
+          if(element.tipo === 'Fruta'){
+            this.frutas.push(element);
+          }else if(element.tipo === 'Frutos Secos'){
+            this.frutos_secos.push(element);
+          }else if(element.tipo === 'Otros'){
+            this.Otros.push(element);
+          }
+        });
+        this.ingredientes_unt = ingredientesUnt;
+        this.nieves = nieves;
+        this.decoraciones = decoraciones;
+  
+        // Procesar harinas
+        this.harinas = harinas;
+        this.procesarHarinas(harinas);
+  
+        // Obtener la orden después de cargar todos los datos
+        const id: string = this.activatedRoute.snapshot.params['id'];
+        return this.add.selectOrden(id);
+      })
+    ).subscribe({
+      next: (res: any) => {
         this.cantidad.push(res[0].cantidad);
-        this.crepa = res[0].orden;
+        this.crepa = JSON.parse(res[0].orden);
         console.log(this.crepa);
         const index = this.harinas.findIndex((i:any) => i.id === this.crepa.harina.id);
         console.log(this.harinas[index].existencia)
@@ -107,6 +100,7 @@ export class EditCrepaDulceComponent {
               this.alertService.mostrarAlerta('The flour '+ this.crepa.harina.harina + ' was removed from the menu');
             }
           this.crepa.harina = [];
+          this.anadirOrden();
         }else if(this.harinas[index].existencia === 0){
           this.crepa.harina = [];
           if(this.authService.lang() === 'es'){
@@ -114,6 +108,7 @@ export class EditCrepaDulceComponent {
             }else if(this.authService.lang() === 'en'){
               this.alertService.mostrarAlerta('The flour '+ this.crepa.harina.harina + ' is not available at the moment');
             }
+            this.anadirOrden();
         }
         this.crepa.ingredientes_unt.forEach((element:any) => {
           const index = this.ingredientes_unt.findIndex((i:any) => i.id === element.id);
@@ -135,6 +130,7 @@ export class EditCrepaDulceComponent {
             const index1 = this.crepa.ingredientes_unt.findIndex((i:any) => i.id === element.id);
             this.crepa.ingredientes_unt.splice(index1, 1);
           }
+          this.anadirOrden();
         });
         this.crepa.ingredientes_com.forEach((element:any) => {
             console.log(element.id)
@@ -158,6 +154,7 @@ export class EditCrepaDulceComponent {
               const index1 = this.crepa.ingredientes_com.findIndex((i:any) => i.id === element.id);
               this.crepa.ingredientes_com.splice(index1, 1);
             }
+            this.anadirOrden();
         });
         this.crepa.nieve.forEach((element:any) => {
           console.log(element)
@@ -180,65 +177,85 @@ export class EditCrepaDulceComponent {
                 }
               const index1 = this.crepa.nieve.findIndex((i:any) => i.id === element.id);
               this.crepa.nieve.splice(index1, 1);
+            }else{
+              this.anadirOrden();
             }
+            this.anadirOrden();
+        });
+
+        this.crepa.decoracion.forEach((element:any) => {
+          console.log(element)
+          const index = this.decoraciones.findIndex((i:any) => i.decoracion === element.nombre);
+          console.log(index)
+          console.log('Problem',this.decoraciones, this.crepa.decoracion)
+          if(index === -1){
+            if(this.authService.lang() === 'es'){
+              this.alertService.mostrarAlerta('La decoracion '+ element.nombre + ' fue retirado del menu');
+              }else if(this.authService.lang() === 'en'){
+                this.alertService.mostrarAlerta('The decoration '+ element.nombre + ' was removed from the menu');
+              }
+              const index1 = this.crepa.decoracion.findIndex((i:any) => i.nombre === element.nombre);
+              this.crepa.decoracion.splice(index1, 1);
+            } else if(this.decoraciones[index].existencia === 0){
+              if(this.authService.lang() === 'es'){
+                this.alertService.mostrarAlerta('La decoracion '+ element.nombre + ' no esta disponible por el momento');
+                }else if(this.authService.lang() === 'en'){
+                  this.alertService.mostrarAlerta('The decoration '+ element.nombre + ' is not available at the moment');
+                }
+              const index1 = this.crepa.decoracion.findIndex((i:any) => i.nombre === element.nombre);
+              this.crepa.decoracion.splice(index1, 1);
+            }else{
+              this.anadirOrden();
+            }
+            this.anadirOrden();
         });
         console.log(this.crepa)
         if(Object.keys(this.crepa.nieve).length > 0){
           this.addN = true;
+          this.anadirOrden();
         }
+        this.anadirOrden();
       },
-      err => console.error(err)
-    )}, 500)
-
-
-
-
-    this.service.getIngredientesC().subscribe(
-      (res:any) => {
-        console.log(res);
-        res.forEach((element:any) => {
-          if(element.tipo === 'Fruta'){
-            this.frutas.push(element);
-          }else if(element.tipo === 'Frutos Secos'){
-            this.frutos_secos.push(element);
-          }else if(element.tipo === 'Otros'){
-            this.Otros.push(element);
-          }
-        });
-
-        this.ingredientes_com = res;
-      },
-      err => console.error(err)
-    ) 
-
-    this.service.getIngredientesU().subscribe(
-      res => {
-        this.ingredientes_unt = res;
-      },
-      err => console.error(err)
-    ) 
-    this.service.getNieves().subscribe(
-      res => {
-        this.nieves = res;
-      },
-      err => console.error(err)
-    )  
-
-    this.service.getPrecios().subscribe(
-      res => {
-        console.log(res);
-      },
-      err => console.error(err)
-    ) 
-    this.service.getDecoraciones().subscribe(
-      res => {
-        console.log(res);
-        this.decoraciones = res;
-      },
-      err => console.error(err)
-    ) 
-
+      error: (err) => console.error(err)
+    });
   }
+  
+  // Métodos auxiliares
+  private procesarPrecios(precios: any) {
+    const regular = precios.find((p: any) => p.descripcion === 'Regular');
+    const extra = precios.find((p: any) => p.descripcion === 'Extra');
+    const nieve = precios.find((p: any) => p.descripcion === 'Nieve');
+    const decoracion = precios.find((p: any) => p.descripcion === 'Decoracion');
+  
+    this.precioRegular.push(regular?.precio || 0);
+    this.precioExtra.push(extra?.precio || 0);
+    this.precioNieve.push(nieve?.precio || 0);
+    this.precioDecoracion.push(decoracion?.precio || 0);
+    this.crepa.precio = this.precioRegular[0];
+  }
+  
+  private procesarHarinas(harinas: any) {
+    const vainilla = harinas.find((h: any) => h.harina === 'Vainilla');
+    if (vainilla?.existencia === 0) {
+      this.mostrarAlerta(
+        'La harina sabor vainilla no está disponible por el momento',
+        'The vanilla flavor flour is not available at the moment'
+      );
+      this.crepa.harina = {};
+    } else {
+      this.crepa.harina = vainilla;
+    }
+  }
+  
+  private mostrarAlerta(mensajeEs: string, mensajeEn: string) {
+    if (this.authService.lang() === 'es') {
+      this.alertService.mostrarAlerta(mensajeEs);
+    } else {
+      this.alertService.mostrarAlerta(mensajeEn);
+    }
+  }
+  
+  
   
   actualizarHarinaSeleccionada(harina: string, id: number, existencia: any) {
     if(existencia === 0){

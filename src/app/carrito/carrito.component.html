@@ -194,23 +194,23 @@
                 <td class="border-cell salado1">
                     <ul class="ingredient-list">
                         
-                        <div><li *ngFor="let ingrediente_base of ingredientesBaseCrepaS1[i]"><i *ngIf="!ingrediente_base.existencia" (click)="deleteIngredienteBase(salada, ingrediente_base, salada.id)" class="trashS far fa-trash-alt"></i><div class="trash1S">{{ ingrediente_base.ingrediente_base }}</div></li></div>
+                        <div><li *ngFor="let ingrediente_base of ingredientesBaseCrepaS1[i]"><i *ngIf="!ingrediente_base.existencia" (click)="deleteIngredienteBase(salada, ingrediente_base.id, salada.id)" class="trashS far fa-trash-alt"></i><div class="trash1S">{{ ingrediente_base.ingrediente_base }}</div></li></div>
                     </ul>
                 </td>
                 <td class="border-cell salado1">
                     <ul class="ingredient-list">
                        
-                         <div><li *ngFor="let adereso_base of aderesosBaseCrepaS1[i]"><i *ngIf="!adereso_base.existencia" (click)="deleteAderesoBase(salada, adereso_base, salada.id)" class="trashS far fa-trash-alt"></i><div class="trash1S">{{ adereso_base.adereso_base }}</div></li></div>
+                         <div><li *ngFor="let adereso_base of aderesosBaseCrepaS1[i]"><i *ngIf="!adereso_base.existencia" (click)="deleteAderesoBase(salada, adereso_base.id, salada.id)" class="trashS far fa-trash-alt"></i><div class="trash1S">{{ adereso_base.adereso_base }}</div></li></div>
                     </ul>
                 </td>
                 <td class="border-cell salado1">
                     <ul class="ingredient-list">
-                        <div><li *ngFor="let ingredientes of ingredientesCrepaS1[i]"><i *ngIf="!ingredientes.existencia" (click)="deletIngrediente(salada, ingredientes, salada.id)" class="trashS far fa-trash-alt"></i><div class="trash1S">{{ ingredientes.nombre }}</div></li></div>
+                        <div><li *ngFor="let ingredientes of ingredientesCrepaS1[i]"><i *ngIf="!ingredientes.existencia" (click)="deletIngrediente(salada, ingredientes.id, salada.id)" class="trashS far fa-trash-alt"></i><div class="trash1S">{{ ingredientes.nombre }}</div></li></div>
                     </ul>
                 </td>
                 <td class="border-cell salado1">
                     <ul class="ingredient-list">
-                        <div><li *ngFor="let aderesos of aderesosCrepaS1[i]"><i *ngIf="!aderesos.existencia" (click)="deleteAdereso(salada, aderesos, salada.id)" class="trashS far fa-trash-alt"></i><div class="trash1S">{{ aderesos.nombre }}</div></li></div>
+                        <div><li *ngFor="let aderesos of aderesosCrepaS1[i]"><i *ngIf="!aderesos.existencia" (click)="deleteAdereso(salada, aderesos.id, salada.id)" class="trashS far fa-trash-alt"></i><div class="trash1S">{{ aderesos.nombre }}</div></li></div>
                     </ul>
                 </td>
                 <td class="border-cell salado1">{{ salada.total }}</td>
@@ -873,7 +873,7 @@ margin-top: 20px;">
         <div class="padd">
             <ul class="ingredient-list">
                         
-                <div><li *ngFor="let ingrediente_base of ingredientesBaseCrepaS1[i]"><i *ngIf="!ingrediente_base.existencia" (click)="deleteIngredienteBase(salada, ingrediente_base, salada.id)" class="trashS far fa-trash-alt"></i><div class="trash1S">{{ ingrediente_base.ingrediente_base }}</div></li></div>
+                <div><li *ngFor="let ingrediente_base of ingredientesBaseCrepaS1[i]"><i *ngIf="!ingrediente_base.existencia" (click)="deleteIngredienteBase(salada, ingrediente_base.id, salada.id)" class="trashS far fa-trash-alt"></i><div class="trash1S">{{ ingrediente_base.ingrediente_base }}</div></li></div>
             </ul>
         </div>
     </div>
@@ -881,7 +881,7 @@ margin-top: 20px;">
         <div class="salado">{{'crepas.adereso.edit.aderesos.base' | translate}}</div>
         <div class="padd">
             <ul class="ingredient-list">          
-                <div><li *ngFor="let adereso_base of aderesosBaseCrepaS1[i]"><i *ngIf="!adereso_base.existencia" (click)="deleteAderesoBase(salada, adereso_base, salada.id)" class="trashS far fa-trash-alt"></i><div class="trash1S">{{ adereso_base.adereso_base }}</div></li></div>
+                <div><li *ngFor="let adereso_base of aderesosBaseCrepaS1[i]"><i *ngIf="!adereso_base.existencia" (click)="deleteAderesoBase(salada, adereso_base.id, salada.id)" class="trashS far fa-trash-alt"></i><div class="trash1S">{{ adereso_base.adereso_base }}</div></li></div>
            </ul>
         </div>
     </div>
@@ -889,7 +889,7 @@ margin-top: 20px;">
         <div class="salado">{{'crepa.dulce.ingredientes' | translate}}</div>
         <div class="padd">
             <ul class="ingredient-list">
-                <div><li *ngFor="let ingredientes of ingredientesCrepaS1[i]"><i *ngIf="!ingredientes.existencia" (click)="deletIngrediente(salada, ingredientes, salada.id)" class="trashS far fa-trash-alt"></i><div class="trash1S">{{ ingredientes.nombre }}</div></li></div>
+                <div><li *ngFor="let ingredientes of ingredientesCrepaS1[i]"><i *ngIf="!ingredientes.existencia" (click)="deletIngrediente(salada, ingredientes.id, salada.id)" class="trashS far fa-trash-alt"></i><div class="trash1S">{{ ingredientes.nombre }}</div></li></div>
             </ul>
         </div>
     </div>
@@ -897,7 +897,7 @@ margin-top: 20px;">
         <div class="salado">{{'crepas.adereso.edit.aderesos' | translate}}</div>
         <div class="padd">
             <ul class="ingredient-list">
-                <div><li *ngFor="let aderesos of aderesosCrepaS1[i]"><i *ngIf="!aderesos.existencia" (click)="deleteAdereso(salada, aderesos, salada.id)" class="trashS far fa-trash-alt"></i><div class="trash1S">{{ aderesos.nombre }}</div></li></div>
+                <div><li *ngFor="let aderesos of aderesosCrepaS1[i]"><i *ngIf="!aderesos.existencia" (click)="deleteAdereso(salada, aderesos.id, salada.id)" class="trashS far fa-trash-alt"></i><div class="trash1S">{{ aderesos.nombre }}</div></li></div>
             </ul>
         </div>
     </div>

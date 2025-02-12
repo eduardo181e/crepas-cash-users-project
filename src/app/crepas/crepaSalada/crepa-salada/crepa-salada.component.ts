@@ -102,19 +102,12 @@ export class CrepaSaladaComponent {
       err => console.error(err)
     )  
 
-    this.service.getPrecio(1).subscribe(
+    this.service.getPrecios().subscribe(
       (res:any) => {
-        console.log(res[0].precio);
-        this.precioExtra.push(res[0].precio);
-        console.log(this.precioExtra);
-      },
-      err => console.error(err)
-    )
-
-    this.service.getPrecio(5).subscribe(
-      (res:any) => {
-        console.log(res[0].precio);
-        this.precioRegular.push(res[0].precio);
+        const indexRegular = res.findIndex((i:any) => i.descripcion === 'Regular')
+        const indexExtra = res.findIndex((i:any) => i.descripcion === 'Extra')
+        this.precioRegular.push(res[indexRegular].precio);
+        this.precioExtra.push(res[indexExtra].precio);
         console.log(this.precioRegular);
         setTimeout(() => {
           this.anadirOrden()

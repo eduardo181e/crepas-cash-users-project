@@ -1,3 +1,4 @@
+
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertDialogService } from 'src/app/alert-dialog.service';
@@ -5,6 +6,7 @@ import { CarritoService } from 'src/app/services/carrito.service';
 import { CrepaSaladaService } from 'src/app/services/crepa-salada.service';
 import { crepasSalada } from 'src/app/models/nameCrepas';
 import { AuthService } from 'src/app/services/auth-service.service';
+import { forkJoin, switchMap } from 'rxjs';
 @Component({
   selector: 'app-edit-crepa-salada',
   templateUrl: './edit-crepa-salada.component.html',
@@ -15,8 +17,8 @@ export class EditCrepaSaladaComponent {
   orden: any = {};
   nombre: string = '';
   precio: number = 0;
-  precioRegular:any = [70];
-  precioExtra:any = [15];
+  precioRegular:any = [];
+  precioExtra:any = [];
 
   ingredientes_pri:any = [];
   aderesos:any = [];
@@ -47,49 +49,37 @@ export class EditCrepaSaladaComponent {
   long:any = this.crepa.ingredientes_base.length + this.crepa.adereso_base.length
   constructor(private service: CrepaSaladaService, private add: CarritoService, private router: Router, private alertService: AlertDialogService, private activatedRoute: ActivatedRoute, private authService: AuthService){}
   ngOnInit() {
-    this.service.getIngredientesB().subscribe(
-      (res:any) => {
-        res.forEach((element:any, index:any) => {
-            this.ingredientes_base1.push(element);
-          
-
-
-        })
-      },
-      err => console.error(err)
-    )
-    this.service.getAderesosB().subscribe(
-      (res:any) => {
-        res.forEach((element:any) => {
-            this.adereso_base1.push(element);
-
-
-        })
-      },
-      err => console.error(err)
-    )
-    this.crepa.precio = this.precioRegular[0]
     this.nombre = crepasSalada;
-    this.service.getAderesos().subscribe(
-      res => {
-        this.aderesos = res;
-      },
-      err => console.error(err)
-    )  
-
-    this.service.getIngredientesP().subscribe(
-      res => {
-        this.ingredientes_pri = res;
-      },
-      err => console.error(err)
-    ) 
-    setTimeout(() => {
-    const params = this.activatedRoute.snapshot.params;
-    const id:string = params['id'];
-    this.add.selectOrden(id).subscribe(
-      (res:any) => {
+  
+    // Usamos forkJoin para ejecutar todas las peticiones en paralelo
+    forkJoin({
+      ingredientesBase: this.service.getIngredientesB(),
+      aderezosBase: this.service.getAderesosB(),
+      aderezos: this.service.getAderesos(),
+      ingredientesPri: this.service.getIngredientesP(),
+      precios: this.service.getPrecios()
+    }).pipe(
+      switchMap(({ ingredientesBase, aderezosBase, aderezos, ingredientesPri, precios }) => {
+        // Guardamos los ingredientes y aderezos
+        this.ingredientes_base1 = ingredientesBase;
+        this.adereso_base1 = aderezosBase;
+        this.aderesos = aderezos;
+        this.ingredientes_pri = ingredientesPri;
+        const precios1:any = precios
+        // Procesamos los precios
+        this.precioRegular.push(precios1.find((i: any) => i.descripcion === 'Regular').precio);
+        this.precioExtra.push(precios1.find((i: any) => i.descripcion === 'Extra').precio);
+  
+        // Ahora que todos los datos están cargados, obtenemos la orden
+        const params = this.activatedRoute.snapshot.params;
+        const id: string = params['id'];
+        return this.add.selectOrden(id);
+      })
+    ).subscribe({
+      next: (res: any) => {
         console.log(res);
         this.cantidad = res[0].cantidad;
+        res[0].orden = JSON.parse(res[0].orden)
         res[0].orden.adereso_base.forEach((element:any) => {
           const index = this.adereso_base1.findIndex((i:any) => i.id === element.id);
           if(index === -1){
@@ -112,6 +102,7 @@ export class EditCrepaSaladaComponent {
             this.anadirOrden();
           }
         } 
+        this.anadirOrden();
         })
           
           
@@ -137,6 +128,7 @@ export class EditCrepaSaladaComponent {
             this.anadirOrden();
           } 
         }
+        this.anadirOrden();
         })
           
 
@@ -161,6 +153,7 @@ export class EditCrepaSaladaComponent {
             return;
           }
         }
+        this.anadirOrden();
         })
 
         res[0].orden.ingredientes.forEach((element:any) => {
@@ -184,12 +177,15 @@ export class EditCrepaSaladaComponent {
             return;
           }
         }
+        this.anadirOrden();
       })
+        this.anadirOrden();
       },
-      err => console.log(err)
-    )
-    }, 500);
+      error: (err) => console.error(err)
+    });
   }
+  
+  
 
   actualizarIngredientes(ingrediente: string, id: number, existencia: any){
     if(existencia === 0){

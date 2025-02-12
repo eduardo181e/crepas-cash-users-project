@@ -15,12 +15,24 @@ export class EnsaladaIndividualComponent {
 Orden:any;
 nombre: string = '';
 precio:number = 0;
-precioEnsalada:any = [55];
+precioEnsalada:any = [];
 ensaladas:any = [];
 ensaladaSeleccionada:any = {};
   constructor(private service: CrepaSaladaService, private router: Router, private add: CarritoService, private alertService: AlertDialogService, private authService: AuthService){}
   ngOnInit(){
     this.nombre = ensaladas;
+    this.service.getPrecios().subscribe(
+      (res:any) => {
+        const precios:any = res
+        const index = precios.findIndex((objeto:any) => objeto.descripcion === 'Ensalada')
+        this.precioEnsalada.push(precios[index].precio)
+        console.log('problem',this.precioEnsalada);
+
+      },
+      err => {
+        console.log(err);
+      }
+    )
     this.service.getEnsaladas().subscribe(res=>{
       this.ensaladas = res;
       console.log(this.ensaladas);
@@ -29,6 +41,7 @@ ensaladaSeleccionada:any = {};
       console.log(err);
     });
   }
+  
 
   addEnsalada(ensalada:any){
     if(ensalada.existencia === 0){
